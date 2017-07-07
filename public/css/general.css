@@ -1,0 +1,130 @@
+.row-margin{
+    margin-bottom: 20px;
+}
+
+/* Navbar
+----------------------------------------------------------*/
+.navbar{
+    background: #007EE5;
+    box-shadow: none !important;
+    -webkit-box-shadow:none !important;
+}
+.navbar-default .navbar-nav>li>a{
+    color: #fff;
+}
+.navbar-default .navbar-nav>li>a:hover,
+.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:active{
+    color: #fff;
+    border-bottom: 2px solid #fff;
+
+}
+.navbar-brand{
+    padding: 5px 15px;
+}
+.navbar-brand img{
+    width: 125px;
+    margin: 0;
+}
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #fff;
+}
+.navbar-default .navbar-toggle:hover .icon-bar{
+    background-color: #0b0b0b;
+}
+
+/* Main content
+----------------------------------------------------------*/
+.main .container{
+    width: 97%;
+}
+.main {
+    padding-top: 10px;
+    z-index: 102;
+    position: relative;
+    background: #ffffff;
+}
+@media screen and (max-width: 768px) {
+    .main {
+        margin-top: 0px;
+        padding-top: 20px;
+    }
+}
+.main small{
+    font-size: 12px;
+}
+.main label {
+    font-size: 15px;
+}
+.small-label{
+    font-size: 14px !important;
+}
+
+/* Marker
+----------------------------------------------------------*/
+.marker{
+    width: 22px;
+}
+
+/* Inline links
+----------------------------------------------------------*/
+.inline-links{
+    list-style-type: none;
+    padding: 0;
+}
+
+.inline-links li{
+    display:inline-block;
+    text-align: center;
+}
+
+.inline-links li a {
+    text-decoration: none;
+    margin-right: 12px;
+}
+
+/* Fixed and scroll columns
+----------------------------------------------------------*/
+@media screen and (min-width: 768px) {
+    .fixedcol {
+        overflow:hidden;
+    }
+
+    .scrollcol {
+        overflow-y: scroll;
+        height: 480px;
+    }
+}
+
+/* Map
+----------------------------------------------------------*/
+#mapid {
+    height: 460px;
+    margin-bottom: 10px;
+}
+
+/* Sticky footer
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 40px;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 40px;
+    margin-top: 0;
+    padding: 10px;
+    text-align: right;
+}
+
+@media screen and (max-width: 768px){
+    .footer{
+        text-align: center;
+    }
+}

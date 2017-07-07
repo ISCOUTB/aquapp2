@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Home Routes
+Route::get('/', 'DataController@getHome');
+Route::post('/', 'DataController@downloadData');
