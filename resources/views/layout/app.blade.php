@@ -15,13 +15,6 @@
     <link href="/libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="/libs/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <!-- Owl Carousel -->
-    <link href="/display-template/css/owl.carousel.min.css" rel="stylesheet">
-    <link href="/display-template/css/owl.theme.default.min.css" rel="stylesheet">
-    <!-- Superfish -->
-    <link href="/display-template/css/superfish.css" rel="stylesheet">
-    <!-- Easy Responsive Tabs -->
-    <link href="/display-template/css/easy-responsive-tabs.css" rel="stylesheet">
     <!-- Theme Style -->
     <link href="/display-template/css/style.css" rel="stylesheet">
 
@@ -76,19 +69,6 @@
     <script src="/libs/jquery/jquery-1.12.4.min.js"></script>
     <!-- Bootstrap -->
     <script src="/libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <!-- Jquery Easing -->
-    <script src="/display-template/js/jquery.easing.1.3.js"></script>
-    <!-- Owl carousel -->
-    <script src="/display-template/js/owl.carousel.min.js"></script>
-    <!-- Superfish -->
-    <script src="/display-template/js/hoverIntent.js"></script>
-    <script src="/display-template/js/superfish.js"></script>
-    <!-- Easy Responsive Tabs -->
-    <script src="/display-template/js/easyResponsiveTabs.js"></script>
-    <!-- FastClick for Mobile/Tablets -->
-    <script src="/display-template/js/fastclick.js"></script>
-    <!-- Main JS -->
-    <script src="/display-template/js/main.js"></script>
 
     @yield('scripts')
 </body>

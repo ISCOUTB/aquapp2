@@ -35,10 +35,9 @@
 /* Main content
 ----------------------------------------------------------*/
 .main .container{
-    width: 97%;
+    width: 99%;
 }
 .main {
-    padding-top: 10px;
     z-index: 102;
     position: relative;
     background: #ffffff;
@@ -87,6 +86,7 @@
 @media screen and (min-width: 768px) {
     .fixedcol {
         overflow:hidden;
+        padding: 0;
     }
 
     .scrollcol {
@@ -97,7 +97,7 @@
 
 /* Map
 ----------------------------------------------------------*/
-#mapid {
+#map {
     height: 460px;
     margin-bottom: 10px;
 }

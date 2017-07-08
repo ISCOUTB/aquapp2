@@ -162,7 +162,7 @@
                     </form>
                 </div>
                 <div class="col-md-8 fixedcol">
-                    <div id="mapid"></div>
+                    <div id="map"></div>
 
                     <div class="row">
                         <div class="col-md-2">
@@ -186,6 +186,7 @@
 @section('scripts')
     <!-- Jquery ui -->
     <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
     <!-- Leaflet -->
     <script src="/libs/leaflet/leaflet.js"></script>
 
@@ -222,8 +223,8 @@
                 return date;
             }
 
-            <!-- Datepicker jquery ui -->
-            var map = L.map('mapid').setView([10.4207375,-75.5475544], 15);
+            <!-- Leaflet Map -->
+            var map = L.map('map').setView([10.4207375,-75.5475544], 15);
 
             L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
                 maxZoom: 18,
