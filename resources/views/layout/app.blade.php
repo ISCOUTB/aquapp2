@@ -42,18 +42,18 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="javascript:void(0)"> Login</a></li>
-                    {{--<li class="dropdown">--}}
-                    {{--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>--}}
-                    {{--<ul class="dropdown-menu">--}}
-                    {{--<li><a href="#">Action</a></li>--}}
-                    {{--<li><a href="#">Another action</a></li>--}}
-                    {{--<li><a href="#">Something else here</a></li>--}}
-                    {{--<li role="separator" class="divider"></li>--}}
-                    {{--<li><a href="#">Separated link</a></li>--}}
-                    {{--</ul>--}}
-                    {{--</li>--}}
-                    <li><a href="javascript:void(0)"> Help <i class="fa fa-question-circle" aria-hidden="true"></i></a></li>
+                    <li><a href="javascript:void(0)"> @lang('Login') </a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ Config::get('locale')[App::getLocale()] }} <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            @foreach (Config::get('locale') as $key => $locale)
+                                @if ($key != App::getLocale())
+                                    <li><a href="{{ route('locale', $key) }}">{{ $locale }}</a></li>
+                                @endif
+                            @endforeach
+                        </ul>
+                    </li>
+                    <li><a href="javascript:void(0)"> @lang('Help') <i class="fa fa-question-circle" aria-hidden="true"></i></a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->

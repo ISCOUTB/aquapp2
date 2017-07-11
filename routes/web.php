@@ -14,3 +14,7 @@
 // Home Routes
 Route::get('/', 'DataController@getHome');
 Route::post('/', 'DataController@downloadData');
+
+
+// Locale Configure
+Route::get('locale/{locale}', 'LocaleController@switchLanguage')->name('locale');
