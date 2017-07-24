@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('title')
-    AquApp 2.0
+    AquApp
 @endsection
 
 @section('styles')
