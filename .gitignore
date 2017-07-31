@@ -14,3 +14,5 @@ yarn-error.log
 .idea
 # OS files
 .DS_Store
+#MongoDB
+mongodb
