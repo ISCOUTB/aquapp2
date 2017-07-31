@@ -19,50 +19,12 @@ Route::post('/', 'DataController@downloadData');
 // Locale Configure
 Route::get('locale/{locale}', 'LocaleController@switchLanguage')->name('locale');
 
-
-Route::get('nodes', function () {
-
-    $node = \App\Node::first();
-    return $node;
-    /*
-   *  Node Type
-    */
-    $sensorA = [
-        "variable" => "Temp Out",
-        "description" => "Temperature measured outside the station",
-        "unit" => "°C"
-    ];
-
-    $sensorB = [
-        "variable" => "Rain Rate",
-        "description" => "How fast the rain is falling at a certain time",
-        "unit" => "mm/h"
-    ];
-
-    $sensors = [];
-    array_push($sensors, $sensorA, $sensorB);
-
-
-    $nodeType = \App\NodeType::create([
-        'name' => 'Water Quality',
-        'status' => 'RT',
-        'sensors' => $sensors
-    ]);
-
-    $coordinates = [10.4207375,-75.5475544];
-
-    $node = \App\Node::create([
-        'name' => 'Bear Cove',
-        'location' => 'AK, Kachemak Bay',
-        'coordinates' => $coordinates,
-        'node_type_id' => $nodeType->id
-    ]);
-
-    $node->node_type()->save($nodeType);
-
-    return \App\Node::all();
+Route::group(['prefix' => 'admin'], function () {
+    Route::resource('nodes', 'NodeController');
 });
 
+
+// Testing Routes
 Route::get('data', function () {
 
     $node = \App\Node::first();
@@ -91,3 +53,32 @@ Route::get('data', function () {
 
     return $node->data;
 });
+
+Route::get('nodetypes', function(){
+    /*
+   *  Node Type
+    */
+    $sensorA = [
+        "variable" => "Temp Out",
+        "description" => "Temperature measured outside the station",
+        "unit" => "°C"
+    ];
+
+    $sensorB = [
+        "variable" => "Rain Rate",
+        "description" => "How fast the rain is falling at a certain time",
+        "unit" => "mm/h"
+    ];
+
+    $sensors = [];
+    array_push($sensors, $sensorA, $sensorB);
+
+
+    \App\NodeType::create([
+        'name' => 'Water Quality',
+        'sensors' => $sensors
+    ]);
+
+    return \App\NodeType::all();
+});
+

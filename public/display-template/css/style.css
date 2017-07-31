@@ -880,7 +880,7 @@ Components
 .btn-danger:hover,
 .btn-danger:active,
 .btn-danger:focus {
-  background: #282e3c;
+  background-color: #282e3c;
   color: #ffffff;
 }
 

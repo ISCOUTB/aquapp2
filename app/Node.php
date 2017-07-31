@@ -12,6 +12,7 @@ class Node extends Model
         'name',
         'location',
         'coordinates',
+        'status',
         'node_type_id',
         'data'
     ];
@@ -26,7 +27,7 @@ class Node extends Model
      */
     public function node_type()
     {
-        return $this->hasOne('App\NodeType', 'node_type_id');
+        return $this->belongsTo('App\NodeType', 'node_type_id');
     }
 
     /**

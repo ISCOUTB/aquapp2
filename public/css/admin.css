@@ -1,0 +1,196 @@
+body {
+    background: #F1F3FA;
+}
+
+/* Side navbar from https://bootsnipp.com/snippets/QXqM1
+----------------------------------------------------------*/
+a {
+    color:#000;
+}
+li {
+    list-style:none;
+}
+.panel-default>.panel-heading {
+    color: #fff;
+    background-color: #404040;
+    border-color: #ddd;
+}
+.panel-group .panel+.panel {
+    margin-top: 0px;
+}
+.panel-group {
+    margin-top: 12px;
+    margin-left: 20px;
+}
+.panel-collapse {
+    background-color:#fff;
+}
+.panel-group .glyphicon {
+    margin-right:10px;
+}
+ul.list-group {
+    margin:0px;
+}
+ul.list-group li.active{
+    border-color: #007EE5;
+    border-style: solid;
+    border-width: 0 6px;
+}
+
+ul.list-group li.active a{
+    border-bottom: 1px dotted rgba(0,0,0,0.2);
+}
+ul.list-group li.active a:hover{
+    border-left:none;
+    border-right:none;
+}
+ul.bulletlist li {
+    list-style:disc;
+}
+ul.list-group  li a {
+    display:block;
+    padding:5px 0px 5px 15px;
+    text-decoration:none;
+}
+ul.list-group li {
+    border-bottom: 1px dotted rgba(0,0,0,0.2);
+}
+ul.list-group  li a:hover, ul li a:focus {
+    border-color: #007EE5;
+    border-style: solid;
+    border-width: 0 6px;
+}
+
+.panel-title a:hover,
+.panel-title a:active,
+.panel-title a:focus,
+.panel-title .open a:hover,
+.panel-title .open a:active,
+.panel-title .open a:focus
+{
+    text-decoration:none;
+    color:#fff;
+    border-bottom: #404040;
+}
+
+.panel-title>.small, .panel-title>.small>a, .panel-title>a, .panel-title>small, .panel-title>small>a {
+    display: block;
+}
+
+@media (min-width: 768px){
+    .panel-group {
+        width: 80%;
+    }
+}
+
+@media (min-width: 992px){
+    .menu-hide {
+        display: none;
+    }
+
+}
+.menu-hide .panel-default>.panel-heading {
+    color: #fff;
+    background-color: #8e8c8c;
+    border-color: #ddd;
+}
+.content{
+    padding: 30px 40px;
+    background: #fff;
+}
+
+/* Admin fixed and scroll columns
+----------------------------------------------------------*/
+@media (min-width: 780px) {
+    .scroll {
+        position: fixed;
+        top: 85px;
+        right: 10px;
+        bottom: 50px;
+        overflow-y: scroll;
+        height: 80%;
+    }
+    .fixed {
+        overflow:hidden;
+        padding: 0;
+
+    }
+}
+
+@media (min-width: 780px) and (max-width: 991px){
+    .scroll{
+        left: 280px;
+        width: 67%;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1200px){
+    .scroll{
+        left: 300px;
+        width: 70%;
+    }
+}
+@media (min-width: 1200px){
+    .scroll{
+        left: 300px;
+        width: 76%;
+    }
+}
+
+
+/* Inputs with icons
+----------------------------------------------------------*/
+.input-group .icon-addon .form-control {
+    border-radius: 0;
+}
+
+.icon-addon {
+    position: relative;
+    color: #555;
+    display: block;
+}
+
+.icon-addon:after,
+.icon-addon:before {
+    display: table;
+    content: " ";
+}
+
+.icon-addon:after {
+    clear: both;
+}
+
+.icon-addon.addon-md .glyphicon,
+.icon-addon .glyphicon,
+.icon-addon.addon-md .fa,
+.icon-addon .fa {
+    position: absolute;
+    z-index: 2;
+    left: 10px;
+    font-size: 14px;
+    width: 20px;
+    margin-left: -2.5px;
+    text-align: center;
+    padding: 10px 0;
+    top: 1px
+}
+
+.icon-addon.addon-lg .form-control {
+    line-height: 1.33;
+    height: 46px;
+    font-size: 18px;
+    padding: 10px 16px 10px 40px;
+}
+.icon-addon.addon-lg .glyphicon {
+    line-height: 1.33;
+    font-size: 18px;
+    color: #007EE5;
+}
+
+
+/* Create Map
+----------------------------------------------------------*/
+#createMap{
+    height: 400px;
+    margin-bottom: 20px;
+}

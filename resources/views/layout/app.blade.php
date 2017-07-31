@@ -13,8 +13,6 @@
     <link type="text/css" href="/css/normalize.css" rel="stylesheet">
     <!-- Bootstrap -->
     <link href="/libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="/libs/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- Theme Style -->
     <link href="/display-template/css/style.css" rel="stylesheet">
 
@@ -53,7 +51,7 @@
                             @endforeach
                         </ul>
                     </li>
-                    <li><a href="javascript:void(0)"> @lang('Help') <i class="fa fa-question-circle" aria-hidden="true"></i></a></li>
+                    <li><a href="javascript:void(0)"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i> @lang('Help') </a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->

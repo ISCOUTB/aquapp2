@@ -1,0 +1,77 @@
+[
+  {
+    "name": "Water Quality",
+    "sensors": [
+      {
+        "variable": "Depth",
+        "description": "",
+        "unit": ""
+      },
+      {
+        "variable": "Dissolved Oxygen",
+        "description": "",
+        "unit": ""
+      },
+      {
+        "variable": "Percent Saturation",
+        "description": "",
+        "unit": ""
+      },
+      {
+        "variable": "pH",
+        "description": "",
+        "unit": ""
+      },
+      {
+        "variable": "Salinity",
+        "description": "",
+        "unit": ""
+      },
+      {
+        "variable": "Specific Conductivity",
+        "description": "",
+        "unit": ""
+      },
+      {
+        "variable": "Turbidity",
+        "description": "",
+        "unit": ""
+      },
+      {
+        "variable": "Water Temperature",
+        "description": "",
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "name": "Nutrient Levels",
+    "sensors": [
+      {
+        "variable": "Chrolophyll a",
+        "description": "",
+        "unit": ""
+      },
+      {
+        "variable": "Nitrate",
+        "description": "",
+        "unit": ""
+      },
+      {
+        "variable": "Nitrite",
+        "description": "",
+        "unit": ""
+      },
+      {
+        "variable": "Nitrite + Nitrate",
+        "description": "",
+        "unit": ""
+      },
+      {
+        "variable": "Orthophosphate",
+        "description": "",
+        "unit": ""
+      }
+    ]
+  }
+]
