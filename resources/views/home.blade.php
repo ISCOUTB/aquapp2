@@ -228,15 +228,70 @@
             }
 
             <!-- Leaflet Map -->
-            var map = L.map('leafletMap').setView([10.4207375,-75.5475544], 15);
+            var map = L.map('map').setView([10.42012275,-75.54751544], 15);
 
             L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-                maxZoom: 18,
                 attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
                 '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
                 'Imagery © <a href="http://mapbox.com">Mapbox</a>',
                 id: 'mapbox.streets'
             }).addTo(map);
+//
+//            var icon = L.icon({
+//                iconUrl: '/images/pin.png',
+//                iconSize: [35, 60] // size of the icon
+//            });
+
+            // Add markers to map
+            var myFeatureGroup = L.featureGroup().addTo(map).on("click", groupClick);
+            var marker, info, markers = [];
+
+            @if (count($nodes) > 0)
+                @foreach($nodes as $node)
+                    var latitude = {{ $node->coordinates[0] }};
+                    var longitude = {{ $node->coordinates[1] }};
+
+                    /*href="{{url('place', str_slug($node->name)."-".$node->id)}}" target="_blank"*/
+
+                    var parameters = [];
+                    @foreach($node->node_type->sensors as $sensor)
+                       parameters.push(" {{ $sensor["variable"] }}");
+                    @endforeach
+
+                    info =  '<p><span class="text-primary text-capitalize"><strong>{{ $node->name }}</strong></span>'+
+                            '<br>' +
+                            '{{ $node->location }}' +
+                            '<br>' +
+                            '[{{ $node->coordinates[0] }}, {{ $node->coordinates[1] }}]' +
+                            '</p>' +
+                            '<p>' +
+                            '<strong>Type</strong> <span class="pull-right"><img src="/images/marker-icon.png" class="marker" alt="marker"></span>' +
+                            '<br>' +
+                            '{{ $node->node_type->name }}' +
+                            '<br>' +
+                            '{{ $node->status }}' +
+                            '</p>' +
+                            '<p>' +
+                            '<strong>Parameters</strong>' +
+                            '<br>' + parameters +
+                            '</p>';
+
+                    marker = L.marker([latitude, longitude]/*, {icon: icon}*/).addTo(myFeatureGroup).bindPopup(info);
+                    marker.info = info;
+
+                    //Add marker to array
+                    markers.push(marker);
+                @endforeach
+
+                // Zoom to fit all markers
+//                var group = new L.featureGroup(markers);
+//                map.fitBounds(group.getBounds());
+            @endif
+
+            function groupClick(event) {
+                console.log("Clicked on marker " + event.layer.info);
+            }
+
 
         });
     </script>

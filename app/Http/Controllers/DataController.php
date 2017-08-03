@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Node;
+
 class DataController extends Controller
 {
     public function getHome(){
-        return view('home');
+        $nodes = Node::all();
+        return view('home', ['nodes' => $nodes]);
     }
 
     public function downloadData(Request $request){
-        dd($request->all());
+        return $request->all();
     }
 }

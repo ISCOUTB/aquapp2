@@ -109,6 +109,7 @@ class NodeController extends Controller
             $nodeTypeId = $nodeType;
         }
 
+
         /*
          *  Update node model
         */
