@@ -4,7 +4,7 @@
     Create Node
 @endsection
 
-@section('content')
+@section('admin-content')
     <p><small>Dashboard > Nodes > Create</small></p>
     <h2>Create Node</h2>
     <hr>
@@ -16,7 +16,7 @@
             <div class="col-md-6 col-sm-6 col-xs-12 form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                 <div class="icon-addon addon-lg">
                     <input type="text" placeholder="Name" class="form-control" id="name" name="name" value="{{ session('error') ? session('name') : old('name') }}" required autofocus>
-                    <label for="name" class="glyphicon glyphicon-bookmark" rel="tooltip" title="name"></label>
+                    <label for="name" class="fa fa-bookmark" rel="tooltip" title="name"></label>
                 </div>
                 @if ($errors->has('name'))
                     <span class="help-block">
@@ -44,7 +44,7 @@
         <div class="form-group{{ $errors->has('location') ? ' has-error' : '' }}">
             <div class="icon-addon addon-lg">
                 <input type="text" placeholder="Location" class="form-control" id="location" name="location" value="{{ session('error') ? session('location') : old('location') }}" required>
-                <label for="location" class="glyphicon glyphicon-map-marker" rel="tooltip" title="location"></label>
+                <label for="location" class="fa fa-map-marker" rel="tooltip" title="location"></label>
             </div>
             @if ($errors->has('location'))
                 <span class="help-block">
@@ -57,7 +57,7 @@
             <div class="col-md-6 col-sm-6 col-xs-12 form-group{{ $errors->has('latitude') ? ' has-error' : '' }}">
                 <div class="icon-addon addon-lg">
                     <input type="text" placeholder="Latitude" class="form-control" id="latitude" name="latitude" value="{{ session('error') ? session('latitude') : old('latitude') }}" required>
-                    <label for="latitude" class="glyphicon glyphicon-globe" rel="tooltip" title="latitude"></label>
+                    <label for="latitude" class="fa fa-globe" rel="tooltip" title="latitude"></label>
                 </div>
                 @if ($errors->has('latitude'))
                     <span class="help-block">
@@ -69,7 +69,7 @@
             <div class="col-md-6 col-sm-6 col-xs-12 form-group{{ $errors->has('longitude') ? ' has-error' : '' }}">
                 <div class="icon-addon addon-lg">
                     <input type="text" placeholder="Longitude" class="form-control" id="longitude" name="longitude" value="{{ session('error') ? session('longitude') : old('longitude') }}" required>
-                    <label for="longitude" class="glyphicon glyphicon-globe" rel="tooltip" title="longitude"></label>
+                    <label for="longitude" class="fa fa-globe" rel="tooltip" title="longitude"></label>
                 </div>
                 @if ($errors->has('longitude'))
                     <span class="help-block">
@@ -82,7 +82,7 @@
         <div id="createMap"></div>
 
         <p class="pull-right"><small>
-            <span class="glyphicon glyphicon-info-sign text-primary" aria-hidden="true"></span>
+            <span class="fa fa-info-sign text-primary" aria-hidden="true"></span>
             Add a marker to the map and get its latitude and longitude
         </small></p>
 

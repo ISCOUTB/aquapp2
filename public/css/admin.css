@@ -25,7 +25,7 @@ li {
 .panel-collapse {
     background-color:#fff;
 }
-.panel-group .glyphicon {
+.panel-group .fa {
     margin-right:10px;
 }
 ul.list-group {
@@ -160,8 +160,8 @@ ul.list-group  li a:hover, ul li a:focus {
     clear: both;
 }
 
-.icon-addon.addon-md .glyphicon,
-.icon-addon .glyphicon,
+.icon-addon.addon-md .fa,
+.icon-addon .fa,
 .icon-addon.addon-md .fa,
 .icon-addon .fa {
     position: absolute;
@@ -181,7 +181,7 @@ ul.list-group  li a:hover, ul li a:focus {
     font-size: 18px;
     padding: 10px 16px 10px 40px;
 }
-.icon-addon.addon-lg .glyphicon {
+.icon-addon.addon-lg .fa {
     line-height: 1.33;
     font-size: 18px;
     color: #007EE5;

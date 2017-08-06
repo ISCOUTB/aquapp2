@@ -156,7 +156,7 @@
                             <div class="row row-margin">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary btn-lg btn-block"> @lang('Get Data') </button>
+                                        <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="fa fa-download"></i> @lang('Get Data') </button>
                                     </div>
                                 </div>
                             </div>

@@ -4,7 +4,7 @@
     Create Node
 @endsection
 
-@section('content')
+@section('admin-content')
     <p><small>Dashboard > Nodes </small></p>
     <h2>Nodes</h2>
 
