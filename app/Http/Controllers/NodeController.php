@@ -19,7 +19,6 @@ class NodeController extends Controller
     public function index()
     {
         $nodes = Node::all();
-        return $nodes;
         return view('admin.nodes.index', ['nodes' => $nodes]);
     }
 
@@ -139,7 +138,9 @@ class NodeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $node = Node::find($id);
+        $nodeTypes = NodeType::all();
+        return view('admin.nodes.edit', ['node' => $node, 'nodeTypes' => $nodeTypes]);
     }
 
     /**
@@ -151,7 +152,29 @@ class NodeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'status' => 'required',
+            'location' => 'required|max:255',
+            'latitude' => 'required|numeric|between:-90,90',
+            'longitude'=>'required|numeric|between:-180,180'
+        ]);
+
+        $name = $request->input('name');
+        $status = $request->input('status');
+        $location = $request->input('location');
+        $latitude = (float) $request->input('latitude');
+        $longitude = (float) $request->input('longitude');
+        $coordinates = [$latitude, $longitude];
+
+        $node = Node::findOrFail($id);
+        $node->name = $name;
+        $node->status = $status;
+        $node->location = $location;
+        $node->coordinates = $coordinates;
+        $node->save();
+
+        return redirect('admin/nodes')->with('success-update', 'Node successfully updated');
     }
 
     /**

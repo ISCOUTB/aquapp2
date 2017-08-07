@@ -82,8 +82,7 @@
         <div id="createMap"></div>
 
         <p class="pull-right"><small>
-            <span class="fa fa-info-sign text-primary" aria-hidden="true"></span>
-            Add a marker to the map and get its latitude and longitude
+            <i class="fa fa-info-circle text-primary"></i> &nbsp; Add a marker to the map and get its latitude and longitude
         </small></p>
 
         <br><br>

@@ -19,6 +19,13 @@
 
     <br class="hidden-xs">
 
+    @if (session('success-update'))
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong> {{ session('success-update') }}</strong>
+        </div>
+    @endif
+
     <div class="table-responsive">
         <table class="table table-striped table-hover" id="table">
             <tr>
