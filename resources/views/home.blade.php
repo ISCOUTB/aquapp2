@@ -258,7 +258,7 @@
                        parameters.push(" {{ $sensor["variable"] }}");
                     @endforeach
 
-                    info =  '<p><span class="text-primary text-capitalize"><strong>{{ $node->name }}</strong></span>'+
+                    info =  '<p><span class="text-primary text-capitalize leaflet-popup-title"><strong>{{ $node->name }}</strong></span>'+
                             '<br>' +
                             '{{ $node->location }}' +
                             '<br>' +
@@ -291,8 +291,6 @@
             function groupClick(event) {
                 console.log("Clicked on marker " + event.layer.info);
             }
-
-
         });
     </script>
 @endsection

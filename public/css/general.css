@@ -83,6 +83,17 @@ body {
 
 /* HOME: Form and Map boxes
 ----------------------------------------------------------*/
+
+/* Popup */
+.leaflet-popup-content{
+    font-family: 'Lato', serif;
+    font-size: 1.2em;
+}
+
+.leaflet-popup-title {
+    font-size: 1.3em;
+}
+
 @media screen and (max-width: 779px) {
     #leafletMap{
         height: 460px;
@@ -272,4 +283,26 @@ body {
 -------------------------------------------------- */
 dd{
     margin-left: 30px; font-weight: 100;
+}
+
+
+/* Modal vertically centered https://codepen.io/dimbslmh/full/mKfCcE
+-------------------------------------------------- */
+.modal {
+    text-align: center;
+    padding: 0!important;
+}
+
+.modal:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px;
+}
+
+.modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
 }

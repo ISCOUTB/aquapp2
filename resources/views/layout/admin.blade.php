@@ -36,7 +36,9 @@
             <!-- end hidden Menu items -->
         </div>
     </div>
+
     @yield('modal')
+
     <div class="col-sm-8 col-md-9 scroll">
         <div class="content">
             @yield('admin-content')
