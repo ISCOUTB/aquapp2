@@ -197,12 +197,7 @@ ul.list-group  li a:hover, ul li a:focus {
 
 /* Table
 ----------------------------------------------------------*/
-th, td{
-    font-size: 1.1em;
-}
-
 #no-found h4{
     margin-top: 12px;
     font-size: 1em;
-
 }

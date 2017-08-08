@@ -1,12 +1,15 @@
 @extends('layout.admin')
 
 @section('title')
-    Create Node
+    @lang('Create Node')
 @endsection
 
 @section('admin-content')
-    <p><small>Dashboard > Nodes > Create</small></p>
-    <h2>Create Node</h2>
+    <p class="title">
+        <h2 style="margin-bottom: 0;">@lang('Create Node')</h2>
+        <small class="text-primary">@lang('Dashboard') > @lang('Nodes') > @lang('Create')</small>
+    </p>
+
     <hr>
 
     <form method="POST" action="{{ route('nodes.store') }}" id="create-form">
@@ -15,7 +18,7 @@
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-12 form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                 <div class="icon-addon addon-lg">
-                    <input type="text" placeholder="Name" class="form-control" id="name" name="name" value="{{ session('error') ? session('name') : old('name') }}" required autofocus>
+                    <input type="text" placeholder="@lang('Name')" class="form-control" id="name" name="name" value="{{ session('error') ? session('name') : old('name') }}" required autofocus>
                     <label for="name" class="fa fa-bookmark" rel="tooltip" title="name"></label>
                 </div>
                 @if ($errors->has('name'))
@@ -28,9 +31,9 @@
             <div class="col-md-6 col-sm-6 col-xs-12 form-group{{ $errors->has('status') ? ' has-error' : '' }}">
                 <div class="icon-addon addon-lg">
                     <select class="form-control" title="Status" name="status" required>
-                        <option value="Real Time">Real Time</option>
-                        <option value="Non Real Time">Non Real Time</option>
-                        <option value="Off">Off</option>
+                        <option value="Real Time">@lang('Real Time')</option>
+                        <option value="Non Real Time">@lang('Non Real Time')</option>
+                        <option value="Off">@lang('Off')</option>
                     </select>
                 </div>
                 @if ($errors->has('status'))
@@ -43,7 +46,7 @@
 
         <div class="form-group{{ $errors->has('location') ? ' has-error' : '' }}">
             <div class="icon-addon addon-lg">
-                <input type="text" placeholder="Location" class="form-control" id="location" name="location" value="{{ session('error') ? session('location') : old('location') }}" required>
+                <input type="text" placeholder="@lang('Location')" class="form-control" id="location" name="location" value="{{ session('error') ? session('location') : old('location') }}" required>
                 <label for="location" class="fa fa-map-marker" rel="tooltip" title="location"></label>
             </div>
             @if ($errors->has('location'))
@@ -56,7 +59,7 @@
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-12 form-group{{ $errors->has('latitude') ? ' has-error' : '' }}">
                 <div class="icon-addon addon-lg">
-                    <input type="text" placeholder="Latitude" class="form-control" id="latitude" name="latitude" value="{{ session('error') ? session('latitude') : old('latitude') }}" required>
+                    <input type="text" placeholder="@lang('Latitude')" class="form-control" id="latitude" name="latitude" value="{{ session('error') ? session('latitude') : old('latitude') }}" required>
                     <label for="latitude" class="fa fa-globe" rel="tooltip" title="latitude"></label>
                 </div>
                 @if ($errors->has('latitude'))
@@ -68,7 +71,7 @@
 
             <div class="col-md-6 col-sm-6 col-xs-12 form-group{{ $errors->has('longitude') ? ' has-error' : '' }}">
                 <div class="icon-addon addon-lg">
-                    <input type="text" placeholder="Longitude" class="form-control" id="longitude" name="longitude" value="{{ session('error') ? session('longitude') : old('longitude') }}" required>
+                    <input type="text" placeholder="@lang('Longitude')" class="form-control" id="longitude" name="longitude" value="{{ session('error') ? session('longitude') : old('longitude') }}" required>
                     <label for="longitude" class="fa fa-globe" rel="tooltip" title="longitude"></label>
                 </div>
                 @if ($errors->has('longitude'))
@@ -82,12 +85,12 @@
         <div id="createMap"></div>
 
         <p class="pull-right"><small>
-            <i class="fa fa-info-circle text-primary"></i> &nbsp; Add a marker to the map and get its latitude and longitude
+            <i class="fa fa-info-circle text-primary"></i> &nbsp; @lang('Add a marker to the map and get its latitude and longitude')
         </small></p>
 
         <br><br>
 
-        <h3>Choose Node Type</h3>
+        <h3>@lang('Choose Node Type')</h3>
         <hr>
 
         <div id="data-schema"></div>
@@ -111,20 +114,27 @@
                             {{ $nodeType->name }}
 
                             <dl>
-                                <dt><small class="text-primary">Parameters</small></dt>
+                                <dt><small class="text-primary">@lang('Parameters')</small></dt>
 
-                                @foreach($nodeType->sensors as $sensor)
-                                    <dd><small>
-                                        {{ $sensor["variable"]}}
+                                <dd>
+                                    @foreach($nodeType->sensors as $sensor)
+                                        <small>
+                                            {{ $sensor["variable"]}}
 
-                                        @if(array_key_exists('unit', $sensor))
-                                            ({{ $sensor["unit"] }})
-                                        @endif
-                                        @if(array_key_exists('description', $sensor))
-                                            : {{ $sensor["description"] }}
-                                        @endif
-                                    </small></dd>
-                                @endforeach
+                                            @if(array_key_exists('unit', $sensor))
+                                                ({{ $sensor["unit"] }})
+                                            @endif
+                                            @if(array_key_exists('description', $sensor))
+                                                : {{ $sensor["description"] }}
+                                            @endif
+
+                                            @if(!$loop->last)
+                                                ,
+                                            @endif
+                                        </small>
+                                    @endforeach
+                                </dd>
+
                             </dl>
                         </label>
                     </div>
@@ -134,7 +144,7 @@
                 <div class="radio radio-primary">
                     <input type="radio" name="node-type" id="node-type" data-toggle="modal" data-target="#schemaModal" value="sending-schema">
                     <label for="node-type">
-                        Choose Data Sending Schema
+                        @lang('Choose Data Sending Schema')
                     </label>
                 </div>
             </div>
@@ -142,7 +152,7 @@
 
         <br>
         <div class="row">
-            <input type="submit" class="btn btn-primary btn-lg pull-right" value="Save">
+            <input type="submit" class="btn btn-primary btn-lg pull-right" value="@lang('Save')">
         </div>
     </form>
 
@@ -154,15 +164,15 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h3 class="modal-title tex"><strong>Set Node Data Schema</strong></h3>
+                    <h3 class="modal-title tex"><strong>@lang('Set Node Data Sending Schema')</strong></h3>
                 </div>
                 <div class="modal-body" style="padding: 30px">
                     <form id="node-type-form">
                         <div class="row">
                             <div class="form-group">
-                                <label class="control-label col-md-4" for="type-name">Node Type Name</label>
+                                <label class="control-label col-md-4" for="type-name">@lang('Node Type Name')</label>
                                 <div class="col-md-8">
-                                    <input class="form-control" id="type-name" name="type-name" type="text" placeholder="e.g. Water Quality" required>
+                                    <input class="form-control" id="type-name" name="type-name" type="text" placeholder="e.g. @lang('Water Quality')" required>
                                 </div>
                             </div>
                         </div>
@@ -171,7 +181,7 @@
 
                         <div class="row">
                             <div class="form-group" id="sending-schema-div">
-                                <label class="control-label col-md-4" for="sending-schema">Node Data Sending Schema
+                                <label class="control-label col-md-4" for="sending-schema">@lang('Node Data Sending Schema')
                                     <br>
                                     <small>(Data split by ;)</small>
                                 </label>
@@ -183,16 +193,16 @@
 
                         <div class="row">
                             <br>
-                            <button type="button" class="btn btn-primary pull-right" id="continue-btn" disabled>Continue</button>
+                            <button type="button" class="btn btn-primary pull-right" id="continue-btn" disabled>@lang('Continue')</button>
                         </div>
 
                         <div id="elements-description-div" style="display: none">
-                            <h4><strong>Parameters Type Selectors</strong></h4>
+                            <h4><strong>@lang('Parameters Type Selectors')</strong></h4>
                             <div class="row" id="elements"></div>
                             <br><br>
                             <div class="row">
-                                <a class="btn btn-danger" id="try-other-schema">Try Other Data Sending Schema </a>
-                                <button type="submit" class="btn btn-primary pull-right">Save</button>
+                                <a class="btn btn-danger" id="try-other-schema">@lang('Try Other Data Sending Schema') </a>
+                                <button type="submit" class="btn btn-primary pull-right">@lang('Save')</button>
                             </div>
                         </div>
                     </form>
@@ -201,6 +211,7 @@
         </div>
     </div>
 @endsection
+
 
 @section('scripts')
     <script>
@@ -301,7 +312,7 @@
                 for(var i=0; i<schema.length; i++){
                     var value = $( "#" + i ).val();
                     if(typeof value !== 'undefined'){
-                        values = values.concat(value + ";");
+                        values = values.concat(value + ",");
                     }
                 }
 

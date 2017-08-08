@@ -265,14 +265,14 @@
                             '[{{ $node->coordinates[0] }}, {{ $node->coordinates[1] }}]' +
                             '</p>' +
                             '<p>' +
-                            '<strong>Type</strong> <span class="pull-right"><img src="/images/marker-icon.png" class="marker" alt="marker"></span>' +
+                            '<strong>@lang('Type')</strong> <span class="pull-right"><img src="/images/marker-icon.png" class="marker" alt="marker"></span>' +
                             '<br>' +
                             '{{ $node->node_type->name }}' +
                             '<br>' +
                             '{{ $node->status }}' +
                             '</p>' +
                             '<p>' +
-                            '<strong>Parameters</strong>' +
+                            '<strong>@lang('Parameters')</strong>' +
                             '<br>' + parameters +
                             '</p>';
 

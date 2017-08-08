@@ -66,7 +66,7 @@
     @yield('content')
 
     <footer class="footer">
-        <small>Copyright © 2017. Universidad Tecnologica de Bolivar. Cartagena de Indias, D.T. & C, Colombia</small>
+        <small>Copyright © 2017. Universidad Tecnologica de Bolivar. Cartagena de Indias, Colombia</small>
     </footer>
 
     <!-- Jquery -->
