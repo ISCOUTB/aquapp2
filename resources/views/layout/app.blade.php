@@ -23,6 +23,12 @@
     <link href="/css/general.css" rel="stylesheet">
 
     @yield('styles')
+
+    <style>
+        .dropdown-menu li a:hover, .dropdown-menu li:hover{
+            border-bottom: none;
+        }
+    </style>
 </head>
 <body class="inner-page">
 

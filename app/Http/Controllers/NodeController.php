@@ -138,7 +138,7 @@ class NodeController extends Controller
      */
     public function edit($id)
     {
-        $node = Node::find($id);
+        $node = Node::findOrFail($id);
         $nodeTypes = NodeType::all();
         return view('admin.nodes.edit', ['node' => $node, 'nodeTypes' => $nodeTypes]);
     }

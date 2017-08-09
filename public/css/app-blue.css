@@ -1,0 +1,37 @@
+body{
+    background: #007EE5;
+    min-height: 100%;
+    color: #fff;
+    font-weight: lighter;
+}
+
+img{
+    display: block;
+    margin: 40px auto auto;
+    width: 13%;
+}
+
+/* Navbar
+-------------------------------------------------- */
+.navbar{
+    padding: 10px 60px;
+}
+a, a:hover{
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+    font-family: 'Lato', serif;
+}
+.nav a:hover{
+    color: #007EE5;
+    background: transparent;
+}
+
+.dropdown-menu li a:hover{
+    border-bottom: none;
+}
+/* Footer
+-------------------------------------------------- */
+.footer{
+    padding: 0 60px;
+}
