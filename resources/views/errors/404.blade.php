@@ -11,12 +11,12 @@
                 <div class="col-middle">
                     <img src="/images/brand-no-back.png" alt="brand">
                     <div class="text-center text-center">
-                        <h1>404. Page not found.</h1>
-                        <p>The page you are looking for does not exist.</p>
+                        <h1>@lang('404. Page not found.')</h1>
+                        <p>@lang('The page you are looking for does not exist.')</p>
 
                         <a href="{{ url('/') }}">
                             <i class='fa fa-2x fa-home' style="vertical-align: middle;"></i>
-                            <strong>&nbsp; Go Home</strong>
+                            <strong>&nbsp; @lang('Home') </strong>
                         </a>
                     </div>
                 </div>
