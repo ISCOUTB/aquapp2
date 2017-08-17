@@ -586,7 +586,7 @@
                 "shasum": ""
             },
             "require": {
-                "ext-mongodb": "^1.2.0",
+                "ext-mongodb": "^1.1.5",
                 "php": ">=5.4"
             },
             "require-dev": {
