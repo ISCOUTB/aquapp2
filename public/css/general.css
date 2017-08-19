@@ -79,25 +79,8 @@ body {
     font-size: 14px !important;
 }
 
-/* Texts
--------------------------------------------------- */
-/*.italic {*/
-    /*font-style: oblique;*/
-/*}*/
-
 /* HOME: Form and Map boxes
 ----------------------------------------------------------*/
-
-/* Popup */
-.leaflet-popup-content{
-    font-family: 'Lato', serif;
-    font-size: 1.2em;
-}
-
-.leaflet-popup-title {
-    font-size: 1.3em;
-}
-
 @media screen and (max-width: 779px) {
     #leafletMap{
         height: 460px;
@@ -121,7 +104,7 @@ body {
     }
     #leafletMap{
         width: 100%;
-        height: 100%;
+        height: 80%;
         position: relative;
     }
 

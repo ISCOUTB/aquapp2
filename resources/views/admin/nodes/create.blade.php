@@ -6,7 +6,7 @@
 
 @section('admin-content')
     <p class="title">
-        <h2 style="margin-bottom: 0;">@lang('Create Node')</h2>
+    </p><h2 style="margin-bottom: 0;">@lang('Create Node')</h2>
         <small class="text-primary">@lang('Dashboard') > @lang('Nodes') > @lang('Create')</small>
     </p>
 
@@ -217,10 +217,10 @@
     <script>
         $( function() {
             <!-- Leaflet Map -->
-            var map = L.map('createMap').setView([10.4207375,-75.5475544], 15);
+            var map = L.map('createMap').setView([10.420737,-75.54755], 15);
 
             L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-                maxZoom: 18,
+                maxZoom: 20,
                 attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
                 '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
                 'Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -235,8 +235,8 @@
                 }
 
                 // Add new markers
-                var latitude = e.latlng.lat;
-                var longitude = e.latlng.lng;
+                var latitude = e.latlng.lat.toFixed(6);
+                var longitude = e.latlng.lng.toFixed(6);
 
                 $("#latitude").val(latitude);
                 $("#longitude").val(longitude);

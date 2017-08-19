@@ -6,7 +6,7 @@
 
 @section('admin-content')
 
-    <a class="btn btn-primary pull-right" href="{{ url('admin/nodes/create') }}"> @lang('Add new node') </a>
+    <a class="btn btn-primary pull-right" href="{{ url('admin/nodes/create') }}"> + @lang('Add new node') </a>
 
     <p class="title">
         <h2 style="margin-bottom: 0;">@lang('Nodes')</h2>
