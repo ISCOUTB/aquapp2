@@ -18,7 +18,7 @@
     <!-- Theme Style -->
     <link href="/display-template/css/style.css" rel="stylesheet">
     <!-- Leaflet -->
-    <link href="/libs/leaflet/leaflet.css" rel="stylesheet">
+    <link href="/libs/leaflet/css/leaflet.css" rel="stylesheet">
 
     <link href="/css/general.css" rel="stylesheet">
 
