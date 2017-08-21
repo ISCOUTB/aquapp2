@@ -29,7 +29,7 @@
   "Dashboard": "Panel administrativo",
   "Nodes": "Nodos",
   "Browse list of nodes": "Examinar lista de nodos",
-  "Add new node": "Añadir nuevo nodo",
+  "New Node": "Nuevo nodo",
   "Search for names": "Buscar por nombre",
   "Name": "Nombre",
   "Location": "Ubicación",
@@ -52,6 +52,14 @@
   "Save": "Guardar",
   "Continue": "Continuar",
   "Type": "Tipo",
+  "Split Data By": "Separar datos por",
+  "Whitespace": "Espacio",
+  "Semicolon": "Punto y coma",
+  "Hyphen": "Guión corto",
+  "Slash": "Barra",
+  "Other": "Otra",
+  "Data Schema": "Esquema de datos",
+  "Data Delimiter": "Delimitador de datos",
 
   "404. Page not found.": "404. Página no encontrada.",
   "The page you are looking for does not exist.": "La página que buscas no existe."

@@ -12,6 +12,7 @@ class NodeType extends Model
 
     protected $fillable = [
         'name',
+        'separator',
         'sensors'
     ];
 

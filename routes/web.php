@@ -76,6 +76,7 @@ Route::get('nodetypes', function(){
 
     \App\NodeType::create([
         'name' => 'Water Quality',
+        'separator' => '-',
         'sensors' => $sensors
     ]);
 

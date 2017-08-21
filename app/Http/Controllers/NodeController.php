@@ -29,7 +29,7 @@ class NodeController extends Controller
      */
     public function create()
     {
-        $nodeTypes = NodeType::all();
+        $nodeTypes = NodeType::orderBy('created_at', 'asc')->get();
         return view('admin.nodes.create', ['nodeTypes' => $nodeTypes]);
     }
 
@@ -82,8 +82,9 @@ class NodeController extends Controller
             */
             $nodeTypeName = $request->input('node-type-name');
             $nodeTypeSensors = $request->input('node-type-sensors');
+            $nodeTypeDelimiter = $request->input('node-type-delimiter');
 
-            $nodeTypeSensors = explode(";", $nodeTypeSensors);
+            $nodeTypeSensors = explode($nodeTypeDelimiter, $nodeTypeSensors);
 
             $sensors = [];
             foreach($nodeTypeSensors as $nodeTypeSensor){
@@ -98,8 +99,10 @@ class NodeController extends Controller
                }
             }
 
+            // Create New Node Type
             $nodeTypeModel = NodeType::create([
                 'name' => $nodeTypeName,
+                'separator' => $nodeTypeDelimiter,
                 'sensors' => $sensors
             ]);
 

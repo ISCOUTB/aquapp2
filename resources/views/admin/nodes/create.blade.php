@@ -84,9 +84,9 @@
 
         <div id="createMap"></div>
 
-        <p class="pull-right"><small>
+        <p class="pull-right">
             <i class="fa fa-info-circle text-primary"></i> &nbsp; @lang('Add a marker to the map and get its latitude and longitude')
-        </small></p>
+        </p>
 
         <br><br>
 
@@ -107,11 +107,13 @@
 
             @foreach($nodeTypes as $nodeType)
                 <div class="col-sm-6">
-                    <div class="radio radio-primary">
+                    <div class="radio-inline radio-primary">
                         <input type="radio" name="node-type" id="{{ $nodeType->id }}" value="{{ $nodeType->id }}" @if ($loop->first) checked @endif>
 
-                        <label for="{{ $nodeType->id }}">
+                        <label for="{{ $nodeType->id }}" class="radio-inline">
                             {{ $nodeType->name }}
+                            <br>
+                            <small><strong class="text-primary">@lang('Data Delimiter') </strong></small> {{ $nodeType->separator }}
 
                             <dl>
                                 <dt><small class="text-primary">@lang('Parameters')</small></dt>
@@ -119,7 +121,12 @@
                                 <dd>
                                     @foreach($nodeType->sensors as $sensor)
                                         <small>
-                                            {{ $sensor["variable"]}}
+                                            @if(array_key_exists('unit', $sensor) or array_key_exists('description', $sensor))
+                                                <strong>{{ $sensor["variable"]}}</strong>
+                                            @else
+                                                {{ $sensor["variable"]}}
+                                            @endif
+
 
                                             @if(array_key_exists('unit', $sensor))
                                                 ({{ $sensor["unit"] }})
@@ -131,6 +138,10 @@
                                             @if(!$loop->last)
                                                 ,
                                             @endif
+
+                                            @if(array_key_exists('unit', $sensor) or array_key_exists('description', $sensor))
+                                                <br>
+                                            @endif
                                         </small>
                                     @endforeach
                                 </dd>
@@ -141,9 +152,9 @@
                 </div>
             @endforeach
             <div class="col-sm-6">
-                <div class="radio radio-primary">
+                <div class="radio-primary">
                     <input type="radio" name="node-type" id="node-type" data-toggle="modal" data-target="#schemaModal" value="sending-schema">
-                    <label for="node-type">
+                    <label for="node-type" class="radio-inline">
                         @lang('Choose Data Sending Schema')
                     </label>
                 </div>
@@ -180,18 +191,48 @@
                         <br>
 
                         <div class="row">
+                            <div class="form-group">
+                                <label class="control-label col-md-4" for="type-name">@lang('Split Data By')</label>
+                                <div class="col-md-8">
+                                    <div style="padding:16px;">
+                                        <div class="row">
+                                            <label class="radio-inline">
+                                                <input type="radio" name="delimiter" value=" " checked> @lang('Whitespace') ( )
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="delimiter" value=";"> @lang('Semicolon') ( ; )
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="delimiter" value="-"> @lang('Hyphen') ( - )
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="delimiter" value="/"> @lang('Slash') ( / )
+                                            </label>
+                                        </div>
+                                        <br>
+                                        <div class="row form-group">
+                                            <label class="radio-inline col-md-2">
+                                                <input type="radio" name="delimiter" value="other-delimiter"> @lang('Other')
+                                            </label>
+                                            <div class="col-md-4">
+                                                <input class="form-control" id="other" type="text" maxlength="3">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
                             <div class="form-group" id="sending-schema-div">
-                                <label class="control-label col-md-4" for="sending-schema">@lang('Node Data Sending Schema')
-                                    <br>
-                                    <small>(Data split by ;)</small>
-                                </label>
+                                <label class="control-label col-md-4" for="sending-schema">@lang('Node Data Sending Schema') </label>
                                 <div class="col-md-8">
                                     <textarea class="form-control" rows="3" id="sending-schema" placeholder="e.g. 25.3;25.3;25.3;85;22.6;1.3;ESE;0.08;1.3;ESE;25.3;27.6;27.4"></textarea>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row" id="continue-btn-div">
                             <br>
                             <button type="button" class="btn btn-primary pull-right" id="continue-btn" disabled>@lang('Continue')</button>
                         </div>
@@ -256,20 +297,36 @@
             @endif
 
             <!-- Sending Data Schema -->
+            // Enable other separator
+            $('#other').hide();
+            $("[name=delimiter]").change(function(){
+                if(this.value == 'other-delimiter') {
+                    $('#other').show();
+                } else {
+                    $('#other').hide();
+                }
+            });
+
             // Enable Continue button according to sending-schema text area
             $('#continue-btn').attr('disabled',true);
             $('#sending-schema').keyup(function(){
-                if($(this).val().length !=0)
+                if($(this).val().length != 0) {
                     $("#continue-btn").attr('disabled', false);
-                else
+                } else{
                     $("#continue-btn").attr('disabled',true);
+                }
             });
 
             // Process data schema
             var schema;
             $("#continue-btn").click(function() {
+
+                // Get delimiter
+                var delimiter = getSchemaDelimiter();
+
                 var schema_str = $("#sending-schema").val();
-                schema = schema_str.split(";");
+
+                schema = schema_str.split(delimiter);
 
                 var variables = ["Depth","Dissolved Oxygen","Percent Saturation","pH","Salinity","Specific Conductivity","Turbidity","Water Temperature",
                     "Chrolophyll a","Nitrate","Nitrite","Nitrite + Nitrate","Orthophosphate"];
@@ -298,7 +355,7 @@
                 $("#elements").html(content);
 
                 $("#sending-schema-div").hide();
-                $("#continue-btn").hide();
+                $("#continue-btn-div").hide();
                 $("#elements-description-div").show();
             });
 
@@ -306,13 +363,16 @@
             $("#node-type-form").submit(function(e){
                 e.preventDefault();
 
+                // Get delimiter
+                var delimiter = getSchemaDelimiter();
+
                 var node_type_name = $("#type-name").val();
 
                 var values = "";
                 for(var i=0; i<schema.length; i++){
                     var value = $( "#" + i ).val();
                     if(typeof value !== 'undefined'){
-                        values = values.concat(value + ",");
+                        values = values.concat(value + delimiter);
                     }
                 }
 
@@ -320,16 +380,20 @@
                         '<a class="close" data-dismiss="alert" aria-label="close" title="close" onclick="newDataSchema()">×</a>' +
                         '<br>' +
                         '<div class="row">' +
-                        '<label class="col-md-4">Node Type Name</label>' +
-                        '<div class="col-md-8">' +
-                        '<input class="form-control" type="text" id="node-type-name" name="node-type-name" value="'+ node_type_name +'" readonly required>' +
+                        '<label class="col-md-2">@lang("Node Type Name")</label>' +
+                        '<div class="col-md-6">' +
+                        '<input class="form-control" type="text" name="node-type-name" value="'+ node_type_name +'" readonly required>' +
+                        '</div>' +
+                        '<label class="col-md-2">@lang("Split Data By")</label>' +
+                        '<div class="col-md-2">' +
+                        '<input class="form-control" type="text" name="node-type-delimiter" value="'+ delimiter +'" readonly required>' +
                         '</div>' +
                         '</div>' +
                         ' <br>' +
                         '<div class="row">' +
-                        '<label class="col-md-4">Node Type Data Schema</label>' +
-                        '<div class="col-md-8">' +
-                        '<input class="form-control" type="text" id="node-type-sensors" name="node-type-sensors" value="'+ values + '" readonly required>' +
+                        '<label class="col-md-2">@lang("Data Schema")</label>' +
+                        '<div class="col-md-10">' +
+                        '<input class="form-control" type="text" name="node-type-sensors" value="'+ values + '" readonly required>' +
                         '</div>' +
                         '</div>' +
                         '</div>';
@@ -344,13 +408,25 @@
             $("#try-other-schema").click(function(){
                 $("#schemaModal").modal();
                 $("#sending-schema-div").show();
-                $("#continue-btn").show();
+                $("#continue-btn-div").show();
                 $("#elements-description-div").hide();
             });
         });
 
         function newDataSchema(){
             $("#select-node-type").show();
+        }
+
+        function getSchemaDelimiter(){
+            var delimiter;
+
+            if($('input[name=delimiter]:checked').val() == 'other-delimiter'){
+                delimiter = $("#other").val();
+            }else{
+                delimiter = $('input[name=delimiter]:checked').val();
+            }
+
+            return delimiter;
         }
     </script>
 @endsection
