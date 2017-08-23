@@ -19,6 +19,8 @@
     <link href="/display-template/css/style.css" rel="stylesheet">
     <!-- Leaflet -->
     <link href="/libs/leaflet/css/leaflet.css" rel="stylesheet">
+    <!-- Footable -->
+    <link href="/libs/footable/css/footable.bootstrap.min.css" rel="stylesheet">
 
     <link href="/css/general.css" rel="stylesheet">
 
@@ -81,6 +83,8 @@
     <script src="/libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
     <!-- Leaflet -->
     <script src="/libs/leaflet/leaflet.js"></script>
+    <!-- Footable -->
+    <script src="/libs/footable/js/footable.js"></script>
 
     @yield('scripts')
 </body>

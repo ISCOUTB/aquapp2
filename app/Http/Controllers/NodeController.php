@@ -69,13 +69,6 @@ class NodeController extends Controller
             }
         }
 
-        $node = Node::create([
-            'name' => $name,
-            'status' => $status,
-            'location' => $location,
-            'coordinates' => $coordinates
-        ]);
-
         if($nodeType == "sending-schema"){
             /*
              * Save Data Schema -> Create Node Type
@@ -83,6 +76,10 @@ class NodeController extends Controller
             $nodeTypeName = $request->input('node-type-name');
             $nodeTypeSensors = $request->input('node-type-sensors');
             $nodeTypeDelimiter = $request->input('node-type-delimiter');
+
+            if($nodeTypeDelimiter == 'whitespace'){
+                $nodeTypeDelimiter = " ";
+            }
 
             $nodeTypeSensors = explode($nodeTypeDelimiter, $nodeTypeSensors);
 
@@ -109,14 +106,19 @@ class NodeController extends Controller
             $nodeTypeId = $nodeTypeModel->id;
         }else{
             $nodeTypeId = $nodeType;
+//            $nodeTypeModel = NodeType::find($nodeTypeId);
         }
 
-
         /*
-         *  Update node model
-        */
-        $node->node_type_id = $nodeTypeId;
-        $node->save();
+         * Create Node
+         */
+        Node::create([
+            'name' => $name,
+            'status' => $status,
+            'location' => $location,
+            'coordinates' => $coordinates,
+            'node_type_id' => $nodeTypeId
+        ]);
 
         return redirect('admin/nodes');
 

@@ -73,5 +73,51 @@
         "unit": ""
       }
     ]
-  }
+  },
+
+  {
+    "name": "Water Quality",
+    "sensors": [
+      {
+        "variable": "Depth",
+        "description": "",
+        "unit": ""
+      },
+      {
+        "variable": "Dissolved Oxygen",
+        "description": "",
+        "unit": ""
+      },
+      {
+        "variable": "Percent Saturation",
+        "description": "",
+        "unit": ""
+      },
+      {
+        "variable": "pH",
+        "description": "",
+        "unit": ""
+      },
+      {
+        "variable": "Salinity",
+        "description": "",
+        "unit": ""
+      },
+      {
+        "variable": "Specific Conductivity",
+        "description": "",
+        "unit": ""
+      },
+      {
+        "variable": "Turbidity",
+        "description": "",
+        "unit": ""
+      },
+      {
+        "variable": "Water Temperature",
+        "description": "",
+        "unit": ""
+      }
+    ]
+  },
 ]

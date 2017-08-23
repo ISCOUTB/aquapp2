@@ -197,7 +197,7 @@
                                     <div style="padding:16px;">
                                         <div class="row">
                                             <label class="radio-inline">
-                                                <input type="radio" name="delimiter" value=" " checked> @lang('Whitespace') ( )
+                                                <input type="radio" name="delimiter" value="whitespace" checked> @lang('Whitespace') ( )
                                             </label>
                                             <label class="radio-inline">
                                                 <input type="radio" name="delimiter" value=";"> @lang('Semicolon') ( ; )
@@ -376,6 +376,11 @@
                     }
                 }
 
+                // post 'whitespace' as separator (avoid null value)
+                if(delimiter == ' '){
+                    delimiter = "whitespace";
+                }
+
                 var data_schema = '<div class="alert alert-danger fade in alert-dismissable">' +
                         '<a class="close" data-dismiss="alert" aria-label="close" title="close" onclick="newDataSchema()">×</a>' +
                         '<br>' +
@@ -393,7 +398,7 @@
                         '<div class="row">' +
                         '<label class="col-md-2">@lang("Data Schema")</label>' +
                         '<div class="col-md-10">' +
-                        '<input class="form-control" type="text" name="node-type-sensors" value="'+ values + '" readonly required>' +
+                        '<textarea class="form-control" name="node-type-sensors" readonly required>'+values+'</textarea>' +
                         '</div>' +
                         '</div>' +
                         '</div>';
@@ -424,6 +429,10 @@
                 delimiter = $("#other").val();
             }else{
                 delimiter = $('input[name=delimiter]:checked').val();
+            }
+
+            if(delimiter == 'whitespace'){
+                delimiter = " ";
             }
 
             return delimiter;

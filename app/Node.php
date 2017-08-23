@@ -27,7 +27,7 @@ class Node extends Model
      */
     public function node_type()
     {
-        return $this->belongsTo('App\NodeType', 'node_type_id');
+        return $this->belongsTo('App\NodeType');
     }
 
     /**
