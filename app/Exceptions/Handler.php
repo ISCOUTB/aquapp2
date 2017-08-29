@@ -2,12 +2,18 @@
 
 namespace App\Exceptions;
 
+use App\Traits\ApiResponser;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
+
+    use ApiResponser;
+
     /**
      * A list of the exception types that should not be reported.
      *
@@ -44,6 +50,17 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof ModelNotFoundException) {
+            // api 404 json feedback
+            if($request->is('api/*')){
+                $model = strtolower(class_basename($exception->getModel())); // Instance without namespace
+                return $this->errorResponse("No instance of {$model} with specified id", 404);
+            }
+
+            // normal 404 view page feedback
+            return abort(404);
+        }
+
         return parent::render($request, $exception);
     }
 
