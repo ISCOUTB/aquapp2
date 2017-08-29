@@ -12,6 +12,13 @@
 
     <hr>
 
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong> @lang(session('error')) </strong>
+        </div>
+    @endif
+
     <form method="POST" action="{{ route('nodes.update', $node->id)  }}" id="create-form">
         {{method_field('PUT')}}
         {{csrf_field()}}
@@ -35,17 +42,25 @@
             </div>
 
             <div class="col-md-6 col-sm-6 col-xs-12 form-group{{ $errors->has('status') ? ' has-error' : '' }}">
-                <div class="icon-addon addon-lg">
-                    <select class="form-control" name="status" required>
-                        <option value="Real Time">@lang('Real Time')</option>
-                        <option value="Non Real Time">@lang('Non Real Time')</option>
-                        <option value="Off">@lang('Off')</option>
-                    </select>
-                </div>
-                @if ($errors->has('status'))
+                @if ($errors->has('status') or session('error'))
+                    <div class="icon-addon addon-lg">
+                        <select class="form-control" name="status" required>
+                            <option value="Real Time" @if(old('status') == "Real Time" or session('status') == "Real Time") selected @endif>@lang('Real Time')</option>
+                            <option value="Non Real Time" @if(old('status') == "Non Real Time" or session('status') == "Non Real Time") selected @endif>@lang('Non Real Time')</option>
+                            <option value="Off" @if(old('status') == "Off" or session('status') == "Off") selected @endif>@lang('Off')</option>
+                        </select>
+                    </div>
                     <span class="help-block">
                         <strong> {{ $errors->first('status') }}</strong>
                     </span>
+                @else
+                    <div class="icon-addon addon-lg">
+                        <select class="form-control" name="status" required>
+                            <option value="Real Time" @if($node->status == "Real Time") selected @endif>@lang('Real Time')</option>
+                            <option value="Non Real Time" @if($node->status == "Non Real Time") selected @endif>@lang('Non Real Time')</option>
+                            <option value="Off" @if($node->status == "Off") selected @endif>@lang('Off')</option>
+                        </select>
+                    </div>
                 @endif
             </div>
         </div>
@@ -105,13 +120,14 @@
 
         <div id="createMap"></div>
 
-        <p class="pull-right"><small>
+        <p class="pull-right">
             <i class="fa fa-info-circle text-primary"></i> &nbsp; @lang('Add a marker to the map and get its latitude and longitude')
-        </small></p>
+        </p>
 
         <br><br>
         <div class="row">
             <input type="submit" class="btn btn-primary btn-lg pull-right" value="@lang('Update')">
+            <a href="{{ url('admin/nodes') }}" class="btn btn-default btn-lg">@lang('Cancel')</a>
         </div>
     </form>
 
@@ -147,8 +163,8 @@
                 }
 
                 // Add new markers
-                var latitude = e.latlng.lat;
-                var longitude = e.latlng.lng;
+                var latitude = e.latlng.lat.toFixed(7);
+                var longitude = e.latlng.lng.toFixed(7);
 
                 $("#latitude").val(latitude);
                 $("#longitude").val(longitude);

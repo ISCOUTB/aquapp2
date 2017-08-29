@@ -28,12 +28,13 @@
                 @endif
             </div>
 
+
             <div class="col-md-6 col-sm-6 col-xs-12 form-group{{ $errors->has('status') ? ' has-error' : '' }}">
                 <div class="icon-addon addon-lg">
                     <select class="form-control" title="Status" name="status" required>
-                        <option value="Real Time">@lang('Real Time')</option>
-                        <option value="Non Real Time">@lang('Non Real Time')</option>
-                        <option value="Off">@lang('Off')</option>
+                        <option value="Real Time" @if(old('status') == "Real Time" or session('status') == "Real Time") selected @endif>@lang('Real Time')</option>
+                        <option value="Non Real Time" @if(old('status') == "Non Real Time" or session('status') == "Non Real Time") selected @endif>@lang('Non Real Time')</option>
+                        <option value="Off" @if(old('status') == "Off" or session('status') == "Off") selected @endif>@lang('Off')</option>
                     </select>
                 </div>
                 @if ($errors->has('status'))
@@ -100,7 +101,7 @@
             <div class="col-xs-12{{ session('error') ? ' has-error' : '' }}">
                 @if (session('error'))
                     <small class="help-block">
-                        <strong> {{ session('error') }}</strong>
+                        <strong> @lang(session('error')) </strong>
                     </small>
                 @endif
             </div>
@@ -253,7 +254,6 @@
     </div>
 @endsection
 
-
 @section('scripts')
     <script>
         $( function() {
@@ -276,8 +276,8 @@
                 }
 
                 // Add new markers
-                var latitude = e.latlng.lat.toFixed(6);
-                var longitude = e.latlng.lng.toFixed(6);
+                var latitude = e.latlng.lat.toFixed(7);
+                var longitude = e.latlng.lng.toFixed(7);
 
                 $("#latitude").val(latitude);
                 $("#longitude").val(longitude);
@@ -289,11 +289,14 @@
 
             <!-- Errors Handling: Leaflet Map -->
             @if (count($errors) > 0 or session('error'))
-                var latitude = {{ old('latitude') ? old('latitude') : session('latitude') }};
-                var longitude = {{ old('longitude') ? old('longitude') : session('longitude') }};
+                @if(!$errors->has('latitude') and !$errors->has('longitude'))
+                    var latitude = {{ old('latitude') ? old('latitude') : session('latitude') }};
+                    var longitude = {{ old('longitude') ? old('longitude') : session('longitude') }};
 
-                map.setView(new L.LatLng(latitude, longitude), 15); // Center map
-                var marker = L.marker([latitude, longitude]).addTo(map); // Add marker
+                    map.setView(new L.LatLng(latitude, longitude), 15); // Center map
+                    var marker = L.marker([latitude, longitude]).addTo(map); // Add marker
+                    markers.push(marker);
+                @endif
             @endif
 
             <!-- Sending Data Schema -->

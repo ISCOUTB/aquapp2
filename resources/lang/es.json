@@ -51,6 +51,7 @@
   "Try Other Data Sending Schema": "Probar otro esquema de envío de datos",
   "Sending Schema": "Esquema de envío",
   "Save": "Guardar",
+  "Cancel": "Cancelar",
   "Continue": "Continuar",
   "Type": "Tipo",
   "Split Data By": "Separar datos por",
@@ -62,6 +63,9 @@
   "Data Schema": "Esquema de datos",
   "Data Delimiter": "Delimitador de datos",
   "Actions": "Acciones",
+  "Choose Data Sending Schema: Node Type Name and Parameters Type Selectors fields required": "Elije el esquema de envío de datos: campos Nombre de tipo de nodo y Selectores tipo de parámetro son requeridos",
+  "Node successfully updated": "Nodo actualizado existosamente",
+  "At least one new value of a field is needed to update": "Para actualizar, al menos un campo con un nuevo valor es requerido",
 
   "404. Page not found.": "404. Página no encontrada.",
   "The page you are looking for does not exist.": "La página que buscas no existe."
