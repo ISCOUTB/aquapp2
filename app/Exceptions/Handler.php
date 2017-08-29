@@ -61,6 +61,16 @@ class Handler extends ExceptionHandler
             return abort(404);
         }
 
+        if ($exception instanceof NotFoundHttpException) {
+            // api 404 json feedback
+            if($request->is('api/*')){
+                return $this->errorResponse("Specified URL not found", 404);
+            }
+
+            // normal 404 view page feedback
+            return abort(404);
+        }
+
         return parent::render($request, $exception);
     }
 
