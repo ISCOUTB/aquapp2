@@ -68,5 +68,6 @@
   "At least one new value of a field is needed to update": "Para actualizar, al menos un campo con un nuevo valor es requerido",
 
   "404. Page not found.": "404. Página no encontrada.",
-  "The page you are looking for does not exist.": "La página que buscas no existe."
+  "The page you are looking for does not exist.": "La página que buscas no existe.",
+  "Unexpected failure. Try later": "Falla inesperada. Intenta más tarde"
 }

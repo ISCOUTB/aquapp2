@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Psy\Exception\ErrorException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -81,7 +82,16 @@ class Handler extends ExceptionHandler
             return back();
         }
 
-        return parent::render($request, $exception);
+        if (config('app.debug')) {
+            return parent::render($request, $exception);
+        }
+
+        if($request->is('api/*')){
+            return $this->errorResponse("Unexpected failure. Try later", 500);
+        }
+
+        // normal 500 view page feedback
+        return abort(500);
     }
 
     /**
