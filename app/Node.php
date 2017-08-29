@@ -30,11 +30,6 @@ class Node extends Model
     /**
      *  Mutators
      */
-    public function setNameAttribute($valor)
-    {
-        $this->attributes['name'] = strtolower($valor);
-    }
-
     public function setLocationAttribute($valor)
     {
         $this->attributes['location'] = strtolower($valor);
@@ -43,11 +38,6 @@ class Node extends Model
     /**
      *  Accessors
      */
-    public function getNameAttribute($valor)
-    {
-        return ucwords($valor);
-    }
-
     public function getLocationAttribute($valor)
     {
         return ucwords($valor);

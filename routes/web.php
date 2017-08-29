@@ -20,7 +20,7 @@ Route::post('/', 'DataController@downloadData');
 Route::get('locale/{locale}', 'LocaleController@switchLanguage')->name('locale');
 
 Route::group(['prefix' => 'admin'], function () {
-    Route::resource('nodes', 'NodeController');
+    Route::resource('nodes', 'NodeController', ['except' => ['show', 'destroy']]);
 });
 
 

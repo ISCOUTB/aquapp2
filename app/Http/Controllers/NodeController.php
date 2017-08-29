@@ -19,6 +19,7 @@ class NodeController extends Controller
     public function index()
     {
         $nodes = Node::all();
+
         return view('admin.nodes.index', ['nodes' => $nodes]);
     }
 
@@ -30,6 +31,7 @@ class NodeController extends Controller
     public function create()
     {
         $nodeTypes = NodeType::orderBy('created_at', 'asc')->get();
+
         return view('admin.nodes.create', ['nodeTypes' => $nodeTypes]);
     }
 
@@ -41,14 +43,20 @@ class NodeController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+
+        $rules = [
             'name' => 'required|max:255',
-            'status' => 'required',
+            'status' => 'required|in:'. Node::REAL_TIME . ',' . Node::NON_REAL_TIME . ',' . Node::OFF,
             'location' => 'required|max:255',
             'latitude' => 'required|numeric|between:-90,90',
             'longitude'=>'required|numeric|between:-180,180'
-        ]);
+        ];
 
+        $this->validate($request, $rules);
+
+        /*
+         * Form fields
+         */
         $name = $request->input('name');
         $status = $request->input('status');
         $location = $request->input('location');
@@ -56,13 +64,17 @@ class NodeController extends Controller
         $longitude = (float) $request->input('longitude');
         $coordinates = [$latitude, $longitude];
 
+
+        /*
+         * Node Type
+         */
         $nodeType = $request->input('node-type');
 
         if($nodeType == "sending-schema"){
             if(!$request->has(['node-type-name', 'node-type-sensors'])){
                 return back()->with('error', 'Choose Data Sending Schema: Node Type Name and Parameters Type Selectors fields required')
                              ->with('name', $name)
-//                             ->with('status', $status)
+                             ->with('status', $status)
                              ->with('location', $location)
                              ->with('latitude', $latitude)
                              ->with('longitude', $longitude);
@@ -106,7 +118,6 @@ class NodeController extends Controller
             $nodeTypeId = $nodeTypeModel->id;
         }else{
             $nodeTypeId = $nodeType;
-//            $nodeTypeModel = NodeType::find($nodeTypeId);
         }
 
         /*
@@ -125,17 +136,6 @@ class NodeController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -144,7 +144,9 @@ class NodeController extends Controller
     public function edit($id)
     {
         $node = Node::findOrFail($id);
+
         $nodeTypes = NodeType::all();
+
         return view('admin.nodes.edit', ['node' => $node, 'nodeTypes' => $nodeTypes]);
     }
 
@@ -157,39 +159,55 @@ class NodeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required|max:255',
-            'status' => 'required',
-            'location' => 'required|max:255',
-            'latitude' => 'required|numeric|between:-90,90',
-            'longitude'=>'required|numeric|between:-180,180'
-        ]);
 
-        $name = $request->input('name');
-        $status = $request->input('status');
-        $location = $request->input('location');
-        $latitude = (float) $request->input('latitude');
-        $longitude = (float) $request->input('longitude');
-        $coordinates = [$latitude, $longitude];
+        $rules = [
+            'name' => 'max:255',
+            'status' => 'in:'. Node::REAL_TIME . ',' . Node::NON_REAL_TIME . ',' . Node::OFF,
+            'location' => 'max:255',
+            'latitude' => 'numeric|between:-90,90',
+            'longitude'=>'numeric|between:-180,180'
+        ];
+
+        $this->validate($request, $rules);
 
         $node = Node::findOrFail($id);
-        $node->name = $name;
-        $node->status = $status;
-        $node->location = $location;
-        $node->coordinates = $coordinates;
+
+        if ($request->has('name'))
+        {
+            $node->name = $request->input('name');
+        }
+
+        if ($request->has('status'))
+        {
+            $node->status = $request->input('status');
+        }
+
+        if ($request->has('location'))
+        {
+            $node->location = $request->input('location');
+        }
+
+        if ($request->has('latitude') or $request->has('longitude'))
+        {
+            $latitude = (float) $request->input('latitude');
+            $longitude = (float) $request->input('longitude');
+            $node->coordinates = [$latitude, $longitude];
+        }
+
+        // At least one new value of a field is needed to update
+        if (!$node->isDirty())
+        {
+            return back()->with('error', 'At least one new value of a field is needed to update')
+                ->with('name', $node->name)
+                ->with('status', $node->status)
+                ->with('location', $node->location)
+                ->with('latitude', $node->coordinates[0])
+                ->with('longitude', $node->coordinates[1]);
+        }
+
         $node->save();
 
         return redirect('admin/nodes')->with('success-update', 'Node successfully updated');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
