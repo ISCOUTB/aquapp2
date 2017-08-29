@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
@@ -69,6 +70,15 @@ class Handler extends ExceptionHandler
 
             // normal 404 view page feedback
             return abort(404);
+        }
+
+        if ($exception instanceof MethodNotAllowedHttpException) {
+            // api 404 json feedback
+            if($request->is('api/*')){
+                return $this->errorResponse("The request method is not valid", 405);
+            }
+
+            return back();
         }
 
         return parent::render($request, $exception);
