@@ -21,22 +21,6 @@ class NodeType extends Model
     ];
 
     /**
-     *  Mutators
-     */
-    public function setNameAttribute($valor)
-    {
-        $this->attributes['name'] = strtolower($valor);
-    }
-
-    /**
-     *  Accessors
-     */
-    public function getNameAttribute($valor)
-    {
-        return ucwords($valor);
-    }
-
-    /**
      * Get the nodes with a specific type.
      */
     public function nodes()

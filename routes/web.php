@@ -55,31 +55,6 @@ Route::get('data', function () {
 });
 
 Route::get('nodetypes', function(){
-    /*
-   *  Node Type
-    */
-    $sensorA = [
-        "variable" => "Temp Out",
-        "description" => "Temperature measured outside the station",
-        "unit" => "°C"
-    ];
-
-    $sensorB = [
-        "variable" => "Rain Rate",
-        "description" => "How fast the rain is falling at a certain time",
-        "unit" => "mm/h"
-    ];
-
-    $sensors = [];
-    array_push($sensors, $sensorA, $sensorB);
-
-
-    \App\NodeType::create([
-        'name' => 'Water Quality',
-        'separator' => '-',
-        'sensors' => $sensors
-    ]);
-
     return \App\NodeType::all();
 });
 

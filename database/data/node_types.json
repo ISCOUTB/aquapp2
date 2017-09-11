@@ -1,123 +1,65 @@
 [
   {
-    "name": "Water Quality",
+    "name": "Water Quality (WQ)",
+    "separator": ";",
     "sensors": [
       {
-        "variable": "Depth",
-        "description": "",
-        "unit": ""
+        "variable": "Dissolved Oxygen (DO)",
+        "description": "A measure of the amount of oxygen in the water",
+        "unit": "mg/L"
       },
       {
-        "variable": "Dissolved Oxygen",
-        "description": "",
-        "unit": ""
+        "variable": "Nitrate (NO3)",
+        "description": "Nitrate concentration on water",
+        "unit": "µg/L"
       },
       {
-        "variable": "Percent Saturation",
-        "description": "",
-        "unit": ""
+        "variable": "Total Suspended Solids (TSS)",
+        "description": "Particles that are larger than 2 microns found in the water column",
+        "unit": "mg/L"
+      },
+      {
+        "variable": "Thermotolerant Coliforms",
+        "description": "Used as bacterial indicator for sanitary quality of water",
+        "unit": "NMP/100ml"
       },
       {
         "variable": "pH",
-        "description": "",
-        "unit": ""
+        "description": "It is a figure between 0 and 14 defining how acidic or basic a body of water is along a logarithmic scale",
+        "unit": "PH units"
       },
       {
-        "variable": "Salinity",
-        "description": "",
-        "unit": ""
+        "variable": "Chrolophyll A (CLA)",
+        "description": "An estimate of the biomass of planktonic algae in the water",
+        "unit": "µg/L"
       },
       {
-        "variable": "Specific Conductivity",
-        "description": "",
-        "unit": ""
+        "variable": "Biochemical Oxygen Demand (BOD)",
+        "description": "Measure of the dissolved oxygen consumed by microorganisms",
+        "unit": "mg/L"
       },
       {
-        "variable": "Turbidity",
-        "description": "",
-        "unit": ""
-      },
-      {
-        "variable": "Water Temperature",
-        "description": "",
-        "unit": ""
+        "variable": "Phosphates (PO4)",
+        "description": "Phosphates concentration on water",
+        "unit": "µg/L"
       }
     ]
   },
   {
-    "name": "Nutrient Levels",
+    "name": "Hydro-Meteorologic Factors (HMF)",
+    "separator": ";",
     "sensors": [
-      {
-        "variable": "Chrolophyll a",
-        "description": "",
-        "unit": ""
-      },
-      {
-        "variable": "Nitrate",
-        "description": "",
-        "unit": ""
-      },
-      {
-        "variable": "Nitrite",
-        "description": "",
-        "unit": ""
-      },
-      {
-        "variable": "Nitrite + Nitrate",
-        "description": "",
-        "unit": ""
-      },
-      {
-        "variable": "Orthophosphate",
-        "description": "",
-        "unit": ""
-      }
-    ]
-  },
 
-  {
-    "name": "Water Quality",
-    "sensors": [
       {
-        "variable": "Depth",
-        "description": "",
-        "unit": ""
-      },
-      {
-        "variable": "Dissolved Oxygen",
-        "description": "",
-        "unit": ""
-      },
-      {
-        "variable": "Percent Saturation",
-        "description": "",
-        "unit": ""
-      },
-      {
-        "variable": "pH",
-        "description": "",
-        "unit": ""
-      },
-      {
-        "variable": "Salinity",
-        "description": "",
-        "unit": ""
-      },
-      {
-        "variable": "Specific Conductivity",
-        "description": "",
-        "unit": ""
-      },
-      {
-        "variable": "Turbidity",
-        "description": "",
-        "unit": ""
+        "variable": "Water Depth",
+        "description": "Vertical distance between the sea floor and still water level",
+        "unit": "m"
       },
       {
         "variable": "Water Temperature",
-        "description": "",
-        "unit": ""
+        "description": "physical property expressing how hot or cold water is.",
+        "unit": "°C"
       }
     ]
-  },
+  }
 ]
