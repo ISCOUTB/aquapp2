@@ -25,7 +25,7 @@
       },
       {
         "variable": "pH",
-        "description": "It is a figure between 0 and 14 defining how acidic or basic a body of water is along a logarithmic scale",
+        "description": "Measures the alkalinity or acidity of water. ",
         "unit": "PH units"
       },
       {

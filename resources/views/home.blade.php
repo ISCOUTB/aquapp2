@@ -458,14 +458,14 @@
             legend.onAdd = function (map) {
 
                 var div = L.DomUtil.create('div', 'info legend'),
-                        grades = [0, 25, 50, 70, 90],
-                        labels = [];
+                    grades = [0, 25, 50, 70, 90],
+                    labels = ['@lang('Appalling')', '@lang('Inadequate')', '@lang('Acceptable')', '@lang('Suitable')', '@lang('Optimal')'];
 
                 // loop through our icam intervals and generate a label with a colored square for each interval
                 for (var i = 0; i < grades.length; i++) {
                     div.innerHTML +=
                             '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-                            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + ' %<br>' : ' - 100 %');
+                            labels[i] + ' (' + grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + ')<br>' : ' - 100)');
                 }
 
                 return div;
