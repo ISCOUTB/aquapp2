@@ -215,7 +215,7 @@
             }
 
             <!-- Leaflet Map -->
-            var map = L.map('map').setView([10.425183, -75.531092], 15);
+            var map = L.map('map').setView([10.421111, -75.522323], 14);
 
             L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
                 maxZoom: 18,
@@ -243,7 +243,7 @@
 
                     var parameters = [];
                     @foreach($node->node_type->sensors as $sensor)
-                       parameters.push(" {{ $sensor["variable"] }}");
+                       parameters.push('{{ $sensor["variable"] }}' + ' ({{ $sensor["unit"] }}) ');
                     @endforeach
 
                     info =  '<p><span class="text-primary text-capitalize leaflet-popup-title"><strong>{{ $node->name }}</strong></span>'+
@@ -406,9 +406,9 @@
 
             // method that we will use to update the control based on feature properties passed
             info.update = function (props) {
-                this._div.innerHTML = '<h4>Cartagena Water Bodies ICAMpff</h4>' +  (props ?
-                        '<b>' + props.name + '</b><br />' + props.icam + ' %'
-                                : 'Hover over a water creek or lake');
+                this._div.innerHTML = '<h4>@lang('Cartagena Water Bodies ICAMpff')</h4>' +  (props ?
+                        '<b>' + props.name + ': ' + '</b>'+ props.icam
+                                : '@lang('Hover over a water creek or lake')');
             };
 
             info.addTo(map);

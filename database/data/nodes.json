@@ -2,43 +2,43 @@
   {
     "name": "Laguna de Chambacú",
     "location": "Centro, Puerto Duro. Frente al Gigante del Hogar",
-    "coordinates": [10.425083333333, -75.543888888889],
+    "coordinates": [10.425083333333333, -75.54388888888889],
     "status": "Off"
   },
   {
     "name": "Laguna de San Lázaro",
     "location": "CAI de Manga. Frente a la Suzuki",
-    "coordinates": [10.417638888889, -75.543111111111],
+    "coordinates": [10.417638888888888, -75.5431111111111],
     "status": "Off"
   },
   {
     "name": "Bocana",
     "location": "Ciénaga de La Virgen ",
-    "coordinates": [10.452, -75.507194444444],
+    "coordinates": [10.452, -75.50719444444445],
     "status": "Off"
   },
   {
     "name": "Caño Juan Angola",
     "location": "Debajo del Puente peatonal nuevo, junto a la vía de Crespo",
-    "coordinates": [10.442194444444, -75.532333333333],
+    "coordinates": [10.43351805,-75.53610091],
     "status": "Off"
   },
   {
     "name": "Caño Bazurto",
     "location": "Junto al puente Jiménez (del lado izquierdo del puente, mirando hacia el Pie de la Popa)",
-    "coordinates": [10.414694444444, -75.532333333333],
+    "coordinates": [10.414694444444445, -75.532333333333],
     "status": "Off"
   },
   {
     "name": "Ciénaga de las Quintas",
     "location": " Frente a la calle",
-    "coordinates": [10.407722222222, -75.523305555556],
+    "coordinates": [10.40894376,-75.52499499],
     "status": "Off"
   },
   {
     "name": "Bahía",
     "location": "Puerto de Marina de Rosales",
-    "coordinates": [10.404833333333, -75.523972222222],
+    "coordinates": [10.404833333333334, -75.52397222222223],
     "status": "Off"
   }
 ]

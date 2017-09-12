@@ -1,11 +1,11 @@
 /* Popup */
 .leaflet-popup-content{
     font-family: 'Lato', serif;
-    font-size: 1.3em;
+    font-size: 1.2em;
 }
 
 .leaflet-popup-title {
-    font-size: 1.3em;
+    font-size: 1.2em;
 }
 
 /* Uper info window & bottom legend */
