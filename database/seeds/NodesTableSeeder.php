@@ -23,6 +23,7 @@ class NodesTableSeeder extends Seeder
 
         foreach ($data as $obj) {
             Node::create([
+                '_id' => $obj->_id,
                 'name' => $obj->name,
                 'location' => $obj->location,
                 'coordinates' => $obj->coordinates,
