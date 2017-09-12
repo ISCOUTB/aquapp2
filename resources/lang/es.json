@@ -1,6 +1,6 @@
 {
   "Login": "Ingresar",
-  "Help": "Ayuda",
+  "About": "Acerca de",
   "Available Data": "Datos disponibles",
   "Real Time": "Tiempo real",
   "Non RT": "Diferido",
@@ -23,10 +23,11 @@
   "Hover over a water creek or lake": "Coloque el cursor sobre un caño o laguna",
   "Cartagena Water Bodies ICAMpff": "ICAMpff cuerpos de agua de Cartagena",
   "Optimal": "Óptima",
-  "Suitable": "Adecuada",
+  "Adequate": "Adecuada",
   "Acceptable": "Aceptable",
   "Inadequate": "Inadecuada",
   "Appalling": "Pésima",
+  "Check source code": "Revisar código fuente",
 
   "Home": "Inicio",
   "Dashboard": "Panel administrativo",

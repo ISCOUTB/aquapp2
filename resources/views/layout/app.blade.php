@@ -48,6 +48,9 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <img src="/images/brand.png" alt="brand">
                 </a>
+                <a href="http://www.unitecnologica.edu.co/" target="_blank">
+                    <img src="/images/logos/utb-white.png" alt="brand" width="92">
+                </a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -65,7 +68,7 @@
                             @endforeach
                         </ul>
                     </li>
-                    <li><a href="javascript:void(0)"><i class="fa fa-question-circle" aria-hidden="true"></i> &nbsp; @lang('Help') </a></li>
+                    <li><a href="javascript:void(0)"><i class="fa fa-question-circle" aria-hidden="true"></i> &nbsp; @lang('About') </a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
@@ -74,7 +77,7 @@
     @yield('content')
 
     <footer class="footer">
-        <small>Copyright © 2017. Universidad Tecnologica de Bolivar. Cartagena de Indias, Colombia</small>
+        <small>Copyright © 2017. Cartagena de Indias, Colombia. <strong><a href="https://github.com/IngenieriaDeSistemasUTB/aquapp2" target="_blank">@lang('Check source code')</a></strong></small>
     </footer>
 
     <!-- Jquery -->

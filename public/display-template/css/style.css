@@ -63,8 +63,8 @@ a {
 a:hover, a:focus, a:active {
   outline: none;
   text-decoration: none;
-  color: #2e2e2e;
-  border-bottom: 2px solid #007EE5;
+  color: #007EE5;
+  border-bottom: 0px;
 }
 
 input {

@@ -459,7 +459,7 @@
 
                 var div = L.DomUtil.create('div', 'info legend'),
                     grades = [0, 25, 50, 70, 90],
-                    labels = ['@lang('Appalling')', '@lang('Inadequate')', '@lang('Acceptable')', '@lang('Suitable')', '@lang('Optimal')'];
+                    labels = ['@lang('Appalling')', '@lang('Inadequate')', '@lang('Acceptable')', '@lang('Adequate')', '@lang('Optimal')'];
 
                 // loop through our icam intervals and generate a label with a colored square for each interval
                 for (var i = 0; i < grades.length; i++) {
