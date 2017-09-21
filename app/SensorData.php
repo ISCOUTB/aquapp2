@@ -4,7 +4,6 @@ namespace App;
 
 use Jenssegers\Mongodb\Eloquent\Model;
 
-
 class SensorData extends Model
 {
 
@@ -16,8 +15,12 @@ class SensorData extends Model
         'data'
     ];
 
-    protected $casts = [
-        'data' => 'array'
-    ];
+    /**
+     * Get the node_type associated with the given node.
+     */
+    public function node()
+    {
+        return $this->belongsTo('App\Node');
+    }
 
 }
