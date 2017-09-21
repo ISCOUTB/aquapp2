@@ -19,12 +19,10 @@ class Node extends Model
         'coordinates',
         'status',
         'node_type_id',
-        'data'
     ];
 
     protected $casts = [
         'coordinates' => 'array',
-        'data' => 'array'
     ];
 
     /**
