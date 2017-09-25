@@ -16,10 +16,6 @@ class NodeType extends Model
         'sensors'
     ];
 
-    protected $casts = [
-        'sensors' => 'array'
-    ];
-
     /**
      * Get the nodes with a specific type.
      */
@@ -27,5 +23,6 @@ class NodeType extends Model
     {
         return $this->hasMany('App\Node');
     }
+
 
 }
