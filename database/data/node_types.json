@@ -1,7 +1,8 @@
 [
   {
-    "name": "Water Quality (WQ)",
-    "separator": ";",
+    "_id" : "59c9d9019a892016ca4be412",
+    "name": "Water Quality",
+    "separator": ",",
     "sensors": [
       {
         "variable": "Dissolved Oxygen (DO)",
@@ -26,7 +27,7 @@
       {
         "variable": "pH",
         "description": "Measures the alkalinity or acidity of water. ",
-        "unit": "PH units"
+        "unit": "pH units"
       },
       {
         "variable": "Chrolophyll A (CLA)",
@@ -46,10 +47,11 @@
     ]
   },
   {
-    "name": "Hydro-Meteorologic Factors (HMF)",
-    "separator": ";",
-    "sensors": [
+    "_id" : "59c9d9019a892016ca4be413",
 
+    "name": "Hydro-Meteorologic Factors",
+    "separator": ",",
+    "sensors": [
       {
         "variable": "Water Depth",
         "description": "Vertical distance between the sea floor and still water level",
