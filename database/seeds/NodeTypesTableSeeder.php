@@ -20,6 +20,7 @@ class NodeTypesTableSeeder extends Seeder
 
         foreach ($data as $obj) {
             NodeType::create([
+                '_id' => $obj->_id,
                 'name' => $obj->name,
                 'separator' => $obj->separator,
                 'sensors' => $obj->sensors

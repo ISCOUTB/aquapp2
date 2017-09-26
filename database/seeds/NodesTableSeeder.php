@@ -18,9 +18,6 @@ class NodesTableSeeder extends Seeder
         $json = File::get("database/data/nodes.json");
         $data = json_decode($json);
 
-        $nodeType = NodeType::where('name', 'Hydro-Meteorologic Factors (HMF)')->first();
-
-
         foreach ($data as $obj) {
             Node::create([
                 '_id' => $obj->_id,
@@ -28,7 +25,7 @@ class NodesTableSeeder extends Seeder
                 'location' => $obj->location,
                 'coordinates' => $obj->coordinates,
                 'status' => $obj->status,
-                'node_type_id' => $nodeType->id
+                'node_type_id' => $obj->node_type_id
             ]);
         }
     }
