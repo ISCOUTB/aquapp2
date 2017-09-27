@@ -7,9 +7,6 @@
 @section('styles')
     <!-- Jquery ui -->
     <link href="https://code.jquery.com/ui/1.12.0-rc.2/themes/smoothness/jquery-ui.css" rel="stylesheet">
-    <!-- Leaflet -->
-    <link href="/libs/leaflet/css/leaflet.css" rel="stylesheet">
-    <link href="/libs/leaflet/css/custom.css" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -27,58 +24,50 @@
                                     <p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</p>
                                 </div>
 
-                                <div class="col-md-8 col-xs-8 col-sm-8 pull-right">
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
+                                <div class="col-xs-8 col-xs-push-4">
+                                    <div class="col-xs-4">
                                         <small>@lang('Real Time')</small>
                                     </div>
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
+                                    <div class="col-xs-4">
                                         <small>@lang('Non RT')</small>
                                     </div>
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
+                                    <div class="col-xs-4">
                                         <small>@lang('Off')</small>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="row row-margin">
-                                <div class="col-md-4 col-sm-4 col-xs-4">
-                                    <div class="radio">
-                                        <label class="small-label"><input type="radio" name="station_type" value="water_quality" checked> @lang('Water Quality')</label>
+                            @foreach($nodeTypes as $nodeType)
+                                <div class="row row-margin">
+                                    <div class="col-xs-4">
+                                        <div class="radio">
+                                            @if($loop->first)
+                                                <label class="small-label"><input type="radio" checked> {{ $nodeType->name }}</label>
+                                            @else
+                                                <label class="small-label"><input type="radio"> {{ $nodeType->name }}</label>
+                                            @endif
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="col-md-8 col-xs-8 col-sm-8">
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-                                        <img src="/images/marker-icon-2x.png" class="marker" alt="marker">
-                                    </div>
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-                                        <img src="/images/marker-icon-2x.png" class="marker" alt="marker">
-                                    </div>
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-                                        <img src="/images/marker-icon-2x.png" class="marker" alt="marker">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row row-margin">
-                                <div class="col-md-4 col-sm-4 col-xs-4">
-                                    <div class="radio">
-                                        <label class="small-label"><input type="radio" name="station_type" value="hydrometereologic_factors" >@lang('Hydro-Meteorologic Factors')</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-8 col-xs-8 col-sm-8">
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-                                        <img src="/images/marker-icon-2x.png" class="marker" alt="marker">
-                                    </div>
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-                                        <img src="/images/marker-icon-2x.png" class="marker" alt="marker">
-                                    </div>
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-                                        <img src="/images/marker-icon-2x.png" class="marker" alt="marker">
+                                    <div class="col-xs-8">
+                                        <div class="col-xs-4">
+                                            <div class="leaflet-marker-icon leaflet-glyph-icon" tabindex="0" style="background-image: url('/libs/leaflet/Leaflet.Icon.Glyph/icons/glyph-marker-icon-green.png'); margin-left: 24px;">
+                                                <span id="{{ $nodeType->name }}" class="icon"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="leaflet-marker-icon leaflet-glyph-icon" tabindex="0" style="background-image: url('/libs/leaflet/Leaflet.Icon.Glyph/icons/glyph-marker-icon-blue.png'); margin-left: 20px;">
+                                                <span id="{{ $nodeType->name }}" class="icon"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="leaflet-marker-icon leaflet-glyph-icon" tabindex="0" style="background-image: url('/libs/leaflet/Leaflet.Icon.Glyph/icons/glyph-marker-icon-gray.png'); margin-left: 10px;">
+                                                <span id="{{ $nodeType->name }}" class="icon"></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endforeach
 
                             <div class="row row-margin">
                                 <div class="form-group">
@@ -178,9 +167,6 @@
     <!-- Jquery ui -->
     <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
-    <!-- Leaflet -->
-    <script src="/libs/leaflet/leaflet.js"></script>
-
     <script>
         $( function() {
             <!-- Datepicker jquery ui -->
@@ -225,11 +211,6 @@
                 id: 'mapbox.streets'
             }).addTo(map);
 
-//            var icon = L.icon({
-//                iconUrl: '/images/marker-icon.png',
-//                iconSize: [25, 40] // size of the icon
-//            });
-
             // Add markers to map
             var myFeatureGroup = L.featureGroup().addTo(map);
             var marker, info, markers = [];
@@ -243,7 +224,7 @@
 
                     var parameters = [];
                     @foreach($node->node_type->sensors as $sensor)
-                       parameters.push('{{ $sensor["variable"] }}' + ' ({{ $sensor["unit"] }}) ');
+                       parameters.push('{{ $sensor["variable"] }}' + ' ({{ $sensor["unit"] }})');
                     @endforeach
 
                     info =  '<p><span class="text-primary text-capitalize leaflet-popup-title"><strong>{{ $node->name }}</strong></span>'+
@@ -256,7 +237,7 @@
                             '<strong>Longitude:</strong> {{ $node->coordinates[1] }}' +
                             '</p>' +
                             '<p>' +
-                            '<strong>@lang('Type')</strong> <span class="pull-right"><img src="images/marker-icon.png" class="marker" alt="marker"></span>' +
+                            '<strong>@lang('Type')</strong>' +
                             '<br>' +
                             '{{ $node->node_type->name }}' +
                             '<br>' +
@@ -267,13 +248,48 @@
                             '<br>' + parameters +
                             '</p>';
 
-                    marker = L.marker([latitude, longitude]/*, {icon: icon}*/).addTo(myFeatureGroup).bindPopup(info);
+                    var acronym = getAcronym('{{ $node->node_type->name }}');
+
+                    var iconUrl;
+                    switch('{{ $node->status }}'){
+                        case 'Real Time':
+                            iconUrl = '/libs/leaflet/Leaflet.Icon.Glyph/icons/glyph-marker-icon-green.png';
+                            break;
+                        case 'Non Real Time':
+                            iconUrl = '/libs/leaflet/Leaflet.Icon.Glyph/icons/glyph-marker-icon-blue.png';
+                            break;
+                        case 'Off':
+                            iconUrl = '/libs/leaflet/Leaflet.Icon.Glyph/icons/glyph-marker-icon-gray.png';
+                            break;
+                    }
+
+                    var icon = L.icon.glyph({
+                        prefix: '',
+                        cssClass:'xolonium',
+                        glyph: acronym,
+                        iconUrl: iconUrl
+                    });
+
+                    marker = L.marker([latitude, longitude], { icon: icon }).addTo(myFeatureGroup).bindPopup(info);
                     marker.info = info;
 
                     //Add marker to array
                     markers.push(marker);
                 @endforeach
             @endif
+
+            function getAcronym(string){
+                var max_length = 3;
+
+                var acronym = string.split(' ').map(function (s) {
+                    return s.charAt(0);
+                }).join('');
+
+                acronym = acronym.substring(0, max_length);
+                acronym = acronym.toUpperCase();
+
+                return acronym;
+            }
 
             var waterBodiesData = [
                 {
@@ -474,6 +490,14 @@
             };
 
             legend.addTo(map);
+
+
+            <!-- Icons list -->
+            $(".icon").each(function() {
+                var id = this.id;
+                var acronym = getAcronym(id);
+                $(this).text(acronym);
+            });
 
         });
     </script>

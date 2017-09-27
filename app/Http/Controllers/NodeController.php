@@ -159,7 +159,6 @@ class NodeController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $rules = [
             'name' => 'max:255',
             'status' => 'in:'. Node::REAL_TIME . ',' . Node::NON_REAL_TIME . ',' . Node::OFF,

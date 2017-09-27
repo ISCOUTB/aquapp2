@@ -37,3 +37,26 @@
 .legend p{
     margin-bottom: 8px;
 }
+
+/*
+ * Leaflet Glyph Icon
+ * From: https://leaflet.github.io/Leaflet.Icon.Glyph/demo.html
+*/
+.leaflet-marker-icon.xolonium {
+    font-weight: bold;
+    font-family: Xolonium;
+}
+
+/*
+ * Icons List
+*/
+.icon{
+    font-size: 11px;
+    color: white;
+    width: 27px;
+    line-height: 48px;
+    text-align: center;
+    margin-top: -7px;
+    pointer-events: none;
+    display: inline-block;
+}

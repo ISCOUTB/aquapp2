@@ -1,0 +1,32 @@
+@font-face {
+    font-family: 'XoloniumBold';
+        src: url('/assets/fonts/xolonium/e00c124f3e1b130e5ec2a7eee2f4f1b8/72d5debbe456e13188bc5726119cc195/XoloniumBold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+      }
+
+@font-face {
+    font-family: 'XoloniumRegular';
+        src: url('/assets/fonts/xolonium/e00c124f3e1b130e5ec2a7eee2f4f1b8/15f3a5a7a8424c8f843ba6c83bfc360d/XoloniumRegular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+      }
+
+ /* The following rules are deprecated. */ 
+
+@font-face {
+    font-family: 'Xolonium';
+        src: url('/assets/fonts/xolonium/e00c124f3e1b130e5ec2a7eee2f4f1b8/72d5debbe456e13188bc5726119cc195/XoloniumBold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+      }
+
+
+
+@font-face {
+    font-family: 'Xolonium';
+        src: url('/assets/fonts/xolonium/e00c124f3e1b130e5ec2a7eee2f4f1b8/15f3a5a7a8424c8f843ba6c83bfc360d/XoloniumRegular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+      }
+

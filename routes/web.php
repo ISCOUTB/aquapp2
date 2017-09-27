@@ -13,7 +13,7 @@
 
 // Home Routes
 Route::get('/', 'DataController@getHome');
-Route::post('/', 'DataController@downloadData');
+Route::post('/', 'DataController@filterData');
 
 
 // Locale Configure
@@ -24,37 +24,10 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 
-// Testing Routes
-Route::get('data', function () {
-
-    $node = \App\Node::first();
-
-    $dataA = [
-        "value" => "19.51",
-        "timestamp" => "20160314130333"
-    ];
-
-    $dataB = [
-        "value" => "19.54",
-        "timestamp" => "20160314150981"
-    ];
-
-    $data = [];
-    array_push($data, $dataA, $dataB);
-
-
-    $sensorData = \App\SensorData::create([
-        'variable' => 'Temp Out',
-        'node_id' => $node->id,
-        'data' => $data
-    ]);
-
-    $node->data()->save($sensorData);
-
-    return $node->data;
-});
-
 Route::get('nodetypes', function(){
     return \App\NodeType::all();
 });
 
+Route::get('data', function(){
+    return \App\Node::first()->node_type;
+});
