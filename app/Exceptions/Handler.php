@@ -54,28 +54,28 @@ class Handler extends ExceptionHandler
     {
         if ($exception instanceof ModelNotFoundException) {
             // api 404 json feedback
-            if($request->is('api/*')){
+            if ($request->is('api/*')) {
                 $model = strtolower(class_basename($exception->getModel())); // Instance without namespace
                 return $this->errorResponse("No instance of {$model} with specified id", 404);
             }
 
             // normal 404 view page feedback
-            return abort(404);
+            return back();
         }
 
         if ($exception instanceof NotFoundHttpException) {
             // api 404 json feedback
-            if($request->is('api/*')){
+            if ($request->is('api/*')) {
                 return $this->errorResponse("Specified URL not found", 404);
             }
 
             // normal 404 view page feedback
-            return abort(404);
+            return response()->view('errors.404');
         }
 
         if ($exception instanceof MethodNotAllowedHttpException) {
             // api 404 json feedback
-            if($request->is('api/*')){
+            if ($request->is('api/*')) {
                 return $this->errorResponse("The request method is not valid", 405);
             }
 
@@ -86,12 +86,12 @@ class Handler extends ExceptionHandler
             return parent::render($request, $exception);
         }
 
-        if($request->is('api/*')){
+        if ($request->is('api/*')) {
             return $this->errorResponse("Unexpected failure. Try later", 500);
         }
 
         // normal 500 view page feedback
-        return abort(500);
+        return response()->view('errors.500');
     }
 
     /**
