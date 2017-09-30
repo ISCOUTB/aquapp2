@@ -6,60 +6,49 @@
     "sensors": [
       {
         "variable": "Dissolved Oxygen (DO)",
-        "description": "A measure of the amount of oxygen in the water",
         "unit": "mg/L"
       },
       {
         "variable": "Nitrate (NO3)",
-        "description": "Nitrate concentration on water",
         "unit": "µg/L"
       },
       {
         "variable": "Total Suspended Solids (TSS)",
-        "description": "Particles that are larger than 2 microns found in the water column",
         "unit": "mg/L"
       },
       {
         "variable": "Thermotolerant Coliforms",
-        "description": "Used as bacterial indicator for sanitary quality of water",
         "unit": "NMP/100ml"
       },
       {
         "variable": "pH",
-        "description": "Measures the alkalinity or acidity of water. ",
         "unit": "pH units"
       },
       {
         "variable": "Chrolophyll A (CLA)",
-        "description": "An estimate of the biomass of planktonic algae in the water",
         "unit": "µg/L"
       },
       {
         "variable": "Biochemical Oxygen Demand (BOD)",
-        "description": "Measure of the dissolved oxygen consumed by microorganisms",
         "unit": "mg/L"
       },
       {
         "variable": "Phosphates (PO4)",
-        "description": "Phosphates concentration on water",
         "unit": "µg/L"
       }
     ]
   },
   {
     "_id" : "59c9d9019a892016ca4be413",
-
     "name": "Hydro-Meteorologic Factors",
     "separator": ",",
     "sensors": [
       {
         "variable": "Water Depth",
-        "description": "Vertical distance between the sea floor and still water level",
         "unit": "m"
       },
       {
         "variable": "Water Temperature",
-        "description": "physical property expressing how hot or cold water is.",
         "unit": "°C"
       }
     ]
