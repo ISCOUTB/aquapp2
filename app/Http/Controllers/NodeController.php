@@ -31,8 +31,9 @@ class NodeController extends Controller
     public function create()
     {
         $nodeTypes = NodeType::orderBy('created_at', 'asc')->get();
+        $sensors = getSensors();
 
-        return view('admin.nodes.create', ['nodeTypes' => $nodeTypes]);
+        return view('admin.nodes.create', ['nodeTypes' => $nodeTypes, 'sensors' => $sensors]);
     }
 
     /**
@@ -43,7 +44,6 @@ class NodeController extends Controller
      */
     public function store(Request $request)
     {
-
         $rules = [
             'name' => 'required|max:255',
             'status' => 'required|in:'. Node::REAL_TIME . ',' . Node::NON_REAL_TIME . ',' . Node::OFF,
@@ -89,21 +89,16 @@ class NodeController extends Controller
             $nodeTypeSensors = $request->input('node-type-sensors');
             $nodeTypeDelimiter = $request->input('node-type-delimiter');
 
-            if($nodeTypeDelimiter == 'whitespace'){
-                $nodeTypeDelimiter = " ";
-            }
-
             $nodeTypeSensors = explode($nodeTypeDelimiter, $nodeTypeSensors);
 
             $sensors = [];
             foreach($nodeTypeSensors as $nodeTypeSensor){
                if($nodeTypeSensor != ""){
+                   $data = str_replace(")", "", explode("(", $nodeTypeSensor));
                    $sensor = [
-                       "variable" => $nodeTypeSensor,
-//                    "description" => "Temperature measured outside the station",
-//                    "unit" => "°C"
+                       "variable" => $data[0],
+                       "unit" => $data[1]
                    ];
-
                    array_push($sensors, $sensor);
                }
             }
@@ -208,5 +203,4 @@ class NodeController extends Controller
 
         return redirect('admin/nodes')->with('success-update', 'Node successfully updated');
     }
-
 }

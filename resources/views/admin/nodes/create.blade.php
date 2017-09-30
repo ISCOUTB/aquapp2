@@ -239,7 +239,6 @@
                         </div>
 
                         <div id="elements-description-div" style="display: none">
-                            <h4><strong>@lang('Parameters Type Selectors')</strong></h4>
                             <div class="row" id="elements"></div>
                             <br><br>
                             <div class="row">
@@ -331,14 +330,12 @@
 
                 schema = schema_str.split(delimiter);
 
-                var variables = ["Depth","Dissolved Oxygen","Percent Saturation","pH","Salinity","Specific Conductivity","Turbidity","Water Temperature",
-                    "Chrolophyll a","Nitrate","Nitrite","Nitrite + Nitrate","Orthophosphate"];
-
                 var type_options = "";
 
-                for(var i=0; i<variables.length; i++){
-                    type_options = type_options.concat('<option value="'+variables[i]+'">'+variables[i]+'</option>');
-                }
+                @foreach($sensors as $sensor)
+                    var value = "{{ $sensor->variable }}({{ $sensor->unit }})";
+                    type_options = type_options.concat('<option value="'+ value +'">'+ value +'</option>');
+                @endforeach
 
                 var content = [];
                 for(var j=0; j<schema.length; j++){
@@ -371,17 +368,17 @@
 
                 var node_type_name = $("#type-name").val();
 
+                // post 'whitespace' as separator (avoid null value)
+                if(delimiter == ' '){
+                    delimiter = "whitespace";
+                }
+
                 var values = "";
                 for(var i=0; i<schema.length; i++){
                     var value = $( "#" + i ).val();
                     if(typeof value !== 'undefined'){
                         values = values.concat(value + delimiter);
                     }
-                }
-
-                // post 'whitespace' as separator (avoid null value)
-                if(delimiter == ' '){
-                    delimiter = "whitespace";
                 }
 
                 var data_schema = '<div class="alert alert-danger fade in alert-dismissable">' +
@@ -440,5 +437,6 @@
 
             return delimiter;
         }
+
     </script>
 @endsection
