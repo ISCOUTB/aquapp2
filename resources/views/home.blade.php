@@ -498,7 +498,6 @@
                 var acronym = getAcronym(id);
                 $(this).text(acronym);
             });
-
         });
     </script>
 @endsection

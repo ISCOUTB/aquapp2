@@ -239,6 +239,12 @@
                         </div>
 
                         <div id="elements-description-div" style="display: none">
+                            <h4>
+                                <strong>@lang('Parameters Type Selectors')</strong>
+                                <strong class="pull-right text-primary">
+                                    <a href="{{ route('parameters') }}" target="_blank">Check available parameters</a>
+                                </strong>
+                            </h4>
                             <div class="row" id="elements"></div>
                             <br><br>
                             <div class="row">

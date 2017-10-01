@@ -203,4 +203,10 @@ class NodeController extends Controller
 
         return redirect('admin/nodes')->with('success-update', 'Node successfully updated');
     }
+
+    public function showAvailableParameters(){
+        $sensors = getSensors();
+        return view('admin.nodes.parameters', ['sensors' => $sensors]);
+    }
+
 }

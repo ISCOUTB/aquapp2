@@ -21,6 +21,7 @@ Route::get('locale/{locale}', 'LocaleController@switchLanguage')->name('locale')
 
 Route::group(['prefix' => 'admin'], function () {
     Route::resource('nodes', 'NodeController', ['except' => ['show', 'destroy']]);
+    Route::get('nodes/parameters','NodeController@showAvailableParameters')->name('parameters');
 });
 
 
@@ -29,5 +30,5 @@ Route::get('nodetypes', function(){
 });
 
 Route::get('data', function(){
-    return \App\Node::first()->node_type;
+    return \App\SensorData::all();
 });
