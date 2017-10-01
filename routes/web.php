@@ -13,7 +13,9 @@
 
 // Home Routes
 Route::get('/', 'DataController@getHome');
-Route::post('/', 'DataController@filterData');
+Route::post('/', 'DataController@getData');
+
+Route::get('data', 'DataController@filterData');
 
 
 // Locale Configure
@@ -27,8 +29,4 @@ Route::group(['prefix' => 'admin'], function () {
 
 Route::get('nodetypes', function(){
     return \App\NodeType::all();
-});
-
-Route::get('data', function(){
-    return \App\SensorData::all();
 });

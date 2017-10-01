@@ -25,7 +25,7 @@
                                 </div>
 
                                 <div class="col-xs-8 col-xs-push-4">
-                                    <div class="col-xs-4">
+                                    <div class="col-xs-4 text-center">
                                         <small>@lang('Real Time')</small>
                                     </div>
                                     <div class="col-xs-4">
@@ -41,11 +41,7 @@
                                 <div class="row row-margin">
                                     <div class="col-xs-4">
                                         <div class="radio">
-                                            @if($loop->first)
-                                                <label class="small-label"><input type="radio" checked> {{ $nodeType->name }}</label>
-                                            @else
-                                                <label class="small-label"><input type="radio"> {{ $nodeType->name }}</label>
-                                            @endif
+                                            <label class="small-label"><input type="radio" name="node-type" value="{{ $nodeType->id }}"> {{ $nodeType->name }}</label>
                                         </div>
                                     </div>
 
@@ -68,6 +64,15 @@
                                     </div>
                                 </div>
                             @endforeach
+
+                            <div class="row row-margin">
+                                <div class="col-xs-4">
+                                    <div class="radio">
+                                        <label class="small-label"><input type="radio" name="node-type" value="all" checked> @lang('All') </label>
+                                    </div>
+                                </div>
+                            </div>
+
 
                             <div class="row row-margin">
                                 <div class="form-group">
@@ -102,12 +107,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-4" for="station"> @lang('Station') </label>
                                     <div class="col-md-8 col-sm-6 col-xs-8">
-                                        <select class="form-control" id="station" name="station">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                        </select>
+                                        <select class="form-control" id="nodes" name="nodes"></select>
                                     </div>
                                 </div>
                             </div>
@@ -116,12 +116,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-4" for="parameter"> @lang('Parameter') </label>
                                     <div class="col-md-8 col-sm-6 col-xs-8">
-                                        <select class="form-control" id="parameter" name="parameter">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                        </select>
+                                        <select class="form-control" id="sensors" name="sensors"></select>
                                     </div>
                                 </div>
                             </div>
@@ -169,6 +164,13 @@
 
     <script>
         $( function() {
+            <!-- Icons list -->
+            $(".icon").each(function() {
+                var id = this.id;
+                var acronym = getAcronym(id);
+                $(this).text(acronym);
+            });
+
             <!-- Datepicker jquery ui -->
             var dateFormat = "dd/mm/yy",
                 from = $( "#from" )
@@ -212,84 +214,8 @@
             }).addTo(map);
 
             // Add markers to map
+            var markers = [];
             var myFeatureGroup = L.featureGroup().addTo(map);
-            var marker, info, markers = [];
-
-            @if (count($nodes) > 0)
-                @foreach($nodes as $node)
-                    var latitude = {{ $node->coordinates[0] }};
-                    var longitude = {{ $node->coordinates[1] }};
-
-                    /*href="{{url('place', str_slug($node->name)."-".$node->id)}}" target="_blank"*/
-
-                    var parameters = [];
-                    @foreach($node->node_type->sensors as $sensor)
-                       parameters.push('{{ $sensor["variable"] }}' + ' ({{ $sensor["unit"] }})');
-                    @endforeach
-
-                    info =  '<p><span class="text-primary text-capitalize leaflet-popup-title"><strong>{{ $node->name }}</strong></span>'+
-                            '<br>' +
-                            '{{ $node->location }}' +
-                            '</p>' +
-                            '<p>' +
-                            '<strong>Latitude:</strong> {{ $node->coordinates[0] }}'+
-                            '<br>'+
-                            '<strong>Longitude:</strong> {{ $node->coordinates[1] }}' +
-                            '</p>' +
-                            '<p>' +
-                            '<strong>@lang('Type')</strong>' +
-                            '<br>' +
-                            '{{ $node->node_type->name }}' +
-                            '<br>' +
-                            '{{ $node->status }}' +
-                            '</p>' +
-                            '<p>' +
-                            '<strong>@lang('Parameters')</strong>' +
-                            '<br>' + parameters +
-                            '</p>';
-
-                    var acronym = getAcronym('{{ $node->node_type->name }}');
-
-                    var iconUrl;
-                    switch('{{ $node->status }}'){
-                        case 'Real Time':
-                            iconUrl = '/libs/leaflet/Leaflet.Icon.Glyph/icons/glyph-marker-icon-green.png';
-                            break;
-                        case 'Non Real Time':
-                            iconUrl = '/libs/leaflet/Leaflet.Icon.Glyph/icons/glyph-marker-icon-blue.png';
-                            break;
-                        case 'Off':
-                            iconUrl = '/libs/leaflet/Leaflet.Icon.Glyph/icons/glyph-marker-icon-gray.png';
-                            break;
-                    }
-
-                    var icon = L.icon.glyph({
-                        prefix: '',
-                        cssClass:'xolonium',
-                        glyph: acronym,
-                        iconUrl: iconUrl
-                    });
-
-                    marker = L.marker([latitude, longitude], { icon: icon }).addTo(myFeatureGroup).bindPopup(info);
-                    marker.info = info;
-
-                    //Add marker to array
-                    markers.push(marker);
-                @endforeach
-            @endif
-
-            function getAcronym(string){
-                var max_length = 3;
-
-                var acronym = string.split(' ').map(function (s) {
-                    return s.charAt(0);
-                }).join('');
-
-                acronym = acronym.substring(0, max_length);
-                acronym = acronym.toUpperCase();
-
-                return acronym;
-            }
 
             var waterBodiesData = [
                 {
@@ -394,10 +320,10 @@
             /***** Color the creeks and lakes according to their ICAMpff value. ******/
             function getColor(d) {
                 return d > 90 ? '#0032FF' : // blue
-                       d > 70 ? '#49C502' : // green
-                       d > 50 ? '#F9F107' : // yellow
-                       d > 25 ? '#F57702' : // orange
-                                '#FB1502' ; // red
+                        d > 70 ? '#49C502' : // green
+                                d > 50 ? '#F9F107' : // yellow
+                                        d > 25 ? '#F57702' : // orange
+                                                '#FB1502' ; // red
             }
 
             function style(feature) {
@@ -472,10 +398,9 @@
             var legend = L.control({position: 'bottomright'});
 
             legend.onAdd = function (map) {
-
                 var div = L.DomUtil.create('div', 'info legend'),
-                    grades = [0, 25, 50, 70, 90],
-                    labels = ['@lang('Appalling')', '@lang('Inadequate')', '@lang('Acceptable')', '@lang('Adequate')', '@lang('Optimal')'];
+                        grades = [0, 25, 50, 70, 90],
+                        labels = ['@lang('Appalling')', '@lang('Inadequate')', '@lang('Acceptable')', '@lang('Adequate')', '@lang('Optimal')'];
 
                 div.innerHTML += '<p class="text-center text-primary">@lang('ICAMpff Values')</p>';
 
@@ -491,13 +416,116 @@
 
             legend.addTo(map);
 
+            // Initial map load
+            getNodes();
 
-            <!-- Icons list -->
-            $(".icon").each(function() {
-                var id = this.id;
-                var acronym = getAcronym(id);
-                $(this).text(acronym);
+            <!-- Display markers according to radio selection -->
+            $('input[name=node-type]').on('change', function(e) {
+                getNodes();
             });
+
+            function getNodes(){
+                var node_type_id = $('input[name=node-type]:checked').val();
+                var url = "/data?node_type_id=" + node_type_id;
+
+                $.get(url, function (data) {
+                    fillMap(data);
+
+                    // clear options
+                    $('#nodes').find('option').remove().end();
+
+                    $.each(data, function(index, value) {
+                        $('#nodes').append(
+                            $('<option></option>').val(index).html(value['name'])
+                        );
+                    });
+                })
+            }
+
+
+            function fillMap(nodes){
+                var marker, info_window;
+
+                // Remove leaflet map markers
+                for(var i = 0; i < markers.length; i++){
+                    map.removeLayer(markers[i]);
+                }
+
+                // Add new markers
+                for (var i = 0; i < nodes.length; i++) {
+                    var location = nodes[i]['location'];
+                    var latitude = nodes[i]['latitude'];
+                    var longitude = nodes[i]['longitude'];
+                    var status = nodes[i]['status'];
+                    var node_type_name = nodes[i]['node_type']['name'];
+                    var node_type_sensors = nodes[i]['node_type']['sensors'];
+
+                    var parameters = [];
+                    for (var j = 0; j < node_type_sensors.length; j++) {
+                        parameters.push(node_type_sensors[j]['variable'] + ' (' + node_type_sensors[j]['unit'] + ')');
+                    }
+
+                    info_window =  '<p><span class="text-primary text-capitalize leaflet-popup-title"><strong>'+ nodes[i]['name'] +'</strong></span>'+
+                            '<br>' + location + '</p>' +
+                            '<p>' +
+                            '<strong>Latitude:</strong>' + latitude +
+                            '<br>'+
+                            '<strong>Longitude:</strong>' + longitude +
+                            '</p>' +
+                            '<p>' +
+                            '<strong>@lang('Type')</strong>' +
+                            '<br>' + node_type_name +
+                            '<br>' + status +
+                            '</p>' +
+                            '<p>' +
+                            '<strong>@lang('Parameters')</strong>' +
+                            '<br>' + parameters +
+                            '</p>';
+
+
+                    var acronym = getAcronym(node_type_name);
+
+                    var iconUrl;
+                    switch(status){
+                        case 'Real Time':
+                            iconUrl = '/libs/leaflet/Leaflet.Icon.Glyph/icons/glyph-marker-icon-green.png';
+                            break;
+                        case 'Non Real Time':
+                            iconUrl = '/libs/leaflet/Leaflet.Icon.Glyph/icons/glyph-marker-icon-blue.png';
+                            break;
+                        case 'Off':
+                            iconUrl = '/libs/leaflet/Leaflet.Icon.Glyph/icons/glyph-marker-icon-gray.png';
+                            break;
+                    }
+
+                    var icon = L.icon.glyph({
+                        prefix: '',
+                        cssClass:'xolonium',
+                        glyph: acronym,
+                        iconUrl: iconUrl
+                    });
+
+                    marker = L.marker([latitude, longitude], { icon: icon }).addTo(myFeatureGroup).bindPopup(info_window);
+                    marker.info = info_window;
+
+                    //Add marker to array
+                    markers.push(marker);
+                }
+            }
+
+            function getAcronym(string){
+                var max_length = 3;
+
+                var acronym = string.split(' ').map(function (s) {
+                    return s.charAt(0);
+                }).join('');
+
+                acronym = acronym.substring(0, max_length);
+                acronym = acronym.toUpperCase();
+
+                return acronym;
+            }
+
         });
     </script>
 @endsection
