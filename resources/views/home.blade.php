@@ -418,6 +418,7 @@
 
             // Initial map load
             getNodes();
+            var nodes = [];
 
             <!-- Display markers according to radio selection -->
             $('input[name=node-type]').on('change', function(e) {
@@ -426,7 +427,7 @@
 
             function getNodes(){
                 var node_type_id = $('input[name=node-type]:checked').val();
-                var url = "/data?node_type_id=" + node_type_id;
+                var url = "data?node_type_id=" + node_type_id;
 
                 $.get(url, function (data) {
                     fillMap(data);
@@ -435,13 +436,15 @@
                     $('#nodes').find('option').remove().end();
 
                     $.each(data, function(index, value) {
+                        nodes.push(value);
                         $('#nodes').append(
-                            $('<option></option>').val(index).html(value['name'])
+                            $('<option></option>').val(value['id']).html(value['name'])
                         );
                     });
+
+                    updateSensors();
                 })
             }
-
 
             function fillMap(nodes){
                 var marker, info_window;
@@ -526,6 +529,29 @@
                 return acronym;
             }
 
+            <!-- Display parameters according to selected node -->
+            $('#nodes').on('change', function(e) {
+                updateSensors();
+            });
+
+            function updateSensors(){
+                var node_id = $('#nodes option:selected').val(); // id of selected node
+
+                var node =  $.grep(nodes, function(item){
+                    return item.id == node_id;
+                });
+
+                var sensors = node[0]['node_type']['sensors'];
+
+                // clear options
+                $('#sensors').find('option').remove().end();
+
+                $.each(sensors, function(index, value) {
+                    $('#sensors').append(
+                        $('<option></option>').val(index).html(value['variable'])
+                    );
+                });
+            }
         });
     </script>
 @endsection

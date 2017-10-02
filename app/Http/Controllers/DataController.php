@@ -21,7 +21,6 @@ class DataController extends Controller
 
     public function filterData(Request $request){
         if($request->ajax()){
-
             foreach(request()->query() as $attribute => $value) {
                 if($attribute == 'node_type_id'){
                     if($value == 'all'){
