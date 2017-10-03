@@ -13,8 +13,6 @@
 
 // Home Routes
 Route::get('/', 'DataController@getHome');
-Route::post('/', 'DataController@getData');
-
 Route::get('data', 'DataController@filterData');
 
 

@@ -15,7 +15,7 @@
             <div class="row">
                 <div class="col-md-4 scrollcol">
                     <div id="form">
-                        <form method="POST" action="{{ url('/') }}">
+                        <form id="filter-form">
                             {{csrf_field()}}
 
                             <div class="row row-margin">
@@ -78,7 +78,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-4" for="from"> @lang('Start Date') </label>
                                     <div class="col-md-8 col-sm-6 col-xs-8">
-                                        <input id="from" type="text" class="form-control datepicker" name="start_date">
+                                        <input id="start-date" type="text" class="form-control datepicker" name="start-date" required>
                                     </div>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-4" for="to"> @lang('End Date') </label>
                                     <div class="col-md-8 col-sm-6 col-xs-8">
-                                        <input id="to" type="text" class="form-control datepicker" name="end_date">
+                                        <input id="end-date" type="text" class="form-control datepicker" name="end-date" required>
                                     </div>
                                 </div>
                             </div>
@@ -105,34 +105,33 @@
 
                             <div class="row row-margin">
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-4" for="station"> @lang('Station') </label>
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-4" for="node"> @lang('Station') </label>
                                     <div class="col-md-8 col-sm-6 col-xs-8">
-                                        <select class="form-control" id="nodes" name="nodes"></select>
+                                        <select class="form-control" id="node" name="node"></select>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row row-margin">
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-4" for="parameter"> @lang('Parameter') </label>
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-4" for="variable"> @lang('Parameter') </label>
                                     <div class="col-md-8 col-sm-6 col-xs-8">
-                                        <select class="form-control" id="sensors" name="sensors"></select>
+                                        <select class="form-control" id="variable" name="variable"></select>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-4" for="parameter"> @lang('Output Format') </label>
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-4" for="output_format"> @lang('Output Format') </label>
                                     <div class="col-md-8 col-sm-6 col-xs-8">
                                         <label class="radio-inline">
-                                            <input type="radio" name="output_format" value="graph" checked> @lang('Graph')
+                                            <input type="radio" name="output-format" value="csv" checked> @lang('CSV File')
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="output_format" value="csv"> @lang('CSV File')
+                                            <input type="radio" name="output-format" value="graph"> @lang('Graph')
                                         </label>
                                     </div>
-
                                 </div>
                             </div>
 
@@ -172,35 +171,25 @@
             });
 
             <!-- Datepicker jquery ui -->
-            var dateFormat = "dd/mm/yy",
-                from = $( "#from" )
-                    .datepicker({
-                        defaultDate: "+1w",
-                        changeMonth: true,
-                        numberOfMonths: 1
-                    })
-                    .on( "change", function() {
-                        to.datepicker( "option", "minDate", getDate( this ) );
-                    }),
-                to = $( "#to" ).datepicker({
-                        defaultDate: "+1w",
-                        changeMonth: true,
-                        numberOfMonths: 1
-                    })
-                    .on( "change", function() {
-                        from.datepicker( "option", "maxDate", getDate( this ) );
-                    });
-
-            function getDate( element ) {
-                var date;
-                try {
-                    date = $.datepicker.parseDate( dateFormat, element.value );
-                } catch( error ) {
-                    date = null;
+            $("#start-date").datepicker({
+                dateFormat: 'mm/dd/yy',
+                changeMonth: true,
+                changeYear: true,
+                yearRange: '2016:',
+                onSelect: function( selectedDate ) {
+                    $("#end-date").datepicker( "option", "minDate", selectedDate );
                 }
+            });
 
-                return date;
-            }
+            $("#end-date").datepicker({
+                dateFormat: 'mm/dd/yy',
+                changeMonth: true,
+                changeYear: true,
+                yearRange: '2016:',
+                onSelect: function( selectedDate ) {
+                    $("#start-date").datepicker( "option", "maxDate", selectedDate );
+                }
+            });
 
             <!-- Leaflet Map -->
             var map = L.map('map').setView([10.421111, -75.522323], 14);
@@ -417,15 +406,15 @@
             legend.addTo(map);
 
             // Initial map load
-            getNodes();
+            getNodesRequest();
             var nodes = [];
 
             <!-- Display markers according to radio selection -->
             $('input[name=node-type]').on('change', function(e) {
-                getNodes();
+                getNodesRequest();
             });
 
-            function getNodes(){
+            function getNodesRequest(){
                 var node_type_id = $('input[name=node-type]:checked').val();
                 var url = "data?node_type_id=" + node_type_id;
 
@@ -433,17 +422,19 @@
                     fillMap(data);
 
                     // clear options
-                    $('#nodes').find('option').remove().end();
+                    $('#node').find('option').remove().end();
 
                     $.each(data, function(index, value) {
                         nodes.push(value);
-                        $('#nodes').append(
-                            $('<option></option>').val(value['id']).html(value['name'])
+                        $('#node').append(
+                                $('<option></option>').val(value['id']).html(value['name'])
                         );
                     });
 
                     updateSensors();
-                })
+                }).fail(function(error){
+                    console.log(error);
+                });
             }
 
             function fillMap(nodes){
@@ -530,12 +521,12 @@
             }
 
             <!-- Display parameters according to selected node -->
-            $('#nodes').on('change', function(e) {
+            $('#node').on('change', function(e) {
                 updateSensors();
             });
 
             function updateSensors(){
-                var node_id = $('#nodes option:selected').val(); // id of selected node
+                var node_id = $('#node option:selected').val(); // id of selected node
 
                 var node =  $.grep(nodes, function(item){
                     return item.id == node_id;
@@ -544,14 +535,34 @@
                 var sensors = node[0]['node_type']['sensors'];
 
                 // clear options
-                $('#sensors').find('option').remove().end();
+                $('#variable').find('option').remove().end();
 
                 $.each(sensors, function(index, value) {
-                    $('#sensors').append(
-                        $('<option></option>').val(index).html(value['variable'])
+                    $('#variable').append(
+                        $('<option></option>').val(value['variable']).html(value['variable'])
                     );
                 });
             }
+
+            <!-- Filter data request -->
+            $("#filter-form").submit(function( event ) {
+                event.preventDefault();
+
+                // inputs
+                var start_date = $('#start-date').val();
+                var end_date = $('#end-date').val();
+                var node_id = $('#node').val();
+                var variable = $('#variable').val();
+                var output_format = $('#output-format').val();
+
+                var url = "data?start_date=" + start_date + "&end_date=" + end_date + "&node_id=" + node_id + "&variable=" + variable;
+
+                $.get(url, function (data) {
+                    console.log(data);
+                }).fail(function(error){
+                    console.log(error);
+                });
+            });
         });
     </script>
 @endsection

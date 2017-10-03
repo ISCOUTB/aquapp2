@@ -2,34 +2,65 @@
 
 namespace App\Http\Controllers;
 
-use App\NodeType;
-use App\SensorData;
 use Illuminate\Http\Request;
+use DB;
 
 use App\Node;
+use App\NodeType;
+use App\SensorData;
 
 class DataController extends Controller
 {
-    public function getHome(){
+    public function getHome()
+    {
         $nodeTypes = NodeType::all();
         return view('home', ["nodeTypes" => $nodeTypes]);
     }
 
-    public function getData(Request $request){
-        return $request->all();
-    }
+    public function filterData(Request $request)
+    {
 
-    public function filterData(Request $request){
-        if($request->ajax()){
-            foreach(request()->query() as $attribute => $value) {
-                if($attribute == 'node_type_id'){
-                    if($value == 'all'){
-                        $collection = Node::all();
-                    }else{
-                        $collection = Node::where($attribute, $value)->get();
+        if($request->ajax())
+        {
+
+            if ($request->has('node_type_id'))
+            {
+                $nodeTypeId = $request->input('node_type_id');
+
+                if($nodeTypeId == 'all')
+                {
+                    $collection = Node::all();
+                }else{
+                    $collection = Node::where('node_type_id', $nodeTypeId)->get();
+                }
+
+                $collection = $this->getCustomNodesResponse($collection);
+            }
+
+            if ($request->has(['node_id', 'variable', 'start_date', 'end_date']))
+            {
+                $nodeId = $request->input('node_id');
+                $variable = $request->input('variable');
+                $startDate = $request->input('start_date');
+                $endDate = $request->input('end_date');
+
+                $startDate = date("YmdHis", strtotime($startDate));
+                $endDate = date("YmdHis", strtotime($endDate));
+
+                $data = DB::collection('sensor_data')
+                    ->where('node_id', $nodeId)
+                    ->where('variable', $variable)
+                    ->whereBetween('data.timestamp', array($startDate, $endDate))
+                    ->select('data')
+                    ->first();
+
+                $collection = [];
+                foreach($data['data'] as $datum)
+                {
+                    if($datum['timestamp'] >= $startDate && $datum['timestamp'] <= $endDate)
+                    {
+                        $collection[] = $datum;
                     }
-
-                    $collection = $this->getCustomNodesResponse($collection);
                 }
             }
 
@@ -38,7 +69,8 @@ class DataController extends Controller
         }
     }
 
-    function getCustomNodesResponse($collection){
+    function getCustomNodesResponse($collection)
+    {
         $data = [];
 
         foreach($collection as $obj){

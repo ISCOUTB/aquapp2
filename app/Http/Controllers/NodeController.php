@@ -81,7 +81,7 @@ class NodeController extends Controller
             }
         }
 
-        if($nodeType == "sending-schema"){
+        if($nodeType == "sending-schema") {
             /*
              * Save Data Schema -> Create Node Type
             */
