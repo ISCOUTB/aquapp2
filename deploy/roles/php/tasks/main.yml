@@ -19,3 +19,24 @@
     line: cgi.fix_pathinfo=0
   notify:
     - restart php7.0-fpm
+
+- name: php fpm config file
+  template:
+    src: php.ini
+    dest: /etc/php/7.0/fpm/php.ini
+
+- name: php fpm config
+  template:
+    src: php-fpm.conf
+    dest: /etc/php/7.0/fpm/php-fpm.conf
+
+- name: php fpm pool config
+  template:
+    src: www.conf
+    dest: /etc/php/7.0/fpm/pool.d/www.conf
+
+- name: start php7.0-fpm service
+  service:
+    name: php7.0-fpm
+    state: started
+    enabled: yes

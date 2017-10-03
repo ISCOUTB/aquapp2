@@ -39,14 +39,16 @@
     path: '{{ webapps_dir }}/{{ app_name }}/src/storage'
     state: directory
     mode: 0775
+    recurse: yes
     owner: www-data
     group: www-data
 
 - name: ensure bootstrap cache dir is writable
   file:
-    path: '{{ webapps_dir }}/{{ app_name }}/src/bootstrap/cache'
+    path: '{{ webapps_dir }}/{{ app_name }}/src/bootstrap'
     state: directory
     mode: 0775
+    recurse: yes
     owner: www-data
     group: www-data
 # end set laravel permissions
@@ -74,7 +76,7 @@
   lineinfile:
     dest: '{{ webapps_dir }}/{{ app_name }}/src/.env'
     regexp: '^APP_DEBUG='
-    line: APP_DEBUG=true 
+    line: APP_DEBUG=true
 
 - name: set APP_URL
   lineinfile:
