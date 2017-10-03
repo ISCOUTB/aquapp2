@@ -24,7 +24,7 @@
     - restart php7.0-fpm
 
 - name: update MondoDB php ext
-  command: pecl install mongodb
+  command: pecl upgrade mongodb
 
 - name: php fpm config file
   template:

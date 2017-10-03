@@ -66,6 +66,18 @@
     regexp: '^APP_NAME='
     line: APP_NAME=false
 
+- name: set REDIS cache
+  lineinfile:
+    dest: '{{ webapps_dir }}/{{ app_name }}/src/.env'
+    regexp: '^CACHE_DRIVER='
+    line: CACHE_DRIVER=redis
+
+- name: set REDIS Session
+  lineinfile:
+    dest: '{{ webapps_dir }}/{{ app_name }}/src/.env'
+    regexp: '^SESSION_DRIVER='
+    line: SESSION_DRIVER=redis
+
 - name: set APP_ENV=production
   lineinfile:
     dest: '{{ webapps_dir }}/{{ app_name }}/src/.env'
@@ -119,6 +131,11 @@
     dest: '{{ webapps_dir }}/{{ app_name }}/src/.env'
     regexp: '^DB_PASSWORD='
     line: 'DB_PASSWORD={{ db_pwd }}'
+
+- name: generate cache table
+  shell: php artisan cache:table
+  args:
+    chdir: '{{ webapps_dir }}/{{ app_name }}/src'
 
 - name: generate APP_KEY
   shell: php artisan key:generate
