@@ -11,6 +11,9 @@
     - php-mongodb
     - php7.0-mcrypt
     - unzip
+    - pkg-config
+    - libssl-dev
+    - pkg-php-tools
 
 - name: secure php cgi
   lineinfile:
@@ -19,6 +22,9 @@
     line: cgi.fix_pathinfo=0
   notify:
     - restart php7.0-fpm
+
+- name: update MondoDB php ext
+  command: pecl install mongodb
 
 - name: php fpm config file
   template:
