@@ -36,8 +36,7 @@ class DataController extends Controller
 
                 $collection = $this->getCustomNodesResponse($collection);
             }
-
-            if ($request->has(['node_id', 'variable', 'start_date', 'end_date']))
+                else if ($request->has(['node_id', 'variable', 'start_date', 'end_date']))
             {
                 $nodeId = $request->input('node_id');
                 $variable = $request->input('variable');
@@ -55,13 +54,21 @@ class DataController extends Controller
                     ->first();
 
                 $collection = [];
-                foreach($data['data'] as $datum)
+
+                if($data)
                 {
-                    if($datum['timestamp'] >= $startDate && $datum['timestamp'] <= $endDate)
+                    foreach($data['data'] as $datum)
                     {
-                        $collection[] = $datum;
+                        if($datum['timestamp'] >= $startDate && $datum['timestamp'] <= $endDate)
+                        {
+                            $collection[] = $datum;
+                        }
                     }
                 }
+
+            } else
+            {
+               $collection = [];
             }
 
             return $collection;
