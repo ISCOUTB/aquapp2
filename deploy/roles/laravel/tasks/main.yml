@@ -16,6 +16,7 @@
     dest: '{{ webapps_dir }}/{{ app_name }}/src'
     remote: '{{ repo_remote }}'
     version: '{{ repo_version }}'
+    force: yes
 
   # - name: add deploy key
   #   shell: echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDWYVynuwFbLCbAYxy/+VOZ+e4D/3TbSqFKafcX0FDdohLFqjCsU34rtryG07/kMfSjbe2BrRDG+gxho+9U22QP/+/lgIfKMAM1qo8uDDHnlFor2x122sbRuZYTUP2AOYO9fBGOiIU9T3sWRzZ9yWHQu3rYLckZgRrOWKTRRHzQdTVo5wnT+NJm7BNEQLSdXEpZgMw9RTwFYvUcPgPX/scMwG2coyyV94xKfC71ONF/QZ9koIO7ahjLY8nSJ8ZGK4ECDkqMj8YVvMKbbRyBLTIxfrUjFOcUrpjpRp+XiQmb1buQzpHk0IKPuoAqxJEBRep2T4l/Gn3KKwimCDp+V/jj" >> /home/ubuntu/.ssh/authorized_keys

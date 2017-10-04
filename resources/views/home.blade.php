@@ -7,6 +7,26 @@
 @section('styles')
     <!-- Jquery ui -->
     <link href="https://code.jquery.com/ui/1.12.0-rc.2/themes/smoothness/jquery-ui.css" rel="stylesheet">
+
+    <style>
+        #graph {
+            width:100%;
+            height:100%;
+            margin-bottom: 40px;
+        }
+
+        .modal-dialog {
+            width: 90%;
+            height: 90%;
+            padding: 0;
+        }
+
+        .modal-content {
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -123,13 +143,13 @@
 
                             <div class="row">
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-4" for="output-format"> @lang('Output Format') </label>
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-4"> @lang('Output Format') </label>
                                     <div class="col-md-8 col-sm-6 col-xs-8">
                                         <label class="radio-inline">
-                                            <input type="radio" id="output-format" name="output-format" value="csv" checked> @lang('CSV File')
+                                            <input type="radio" name="output-format" value="csv" checked> @lang('CSV File')
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" id="output-format" name="output-format" value="graph"> @lang('Graph')
+                                            <input type="radio" name="output-format" value="graph"> @lang('Graph')
                                         </label>
                                     </div>
                                 </div>
@@ -157,11 +177,47 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div id="graph-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="graph"></div>
+
+                    {{--<div class="container">--}}
+                        {{--<div class="row">--}}
+                            {{--<div class="col-md-3">--}}
+                                {{--<strong>Second Data Type?</strong>--}}
+                            {{--</div>--}}
+                            {{--<div class="col-md-3">--}}
+                                {{--<strong>Second Station?</strong>--}}
+                            {{--</div>--}}
+                            {{--<div class="col-md-3">--}}
+                                {{--<strong>Which Parameter?</strong>--}}
+                            {{--</div>--}}
+                            {{--<div class="col-md-3">--}}
+                                {{--<button type="button" class="btn"> Plot Graph</button>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                </div>
+                <div class="modal-footer">
+                    <a class="btn pull-right" data-dismiss="modal">Close</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
 @endsection
 
 @section('scripts')
     <!-- Jquery ui -->
     <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <!-- Highcharts -->
+    <script src="/libs/highcharts/highcharts.js"></script>
+    <script src="/libs/highcharts/exporting.js"></script>
 
     <script>
         $( function() {
@@ -541,24 +597,30 @@
 
                 $.each(sensors, function(index, value) {
                     $('#variable').append(
-                        $('<option></option>').val(value['variable']).html(value['variable'])
+                        $('<option></option>').val(value['variable'] + '-' + value['unit']).html(value['variable'] + ' (' + value['unit'] + ')')
                     );
                 });
             }
 
             <!-- Filter data request -->
-            $("#filter-form").submit(function( event ) {
+            $("#filter-form").submit(function(event) {
                 event.preventDefault();
 
                 // inputs
                 var start_date = $('#start-date').val();
                 var end_date = $('#end-date').val();
+
                 var node_id = $('#node').val();
                 var node_name = $("#node option[value='"+ node_id +"']").text();
-                var variable = $('#variable').val();
-                var output_format = $('#output-format').val();
 
-                var url = "data?start_date=" + start_date + "&end_date=" + end_date + "&node_id=" + node_id + "&variable=" + variable;
+                var variable = $('#variable').val();
+                variable = variable.split("-");
+                var name = variable[0];
+                var unit = variable[1];
+
+                var output_format = $('input[name=output-format]:checked').val();
+
+                var url = "data?start_date=" + start_date + "&end_date=" + end_date + "&node_id=" + node_id + "&variable=" + name;
 
                 $.get(url, function (data)
                 {
@@ -570,7 +632,7 @@
                             JSONToCSVConvertor(data, filename, true);
                         } else if(output_format == 'graph')
                         {
-                            console.log(data);
+                            drawGraph(node_name, name, unit, start_date, end_date, data);
                         }
                     } else
                     {
@@ -580,7 +642,6 @@
                 }).fail(function(error){
                     console.log(error);
                 });
-
             });
 
             function JSONToCSVConvertor(JSONData,fileName,ShowLabel)
@@ -645,6 +706,81 @@
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
+            }
+
+            function drawGraph(node_name, name, unit, start_date, end_date, data)
+            {
+                // Data processing
+                var values = [];
+
+                for(var i = 0; i < data.length; i++){
+                    var year = data[i]["timestamp"][0]+data[i]["timestamp"][1]+data[i]["timestamp"][2]+data[i]["timestamp"][3];
+                    var month = data[i]["timestamp"][4]+data[i]["timestamp"][5];
+                    var day = data[i]["timestamp"][6]+data[i]["timestamp"][7];
+                    var hours = data[i]["timestamp"][8]+data[i]["timestamp"][9];
+                    var minutes = data[i]["timestamp"][10]+data[i]["timestamp"][11];
+                    var seconds = data[i]["timestamp"][12]+data[i]["timestamp"][13];
+
+                    var date_obj = Date.UTC(year, month, day, hours, minutes, seconds);
+                    values.push([date_obj, parseFloat(data[i]["value"])]);
+                }
+
+                // Graph config
+                Highcharts.setOptions({
+                    global: {
+                        useUTC: false
+                    }
+                });
+
+                var chart;
+                $(window).resize(function() {
+                    newh = $("#graph-modal").height();
+                    chart.redraw();
+                    chart.reflow();
+                });
+
+                chart = Highcharts.chart('graph', {
+
+                    title: {
+                        text: name + ' for ' + node_name
+                    },
+                    subtitle: {
+                        text: start_date + ' - ' + end_date
+                    },
+                    xAxis: {
+                        type: 'datetime',
+                        labels: {
+                            formatter: function() {
+                                return Highcharts.dateFormat('%e. %b, %Y', this.value);
+                            }
+                        }
+                    },
+                    yAxis : {
+                        title: {
+                            text: name + ' (' + unit + ')',
+                            style: {
+                                color: '#e00822'
+                            }
+                        },
+                        labels: {
+                            format: '{value} ' + unit,
+                            style: {
+                                color: '#e00822'
+                            }
+                        }
+                    },
+                    series: [{
+                        name: name,
+                        data: values,
+                        color: '#e00822',
+                        tooltip: {
+                            valueSuffix: ' ' + unit
+                        }
+                    }]
+                });
+
+                // Open modal
+                $('#graph-modal').modal('show');
             }
 
         });
