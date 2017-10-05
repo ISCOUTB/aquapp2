@@ -51,13 +51,17 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <img src="/images/brand.png" alt="brand">
                 </a>
-                <a href="http://www.unitecnologica.edu.co/" target="_blank">
-                    <img src="/images/logos/utb-white.png" alt="brand" width="92">
-                </a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <a href="http://www.unitecnologica.edu.co/" target="_blank" style="padding: 0">
+                            <img src="/images/logos/utb-white.png" alt="brand" width="92">
+                        </a>
+                    </li>
+                </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="{{ url('/admin/nodes') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> &nbsp; @lang('Login') </a></li>
                     <li class="dropdown">
