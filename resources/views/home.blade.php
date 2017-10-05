@@ -15,13 +15,13 @@
             margin-bottom: 40px;
         }
 
-        .modal-dialog {
+        #graph-modal .modal-dialog {
             width: 90%;
             height: 90%;
             padding: 0;
         }
 
-        .modal-content {
+        #graph-modal .modal-content {
             width: 100%;
             height: 100%;
             border-radius: 0;
