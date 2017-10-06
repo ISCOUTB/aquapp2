@@ -24,53 +24,24 @@ class DataController extends Controller
             if ($request->has('node_type_id'))
             {
                 $nodeTypeId = $request->input('node_type_id');
-
                 if($nodeTypeId == 'all')
                 {
                     $collection = Node::all();
                 }else{
                     $collection = Node::where('node_type_id', $nodeTypeId)->get();
                 }
-
                 $collection = $this->getCustomNodesResponse($collection);
             }
-                else if ($request->has(['node_id', 'variable', 'start_date', 'end_date']))
+            else if ($request->has(['node_id', 'variable', 'start_date', 'end_date']))
             {
-                $nodeId = $request->input('node_id');
-                $variable = $request->input('variable');
-                $startDate = $request->input('start_date');
-                $endDate = $request->input('end_date');
-
-                $startDate = date("YmdHis", strtotime($startDate));
-                $endDate = date("YmdHis", strtotime($endDate));
-
-                $data = DB::collection('sensor_data')
-                    ->where('node_id', $nodeId)
-                    ->where('variable', $variable)
-                    ->whereBetween('data.timestamp', array($startDate, $endDate))
-                    ->select('data')
-                    ->first();
-
-                $collection = [];
-
-                if($data)
-                {
-                    foreach($data['data'] as $datum)
-                    {
-                        if($datum['timestamp'] >= $startDate && $datum['timestamp'] <= $endDate)
-                        {
-                            $collection[] = $datum;
-                        }
-                    }
-                }
+                $collection = getFilteredData($request);
 
             } else
             {
-               $collection = [];
+                $collection = [];
             }
 
             return $collection;
-
         }
     }
 

@@ -607,7 +607,7 @@
                 event.preventDefault();
 
                 // inputs
-                var start_date = $('#start-date').val();
+                var start_date = $('#start-date').val(); // mm/dd/YY -> 10/01/2016 Oct 1 2016
                 var end_date = $('#end-date').val();
 
                 var node_id = $('#node').val();
@@ -622,25 +622,40 @@
 
                 var url = "data?start_date=" + start_date + "&end_date=" + end_date + "&node_id=" + node_id + "&variable=" + name;
 
-                $.get(url, function (data)
-                {
-                    if(data != "" && data != null)
-                    {
-                        if(output_format == 'csv')
-                        {
+                $.get(url, function (response) {
+                    var data = response['data'];
+
+                    if(data != "" && data != null) {
+                        if(output_format == 'csv') {
                             var filename = node_name + "_" + variable + "_" + start_date + "_" + end_date;
                             JSONToCSVConvertor(data, filename, true);
-                        } else if(output_format == 'graph')
-                        {
+                        } else if(output_format == 'graph') {
                             drawGraph(node_name, name, unit, start_date, end_date, data);
                         }
-                    } else
-                    {
+                    } else {
                         $('#error').html('<p class="text-danger"><strong>No data available</strong></p>');
                     }
 
-                }).fail(function(error){
-                    console.log(error);
+                }).fail(function(jqXHR, exception){
+                    // Our error logic here
+                    var msg = '';
+                    if (jqXHR.status === 0) {
+                        msg = 'Not connect.\n Verify Network.';
+                    } else if (jqXHR.status == 404) {
+                        msg = 'Requested page not found. [404]';
+                    } else if (jqXHR.status == 500) {
+                        msg = 'Internal Server Error [500].';
+                    } else if (exception === 'parsererror') {
+                        msg = 'Requested JSON parse failed.';
+                    } else if (exception === 'timeout') {
+                        msg = 'Time out error.';
+                    } else if (exception === 'abort') {
+                        msg = 'Ajax request aborted.';
+                    } else {
+                        msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                    }
+
+                    console.log(msg);
                 });
             });
 
@@ -652,8 +667,7 @@
                 var CSV = '';
 
                 //This condition will generate the Label/Header
-                if (ShowLabel)
-                {
+                if (ShowLabel) {
                     var row = "";
 
                     //This loop will extract the label from 1st index of on array
@@ -670,8 +684,7 @@
                 }
 
                 //1st loop is to extract each row
-                for (var i = 0; i < arrData.length; i++)
-                {
+                for (var i = 0; i < arrData.length; i++) {
                     var row = "";
 
                     //2nd loop will extract each column and convert it in string comma-seprated
@@ -685,8 +698,7 @@
                     CSV += row + '\r\n';
                 }
 
-                if (CSV == '')
-                {
+                if (CSV == '') {
                     alert("Invalid data");
                     return;
                 }
@@ -708,8 +720,7 @@
                 document.body.removeChild(link);
             }
 
-            function drawGraph(node_name, name, unit, start_date, end_date, data)
-            {
+            function drawGraph(node_name, name, unit, start_date, end_date, data) {
                 // Data processing
                 var values = [];
 
