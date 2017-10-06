@@ -19,10 +19,8 @@ class DataController extends Controller
 
     public function filterData(Request $request)
     {
-
         if($request->ajax())
         {
-
             if ($request->has('node_type_id'))
             {
                 $nodeTypeId = $request->input('node_type_id');
