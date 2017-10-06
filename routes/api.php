@@ -13,6 +13,13 @@ use Illuminate\Http\Request;
 |
 */
 
+
+/*
+ * Node Types
+ */
+Route::resource('nodetypes', 'ApiControllers\NodeType\NodeTypeController', ['only' => ['index', 'show']]);
+Route::resource('nodetypes.nodes', 'ApiControllers\NodeType\NodeTypeNodeController', ['only' => ['index']]);
+
 /*
  * Nodes
  */
