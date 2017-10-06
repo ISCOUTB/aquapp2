@@ -23,6 +23,4 @@ class NodeType extends Model
     {
         return $this->hasMany('App\Node');
     }
-
-
 }

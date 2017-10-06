@@ -14,13 +14,4 @@ class SensorData extends Model
         'node_id',
         'data'
     ];
-
-    /**
-     * Get the node_type associated with the given node.
-     */
-    public function node()
-    {
-        return $this->belongsTo('App\Node');
-    }
-
 }

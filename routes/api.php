@@ -23,4 +23,10 @@ Route::resource('nodetypes.nodes', 'ApiControllers\NodeType\NodeTypeNodeControll
 /*
  * Nodes
  */
-Route::resource('nodes', 'ApiControllers\NodeController', ['only' => ['index', 'show']]);
+Route::resource('nodes', 'ApiControllers\Node\NodeController', ['only' => ['index', 'show']]);
+Route::resource('nodes.data', 'ApiControllers\Node\NodeDataController', ['only' => ['index']]);
+
+/*
+ * Data
+ */
+Route::resource('data', 'ApiControllers\DataController', ['only' => ['index']]);
