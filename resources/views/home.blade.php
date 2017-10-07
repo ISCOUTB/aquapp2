@@ -146,10 +146,10 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-4"> @lang('Output Format') </label>
                                     <div class="col-md-8 col-sm-6 col-xs-8">
                                         <label class="radio-inline">
-                                            <input type="radio" name="output-format" value="csv" checked> @lang('CSV File')
+                                            <input type="radio" name="output-format" value="graph" checked> @lang('Graph')
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="output-format" value="graph"> @lang('Graph')
+                                            <input type="radio" name="output-format" value="csv"> @lang('CSV File')
                                         </label>
                                     </div>
                                 </div>
@@ -756,7 +756,9 @@
                 });
 
                 chart = Highcharts.chart('graph', {
-
+                    chart: {
+                      type: 'spline'
+                    },
                     title: {
                         text: name + ' for ' + node_name
                     },
