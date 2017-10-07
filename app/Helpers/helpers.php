@@ -47,6 +47,17 @@ function getFilteredData($request)
         }
     }
 
+    /*
+     * Sort data
+     */
+    function cmp($item1, $item2) {
+        $ts1 = strtotime($item1['timestamp']);
+        $ts2 = strtotime($item2['timestamp']);
+        return $ts2 - $ts1;
+    }
+
+    usort($data, "cmp");
+
     $sensorData['data'] = $data;
 
     return $sensorData;
