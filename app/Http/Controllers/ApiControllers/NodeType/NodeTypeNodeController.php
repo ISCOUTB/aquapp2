@@ -19,6 +19,11 @@ class NodeTypeNodeController extends ApiController
 
         $nodes = $nodeType->nodes;
 
+        $nodes->map(function ($node) {
+            $node = mapNode($node);
+            return $node;
+        });
+
         return $this->showAll($nodes);
     }
 

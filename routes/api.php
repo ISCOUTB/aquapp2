@@ -15,18 +15,28 @@ use Illuminate\Http\Request;
 
 
 /*
- * Node Types
+ * API Documentation
  */
-Route::resource('nodetypes', 'ApiControllers\NodeType\NodeTypeController', ['only' => ['index', 'show']]);
-Route::resource('nodetypes.nodes', 'ApiControllers\NodeType\NodeTypeNodeController', ['only' => ['index']]);
+Route::get('/', function(){
+    return view('api.swagger-api-doc');
+});
 
-/*
- * Nodes
- */
-Route::resource('nodes', 'ApiControllers\Node\NodeController', ['only' => ['index', 'show']]);
-Route::resource('nodes.data', 'ApiControllers\Node\NodeDataController', ['only' => ['index']]);
+//Route::middleware('client.credentials')->group(function () {
+    /*
+    * Node Types
+    */
+    Route::resource('node-types', 'ApiControllers\NodeType\NodeTypeController', ['only' => ['index', 'show']]);
+    Route::resource('node-types.nodes', 'ApiControllers\NodeType\NodeTypeNodeController', ['only' => ['index']]);
 
-/*
- * Data
- */
-Route::resource('data', 'ApiControllers\DataController', ['only' => ['index']]);
+    /*
+     * Nodes
+     */
+    Route::resource('nodes', 'ApiControllers\Node\NodeController', ['only' => ['index', 'show']]);
+    Route::resource('nodes.data', 'ApiControllers\Node\NodeDataController', ['only' => ['index']]);
+
+    /*
+     * Data
+     */
+    Route::resource('data', 'ApiControllers\DataController', ['only' => ['index']]);
+
+//});

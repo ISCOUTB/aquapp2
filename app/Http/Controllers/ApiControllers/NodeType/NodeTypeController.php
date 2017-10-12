@@ -18,7 +18,7 @@ class NodeTypeController extends ApiController
         $nodeTypes = NodeType::all();
 
         $nodeTypes->map(function ($nodeType) {
-            $nodeType = self::map($nodeType);
+            $nodeType = mapNodeType($nodeType);
             return $nodeType;
         });
 
@@ -35,24 +35,8 @@ class NodeTypeController extends ApiController
     {
         $nodeType = NodeType::findOrFail($id);
 
-        $nodeType = self::map($nodeType);
+        $nodeType = mapNodeType($nodeType);
 
         return $this->showOne($nodeType);
-    }
-
-    function map($nodeType)
-    {
-        $nodeType['links'] = [
-            [
-                'rel' => 'self',
-                'href' => url('api/v1/nodetypes', $nodeType->id),
-            ],
-            [
-                'rel' => 'nodetypes.nodes',
-                'href' => route('nodetypes.nodes.index', $nodeType->id),
-            ]
-        ];
-
-        return $nodeType;
     }
 }

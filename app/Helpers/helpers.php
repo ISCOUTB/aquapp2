@@ -62,3 +62,40 @@ function getFilteredData($request)
 
     return $sensorData;
 }
+
+function mapNode($node)
+{
+    $node['links'] = [
+        [
+            'rel' => 'self',
+            'href' => url('api/v1/nodes', $node->id),
+        ],
+        [
+            'rel' => 'node-types',
+            'href' => url('api/v1/node-types', $node->node_type_id),
+        ]
+        ,
+        [
+            'rel' => 'nodes.data',
+            'href' => route('nodes.data.index', $node->id),
+        ]
+    ];
+
+    return $node;
+}
+
+function mapNodeType($nodeType)
+{
+    $nodeType['links'] = [
+        [
+            'rel' => 'self',
+            'href' => url('api/v1/node-types', $nodeType->id),
+        ],
+        [
+            'rel' => 'node-types.nodes',
+            'href' => route('node-types.nodes.index', $nodeType->id),
+        ]
+    ];
+
+    return $nodeType;
+}

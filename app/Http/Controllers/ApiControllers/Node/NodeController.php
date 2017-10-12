@@ -17,7 +17,7 @@ class NodeController extends ApiController
         $nodes = Node::all();
 
         $nodes->map(function ($node) {
-            $node = self::map($node);
+            $node = mapNode($node);
             return $node;
         });
 
@@ -34,29 +34,8 @@ class NodeController extends ApiController
     {
         $node = Node::findOrFail($id);
 
-        $node = self::map($node);
+        $node = mapNode($node);
 
         return $this->showOne($node);
-    }
-
-    function map($node)
-    {
-        $node['links'] = [
-            [
-                'rel' => 'self',
-                'href' => url('api/v1/nodes', $node->id),
-            ],
-            [
-                'rel' => 'nodetype',
-                'href' => url('api/v1/nodetypes', $node->node_type_id),
-            ]
-            ,
-            [
-                'rel' => 'nodes.data',
-                'href' => route('nodes.data.index', $node->id),
-            ]
-        ];
-
-        return $node;
     }
 }
