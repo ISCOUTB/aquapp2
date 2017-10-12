@@ -8,8 +8,12 @@
 
     <title>API Documentation}</title>
 
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400|Crimson+Text' rel='stylesheet' type='text/css'>
+    <!-- Normalize -->
+    <link type="text/css" href="/css/normalize.css" rel="stylesheet">
     <!-- Bootstrap -->
-    <link href="/libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="/libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Code+Pro:300,600|Titillium+Web:400,600,700" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/swagger/swagger-ui.css" >
@@ -25,14 +29,15 @@
         body{
             overflow-x: hidden;
         }
+        .swagger-ui .model-box, .opblock-section-header, .swagger-ui .responses-inner {
+              overflow-x: scroll;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <div class="row">
-            <div id="swagger-ui"></div>
-        </div>
+        <div id="swagger-ui"></div>
     </div>
 
     <script src="/swagger/swagger-ui-bundle.js"> </script>

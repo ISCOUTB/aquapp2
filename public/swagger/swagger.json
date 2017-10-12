@@ -1,0 +1,406 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Aquapp 2.0 API",
+    "description": "API for Aquapp clients",
+    "version": "1.0.0"
+  },
+  "host": "aquapp.utb.services",
+  "schemes": [
+    "http"
+  ],
+  "basePath": "/",
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/node-types": {
+      "get": {
+        "summary": "Get all node types",
+        "description": "Returns a collection of node types",
+        "responses": {
+          "200": {
+            "description": "Node type collection",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Node-Type"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/node-types/{nodeTypeId}": {
+      "get": {
+        "summary": "Find node type by ID",
+        "description": "Returns a single node type",
+        "parameters": [
+          {
+            "name": "nodeTypeId",
+            "in": "path",
+            "description": "ID of node type to return",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Node type object",
+            "schema": {
+              "$ref": "#/definitions/Node-Type"
+            }
+          },
+          "404": {
+            "description": "Node type not found"
+          }
+        }
+      }
+    },
+    "/api/v1/node-types/{nodeTypeId}/nodes": {
+      "get": {
+        "summary": "Get all nodes with a given type",
+        "description": "Returns nodes collection",
+        "parameters": [
+          {
+            "name": "nodeTypeId",
+            "in": "path",
+            "description": "ID of node type to return",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "description": "Node collection with a given type",
+              "items": {
+                "$ref": "#/definitions/Node"
+              }
+            }
+          },
+          "404": {
+            "description": "Node type not found"
+          }
+        }
+      }
+    },
+    "/api/v1/nodes": {
+      "get": {
+        "summary": "Get all nodes",
+        "description": "Returns a collection of nodes",
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "description": "Node collection",
+              "items": {
+                "$ref": "#/definitions/Node"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/nodes/{nodeId}": {
+      "get": {
+        "summary": "Find node by ID",
+        "description": "Returns a single node",
+        "parameters": [
+          {
+            "name": "nodeId",
+            "in": "path",
+            "description": "ID of node to return",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Node object",
+            "schema": {
+              "$ref": "#/definitions/Node"
+            }
+          },
+          "404": {
+            "description": "Node not found"
+          }
+        }
+      }
+    },
+    "/api/v1/nodes/{nodeId}/data": {
+      "get": {
+        "summary": "Find available data by node ID",
+        "description": "Returns a collection of data",
+        "parameters": [
+          {
+            "name": "nodeId",
+            "in": "path",
+            "description": "ID of node which data to return",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data object",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Data"
+              }
+            }
+          },
+          "404": {
+            "description": "Node not found"
+          }
+        }
+      }
+    },
+    "/api/v1/data": {
+      "get": {
+        "summary": "Get filtered data",
+        "description": "Returns data filter by several parameters",
+        "parameters": [
+          {
+            "name": "node_id",
+            "in": "query",
+            "description": "Unique node identifier to filter by",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "start_date",
+            "in": "query",
+            "description": "Initial date to filter by",
+            "format": "mm/dd/yy",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "description": "End date to filter by",
+            "format": "mm/dd/yy",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "variable",
+            "in": "query",
+            "description": "Parameter to filter by",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filtered data",
+            "schema": {
+              "$ref": "#/definitions/Data"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Node-Type": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "description": "Unique node type identifier",
+          "example": "59c9d9019a892016ca4be412"
+        },
+        "name": {
+          "type": "string",
+          "description": "Node type name",
+          "example": "Water Quality"
+        },
+        "saparator": {
+          "type": "string",
+          "description": "Data delimiter",
+          "example": null
+        },
+        "sensors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Sensor"
+          }
+        },
+        "updated_at": {
+          "type": "string",
+          "description": "Node type last update date",
+          "example": "2017-07-28T00:05:11.000Z"
+        },
+        "created_at": {
+          "type": "string",
+          "description": "Node type storing date",
+          "example": "2017-07-28T00:05:11.000Z"
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Links"
+          }
+        }
+      }
+    },
+    "Sensor": {
+      "type": "object",
+      "properties": {
+        "variable": {
+          "type": "string",
+          "description": "Measured property",
+          "example": "Thermotolerant Coliforms"
+        },
+        "unit": {
+          "type": "string",
+          "description": "Measured unit",
+          "example": "NMP/100ml"
+        }
+      }
+    },
+    "Node": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "description": "Unique node identifier",
+          "example": "59b75c5f9a8920223f2eabe4"
+        },
+        "name": {
+          "type": "string",
+          "description": "Node name",
+          "example": "Laguna de Chambacú"
+        },
+        "location": {
+          "type": "string",
+          "description": "City location reference",
+          "example": "Centro, Puerto Duro. Frente Al Gigante Del Hogar"
+        },
+        "coordinates": {
+          "type": "array",
+          "items": {
+            "type": "float",
+            "example": "10.425083333333, -75.543888888889"
+          }
+        },
+        "status": {
+          "type": "string",
+          "description": "Node current status",
+          "enum": [
+            "Real Time",
+            "Non Real Time",
+            "Off"
+          ],
+          "example": "Off"
+        },
+        "node_type_id": {
+          "type": "integer",
+          "description": "Node type unique identifier",
+          "example": "59c9d9019a892016ca4be412"
+        },
+        "updated_at": {
+          "type": "string",
+          "description": "Node last update date",
+          "example": "2017-07-28T00:05:11.000Z"
+        },
+        "created_at": {
+          "type": "string",
+          "description": "Node storing date",
+          "example": "2017-07-28T00:05:11.000Z"
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Links"
+          }
+        }
+      }
+    },
+    "Data": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "description": "Unique data identifier",
+          "example": "59c9d12312016ca4be1892"
+        },
+        "variable": {
+          "type": "string",
+          "description": "Data collected variable"
+        },
+        "node_id": {
+          "type": "integer",
+          "description": "Unique node identifier",
+          "example": "59b75c5f9a8920223f2eabe4"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Datum"
+          }
+        },
+        "updated_at": {
+          "type": "string",
+          "description": "Node last update date",
+          "example": "2017-07-28T00:05:11.000Z"
+        },
+        "created_at": {
+          "type": "string",
+          "description": "Node storing date",
+          "example": "2017-07-28T00:05:11.000Z"
+        }
+      }
+    },
+    "Datum": {
+      "type": "object",
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "description": "collecting date",
+          "format": "yyyymmddhhmiss",
+          "example": 20161008185500
+        },
+        "value": {
+          "type": "float",
+          "description": "measured value",
+          "example": 0.209
+        }
+      }
+    },
+    "Links": {
+      "type": "object",
+      "properties": {
+        "rel": {
+          "type": "string",
+          "description": "Hypermedia link relationship with the current returned object",
+          "example": "self"
+        },
+        "href": {
+          "type": "string",
+          "description": "URI to described resource",
+          "example": "http://aquapp.utb.services/api/v1/nodes/59b75c5f9a8920223f2eabe4"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    },
+    "ubikate_auth": {
+      "type": "oauth2",
+      "flows": {
+        "implicit": {
+          "authorizationUrl": "http://aquapp.utb.services/oauth/token"
+        }
+      }
+    }
+  }
+}

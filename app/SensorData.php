@@ -6,7 +6,6 @@ use Jenssegers\Mongodb\Eloquent\Model;
 
 class SensorData extends Model
 {
-
     protected $collection = 'sensor_data';
 
     protected $fillable = [
