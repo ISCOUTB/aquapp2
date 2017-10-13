@@ -2,8 +2,8 @@
 
 namespace App\Exceptions;
 
-use App\Traits\ApiResponser;
 use Exception;
+use App\Traits\ApiResponser;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -52,46 +52,48 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof TokenMismatchException) {
+            return redirect()->back()->withInput($request->input());
+        }
+
         if ($exception instanceof ModelNotFoundException) {
-            // api 404 json feedback
-            if ($request->is('api/*')) {
-                $model = strtolower(class_basename($exception->getModel())); // Instance without namespace
-                return $this->errorResponse("No instance of {$model} with specified id", 404);
+
+            if($this->isFrontend($request)) {
+                return back();
             }
 
-            // normal 404 view page feedback
-            return back();
+            $model = strtolower(class_basename($exception->getModel())); // Instance without namespace
+
+            return $this->errorResponse("No instance of {$model} with specified id", 404);
         }
 
         if ($exception instanceof NotFoundHttpException) {
-            // api 404 json feedback
             if ($request->is('api/*')) {
                 return $this->errorResponse("Specified URL not found", 404);
             }
 
-            // normal 404 view page feedback
             return response()->view('errors.404');
         }
 
         if ($exception instanceof MethodNotAllowedHttpException) {
-            // api 404 json feedback
-            if ($request->is('api/*')) {
-                return $this->errorResponse("The request method is not valid", 405);
+
+            if($this->isFrontend($request)) {
+                return back();
             }
 
-            return back();
+            return $this->errorResponse("The request method is not valid", 405);
         }
 
         if (config('app.debug')) {
             return parent::render($request, $exception);
         }
 
-        if ($request->is('api/*')) {
-            return $this->errorResponse("Unexpected failure. Try later", 500);
+        if($this->isFrontend($request)) {
+            return response()->view('errors.500');
         }
 
-        // normal 500 view page feedback
-        return response()->view('errors.500');
+        return $this->errorResponse("Unexpected failure. Try later", 500);
+
     }
 
     /**
@@ -109,4 +111,16 @@ class Handler extends ExceptionHandler
 
         return redirect()->guest(route('login'));
     }
+
+    private function isFrontend($request)
+    {
+        dd($request->expectsJson());
+        return $request->acceptsHtml() && collect($request->route()->middleware())->contains('web');
+    }
 }
+
+//        if($this->isFrontend($request)) {
+//            return redirect()->guest('login');
+//        }
+//
+//        return $this->errorResponse("Unauthenticated", 401);
