@@ -28,17 +28,7 @@
 
 <nav class="navbar navbar-light">
     <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-language fa-fw" aria-hidden="true"></i> &nbsp; {{ Config::get('locale')[App::getLocale()] }} <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                @foreach (Config::get('locale') as $key => $locale)
-                    @if ($key != App::getLocale())
-                        <li><a href="{{ route('locale', $key) }}">{{ $locale }}</a></li>
-                    @endif
-                @endforeach
-            </ul>
-        </li>
+        <li><a href="{{ url('/') }}"><i class="fa fa-home" aria-hidden="true"></i> &nbsp; @lang('Home') </a></li>
         <li><a href="javascript:void(0)"><i class="fa fa-question-circle" aria-hidden="true"></i> &nbsp; @lang('Help') </a></li>
     </ul>
 </nav>
@@ -46,7 +36,7 @@
 @yield('content')
 
 <footer class="footer">
-    <small class="text">Copyright © 2017. Universidad Tecnologica de Bolivar. Cartagena de Indias, Colombia</small>
+    <small class="text">Copyright © 2017. Universidad Tecnologica de Bolivar.</small>
 </footer>
 
 <!-- Jquery -->
