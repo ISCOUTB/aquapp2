@@ -170,8 +170,10 @@
                     </div>
                 </div>
                 <div class="col-md-8 fixedcol">
-                    <div id="map">
-                        <div id="leafletMap"></div>
+                    <div class="container">
+                        <div id="map">
+                            <div id="leafletMap"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -250,7 +252,7 @@
             });
 
             <!-- Leaflet Map -->
-            var map = L.map('map').setView([10.421111, -75.522323], 14);
+            var map = L.map('map').setView([10.4261961, -75.5364990], 14);
 
             L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
                 maxZoom: 18,

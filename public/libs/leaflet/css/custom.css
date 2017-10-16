@@ -12,8 +12,9 @@
 .info {
     padding: 10px;
     font: 16px 'Lato', serif;
-    background: #ffffff;
-    box-shadow: 0 0 15px rgba(0,0,0,0.9);
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
     border-radius: 5px;
 }
 .info h4 {
@@ -34,8 +35,33 @@
     margin-right: 8px;
     opacity: 0.7;
 }
+
 .legend p{
     margin-bottom: 8px;
+}
+
+@media screen and (max-width: 767px) {
+    .leaflet-popup-content{
+        font-size: 0.8em;
+        padding: 0;
+    }
+
+    .leaflet-popup-title {
+        font-size: 0.9em;
+    }
+
+    /* Uper info window & bottom legend */
+    .info {
+        font-size: 12px;
+        padding: 6px;
+    }
+    .info h4 {
+        font-size: 1.1em;
+        margin: 0;
+    }
+    .legend p{
+        margin-bottom: 0;
+    }
 }
 
 /*
