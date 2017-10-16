@@ -42,21 +42,21 @@
 
 @media screen and (max-width: 767px) {
     .leaflet-popup-content{
-        font-size: 0.6em;
+        font-size: 0.8em;
         padding: 0;
     }
 
     .leaflet-popup-title {
-        font-size: 0.6em;
+        font-size: 0.9em;
     }
 
     /* Uper info window & bottom legend */
     .info {
-        font-size: 8px;
+        font-size: 12px;
         padding: 3px 5px;
     }
     .info h4 {
-        font-size: 1em;
+        font-size: 1.1em;
         margin: 0;
     }
     .legend p{
