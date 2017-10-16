@@ -55,7 +55,7 @@
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-left">
+                <ul class="nav navbar-nav navbar-left hidden-xs">
                     <li>
                         <a href="http://www.unitecnologica.edu.co/" target="_blank" style="padding: 0">
                             <img src="/images/logos/utb-white.png" alt="brand" width="92">

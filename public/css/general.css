@@ -32,6 +32,14 @@ body {
 .navbar-default .navbar-nav>li>a{
     color: #fff;
 }
+.navbar-default .navbar-toggle, .navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover,.navbar-default
+.navbar-toggle:active, .navbar-default .navbar-toggle:visited {
+    background-color: #007EE5;
+}
+.navbar-default .navbar-toggle:hover .icon-bar{
+    color: #fff;
+}
+
 .navbar-default .navbar-nav>li>a:hover,
 .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:active{
     color: #fff;
@@ -45,13 +53,9 @@ body {
     width: 125px;
     margin: 0;
 }
-.navbar-default .navbar-toggle .icon-bar {
+.navbar-default .navbar-toggle .icon-bar, .navbar-default .navbar-toggle .icon-bar:hover  {
     background-color: #fff;
 }
-.navbar-default .navbar-toggle:hover .icon-bar{
-    background-color: #0b0b0b;
-}
-
 .navbar-default .dropdown-menu li a:hover{
     border-bottom: none;
 }
