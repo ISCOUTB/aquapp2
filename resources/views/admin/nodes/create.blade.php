@@ -153,7 +153,7 @@
                 </div>
             @endforeach
             <div class="col-sm-6">
-                <div class="radio-primary">
+                <div class="radio-inline radio-primary">
                     <input type="radio" name="node-type" id="node-type" data-toggle="modal" data-target="#schemaModal" value="sending-schema">
                     <label for="node-type" class="radio-inline">
                         @lang('Choose Data Sending Schema')
@@ -179,7 +179,7 @@
                     <h3 class="modal-title tex"><strong>@lang('Set Node Data Sending Schema')</strong></h3>
                 </div>
                 <div class="modal-body" style="padding: 30px">
-                    <form id="node-type-form">
+                    <form id="node-type-form" class="form-horizontal">
                         <div class="row">
                             <div class="form-group">
                                 <label class="control-label col-md-4" for="type-name">@lang('Node Type Name')</label>
@@ -195,34 +195,22 @@
                             <div class="form-group">
                                 <label class="control-label col-md-4" for="type-name">@lang('Split Data By')</label>
                                 <div class="col-md-8">
-                                    <div style="padding:16px;">
-                                        <div class="row">
-                                            <label class="radio-inline">
-                                                <input type="radio" name="delimiter" value="whitespace" checked> @lang('Whitespace') ( )
-                                            </label>
-                                            <label class="radio-inline">
-                                                <input type="radio" name="delimiter" value=";"> @lang('Semicolon') ( ; )
-                                            </label>
-                                            <label class="radio-inline">
-                                                <input type="radio" name="delimiter" value="-"> @lang('Hyphen') ( - )
-                                            </label>
-                                            <label class="radio-inline">
-                                                <input type="radio" name="delimiter" value="/"> @lang('Slash') ( / )
-                                            </label>
-                                        </div>
-                                        <br>
-                                        <div class="row form-group">
-                                            <label class="radio-inline col-md-2">
-                                                <input type="radio" name="delimiter" value="other-delimiter"> @lang('Other')
-                                            </label>
-                                            <div class="col-md-4">
-                                                <input class="form-control" id="other" type="text" maxlength="3">
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <label class="radio-inline"><input type="radio" name="delimiter" value="whitespace" checked> @lang('Whitespace') ( )</label>
+                                    <label class="radio-inline"><input type="radio" name="delimiter" value=";"> @lang('Semicolon') ( ; )</label>
+                                    <label class="radio-inline"><input type="radio" name="delimiter" value="-"> @lang('Hyphen') ( - ) </label>
+                                    <label class="radio-inline"><input type="radio" name="delimiter" value="/"> @lang('Slash') ( / )</label>
+                                    <label class="radio-inline"><input type="radio" name="delimiter" value="other-delimiter"> @lang('Other')</label>
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6 col-md-push-4">
+                                <input class="form-control" id="other" type="text" maxlength="3">
+                            </div>
+                        </div>
+
+                        <br>
 
                         <div class="row">
                             <div class="form-group" id="sending-schema-div">
