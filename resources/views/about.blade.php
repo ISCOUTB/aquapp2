@@ -203,15 +203,19 @@
                 </p>
 
                 <h2>Web Technologies</h2>
-                <p>
-                    At Bootply we like to build simple Bootstrap templates that utilize the code Bootstap CSS without a lot of customization. Sure you can
-                    find a lot of Bootstrap themes and inspiration, but these templates tend to be heavy on customization.
-                </p>
-
                 <div class="row">
-                    <div class="col-md-3 col-xs-4"><img src="/images/web-technologies/css3.png" class="img-responsive" width="100"></div>
-                    <div class="col-md-3 col-xs-4"><img src="/images/web-technologies/css3.png" class="img-responsive" width="100"></div>
-                    <div class="col-md-3 col-xs-4"><img src="/images/web-technologies/css3.png" class="img-responsive" width="100"></div>
+                    <div class="col-xs-2"><img class="img-responsive" data-toggle="tooltip" data-placement="bottom" title="HTML5" src="/images/web-technologies/html5.png" width="60"></div>
+                    <div class="col-xs-2"><img class="img-responsive" data-toggle="tooltip" data-placement="bottom" title="CSS3" src="/images/web-technologies/css3.png" width="60"></div>
+                    <div class="col-xs-2"><img class="img-responsive" data-toggle="tooltip" data-placement="bottom" title="JavaScript" src="/images/web-technologies/js.png" width="57"></div>
+                    <div class="col-xs-2"><img class="img-responsive" data-toggle="tooltip" data-placement="bottom" title="Jquery" src="/images/web-technologies/jquery.png" width="60"></div>
+                    <div class="col-xs-2"><img class="img-responsive" data-toggle="tooltip" data-placement="bottom" title="Bootstrap 3" src="/images/web-technologies/bootstrap.png" width="70"></div>
+                    <div class="col-xs-2"><img class="img-responsive" data-toggle="tooltip" data-placement="bottom" title="Laravel" src="/images/web-technologies/laravel.png" width="65"></div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-xs-2"><img class="img-responsive" data-toggle="tooltip" data-placement="bottom" title="Highcharts" src="/images/web-technologies/highcharts.png" width="60"></div>
+                    <div class="col-xs-3"><img class="img-responsive" data-toggle="tooltip" data-placement="bottom" title="Leafletjs" src="/images/web-technologies/leafletjs.png" width="160" style="margin-top: 14px"></div>
+                    <div class="col-xs-2"><img class="img-responsive" data-toggle="tooltip" data-placement="bottom" title="Git" src="/images/web-technologies/git.png" width="90" style="margin-top: 18px"></div>
                 </div>
 
                 <hr class="section-divisor">
@@ -294,18 +298,24 @@
 
 @section('scripts')
     <script>
-        $('#sidebar').affix({
-            offset: {
-                top: 245
-            }
-        });
+        $(document).ready(function(){
+            // Scrollspy
+            $('#sidebar').affix({
+                offset: {
+                    top: 245
+                }
+            });
 
-        var $body   = $(document.body);
-        var navHeight = $('.navbar').outerHeight(true) + 10;
+            var $body   = $(document.body);
+            var navHeight = $('.navbar').outerHeight(true) + 10;
 
-        $body.scrollspy({
-            target: '#leftCol',
-            offset: navHeight
+            $body.scrollspy({
+                target: '#leftCol',
+                offset: navHeight
+            });
+
+            // Tooltip
+            $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
 @endsection
