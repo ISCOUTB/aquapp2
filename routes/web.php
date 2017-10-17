@@ -13,8 +13,9 @@
 
 // Home Routes
 Route::get('/', 'DataController@getHome');
-Route::get('data', 'DataController@filterData');
+Route::get('about', 'DataController@getAbout');
 
+Route::get('data', 'DataController@filterData');
 
 // Locale Configure
 Route::get('locale/{locale}', 'LocaleController@switchLanguage')->name('locale');

@@ -63,4 +63,9 @@ class DataController extends Controller
 
         return $data;
     }
+
+    public function getAbout()
+    {
+        return view('about');
+    }
 }

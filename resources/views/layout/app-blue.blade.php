@@ -29,7 +29,7 @@
 <nav class="navbar navbar-light">
     <ul class="nav navbar-nav navbar-right">
         <li><a href="{{ url('/') }}"><i class="fa fa-home" aria-hidden="true"></i> &nbsp; @lang('Home') </a></li>
-        <li><a href="javascript:void(0)"><i class="fa fa-question-circle" aria-hidden="true"></i> &nbsp; @lang('Help') </a></li>
+        <li><a href="{{ url('about') }}"><i class="fa fa-question-circle" aria-hidden="true"></i> &nbsp; @lang('About') </a></li>
     </ul>
 </nav>
 

@@ -75,7 +75,7 @@
                             @endforeach
                         </ul>
                     </li>
-                    <li><a href="javascript:void(0)"><i class="fa fa-question-circle" aria-hidden="true"></i> &nbsp; @lang('About') </a></li>
+                    <li><a href="{{ url('about') }}"><i class="fa fa-question-circle" aria-hidden="true"></i> &nbsp; @lang('About') </a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
