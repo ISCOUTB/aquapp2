@@ -106,16 +106,16 @@
                     <li>
                         <a href="#aquapp">Aquapp 2.0</a>
                         <ul class="nav">
-                            <li class="subsection"><a href="#">Project</a></li>
-                            <li class="subsection"><a href="#">Features</a></li>
-                            <li class="subsection"><a href="#">How it works?</a></li>
-                            <li class="subsection"><a href="#">Web Technologies</a></li>
+                            <li class="subsection"><a href="#">@lang('Project')</a></li>
+                            <li class="subsection"><a href="#">@lang('Features')</a></li>
+                            <li class="subsection"><a href="#">@lang('How it works?')</a></li>
+                            <li class="subsection"><a href="#">@lang('Web Technologies')</a></li>
                         </ul>
                     </li>
-                    <li><a href="#faqs">FAQs</a></li>
-                    <li><a href="#team">Team</a></li>
-                    <li><a href="#terms">Terms & Conditions</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#faqs">@lang('FAQs')</a></li>
+                    <li><a href="#team">@lang('Team')</a></li>
+                    <li><a href="#terms">@lang('Terms & Conditions')</a></li>
+                    <li><a href="#contact">@lang('Contact')</a></li>
                     {{--<li><a href="#sec4">API v1.0</a></li>--}}
                 </ul>
             </div>
@@ -123,26 +123,23 @@
             <div class="container">
                 <div class="col-md-9">
                     <h1 id="aquapp">Aquapp 2.0</h1>
-                    <h2>Project</h2>
+                    <h2>@lang('Project')</h2>
                     <p>
                         At Bootply we like to build simple Bootstrap templates that utilize the code Bootstap CSS without a lot of customization. Sure you can
                         find a lot of Bootstrap themes and inspiration, but these templates tend to be heavy on customization.
                     </p>
 
-                    <h2>Features</h2>
+                    <h2>@lang('Features')</h2>
                     <div class="row">
                         <div class="col-md-4 col-xs-12">
                             <h3>
                             <span class="fa-stack fa-lg">
                               <i class="fa fa-calendar-check-o"></i>
                             </span>
-                                Real Data
+                                @lang('Real Data')
                             </h3>
                             <p>
-                                {{--Los datos disponibles en la plataforma son recolectados por estudiantes de pregrado de la UTB a través de una sonda multi-parámetrica. Los--}}
-                                {{--monitoreos son realizados una vez por semana, y se espera realizar la recolección de datos remotamente en una segunda etapa del proyecto.--}}
-                                Data is collected by UTB undergraduate students through a multi-parameter probe. Monitoring is performed once a week, and data collection is
-                                expected to be remotely in a second stage of the project.
+                                @lang('Data is collected by UTB undergraduate students through a multi-parameter probe. Monitoring is performed once a week, and data collection is expected to be remotely in a second stage of the project')
                             </p>
                         </div>
                         <div class="col-md-4 col-xs-12">
@@ -150,10 +147,10 @@
                             <span class="fa-stack fa-lg">
                               <i class="fa fa-filter"></i>
                             </span>
-                                Filtering
+                                @lang('Filtering')
                             </h3>
                             <p>
-                                Available data can be filtered by picking a station type, date range, station, and parameter using the form on the left side of the screen.
+                                @lang('Available data can be filtered by picking a station type, date range, station, and parameter using the form on the left side of the screen')
                             </p>
                         </div>
                         <div class="col-md-4 col-xs-12">
@@ -161,11 +158,10 @@
                             <span class="fa-stack fa-lg">
                               <i class="fa fa-download"></i>
                             </span>
-                                Download
+                                @lang('Download')
                             </h3>
                             <p>
-                                After filtering data and getting exactly what you need, it can be downloaded as a Comma Separated Values (CSV) file, or get a representation
-                                as a graph which you can download in different file formats as well.
+                                @lang('After filtering data, it can be downloaded as a Comma Separated Values (CSV) file, or get a representation as a graph which you can download in different file formats as well')
                             </p>
                         </div>
                     </div>
@@ -176,14 +172,10 @@
                             <span class="fa-stack fa-lg">
                               <i class="fa fa-clock-o"></i>
                             </span>
-                                Availble
+                                @lang('No restriction')
                             </h3>
                             <p>
-                                {{--A diferencia de otras instituciones con planes de monitoreo sobre cuerpos de agua del sistema lagunar de Cartagena y que restringen el acceso--}}
-                                {{--a los datos tomados, Aquapp brinda información disponible para toda la comunidad.--}}
-                                Unlike other institutions with monitoring plans on water bodies of the internal creeks and lakes system of Cartagena that restrict access to the data taken,
-                                Aquapp provides information available for the entire community.
-
+                                @lang('Unlike other institutions with monitoring plans on water bodies of the internal creeks and lakes system of Cartagena that restrict access to the data taken, Aquapp provides information available for the entire community')
                             </p>
                         </div>
                         <div class="col-md-4 col-xs-12">
@@ -191,12 +183,10 @@
                             <span class="fa-stack fa-lg">
                               <i class="fa fa-paint-brush"></i>
                             </span>
-                                Cool
+                                @lang('Cool')
                             </h3>
                             <p>
-                                To guarantee a great experience, we developed a well-built website up-to-date, with worthwhile content and an improved user interface
-                                good navigation for quick and easy travel throughout the entire website.
-
+                                @lang('To guarantee a great experience, we developed a well-built website up-to-date, with worthwhile content and an improved user interface with good navigation for quick and easy travel throughout the entire website')
                             </p>
                         </div>
                         <div class="col-md-4 col-xs-12">
@@ -204,15 +194,15 @@
                             <span class="fa-stack fa-lg">
                               <i class="fa fa-desktop"></i>
                             </span>
-                                Cross Browser
+                                @lang('Cross Browser')
                             </h3>
                             <p>
-                                We built this compatible with all modern browsers. You are allow to use it in Chrome, Firefox, Safari and Opera, feel free to prove it yourself.
+                                @lang('We built this compatible with all modern browsers. You are allow to use it in Chrome, Firefox, Safari and Opera, feel free to prove it yourself')
                             </p>
                         </div>
                     </div>
 
-                    <h2>How it works?</h2>
+                    <h2>@lang('How it works?')</h2>
 
                     {{--Available formats are a graph or a Comma Separated Values (CSV) file that can be viewed in Excel or any other spreadsheet program.--}}
                     {{--After selecting a data type, date range, station, and parameter, click the circle next to the word “Graph”, then click the blue "Get Data" button.--}}
@@ -231,8 +221,8 @@
                         find a lot of Bootstrap themes and inspiration, but these templates tend to be heavy on customization.
                     </p>
 
-                    <h2>Web Technologies</h2>
-                    <p>Developed with the best Web Design Technologies</p>
+                    <h2>@lang('Web Technologies')</h2>
+                    <p>@lang('Developed with the best Web Design Technologies')</p>
                     <div class="row">
                         <div class="col-xs-2"><img class="img-responsive" data-toggle="tooltip" data-placement="bottom" title="HTML5" src="/images/web-technologies/html5.png" width="60"></div>
                         <div class="col-xs-2"><img class="img-responsive" data-toggle="tooltip" data-placement="bottom" title="CSS3" src="/images/web-technologies/css3.png" width="60"></div>
@@ -250,7 +240,7 @@
 
                     <hr class="section-divisor">
 
-                    <h1 id="faqs">FAQs</h1>
+                    <h1 id="faqs">@lang('FAQs')</h1>
                     <p>
                         Rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
                         dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut.
@@ -280,7 +270,7 @@
 
                     <hr class="section-divisor">
 
-                    <h1 id="team">Team</h1>
+                    <h1 id="team">@lang('Team')</h1>
                     <p>
                         Rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
                         dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia cor magni dolores
@@ -296,7 +286,7 @@
 
                     <hr class="section-divisor">
 
-                    <h1 id="terms">Terms & Conditions</h1>
+                    <h1 id="terms">@lang('Terms & Conditions')</h1>
                     <p>
                         Images are responsive sed @mdo but sum are more fun peratis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
                         totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
@@ -308,7 +298,7 @@
 
                     <hr class="section-divisor">
 
-                    <h1 id="contact">Contact</h1>
+                    <h1 id="contact">@lang('Contact')</h1>
                     <p>
                         Rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
                         dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia cor magni dolores

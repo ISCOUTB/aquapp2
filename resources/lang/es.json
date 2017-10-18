@@ -75,5 +75,27 @@
 
   "404. Page not found.": "404. Página no encontrada.",
   "The page you are looking for does not exist.": "La página que buscas no existe.",
-  "Unexpected failure. Try later": "Falla inesperada. Intenta más tarde"
+  "Unexpected failure. Try later": "Falla inesperada. Intenta más tarde",
+
+  "Project" : "Proyecto",
+  "Features" : "Características",
+  "How it works?" : "¿Cómo funciona?",
+  "Web Technologies" : "Tecnologías web",
+  "FAQs" : "Preguntas frecuentes",
+  "Team" : "Equipo",
+  "Terms & Conditions" : "Términos y condiciones",
+  "Contact" : "Contacto",
+  "Real Data" : "Datos reales",
+  "Data is collected by UTB undergraduate students through a multi-parameter probe. Monitoring is performed once a week, and data collection is expected to be remotely in a second stage of the project" : "Los datos disponibles en la plataforma son recolectados por estudiantes de pregrado de la UTB a través de una sonda multi-parámetrica. Los monitoreos son realizados una vez por semana, y se espera realizar la recolección de datos remotamente en una segunda etapa del proyecto",
+  "Filtering" : "Filtrado",
+  "Available data can be filtered by picking a station type, date range, station, and parameter using the form on the left side of the screen" : "Los datos disponibles pueden ser filtrados seleccionando un tipo de estación, rango de fechas, estación y parámetro usando el formulario al lado izquierdo de la pantalla",
+  "Download" : "Descarga",
+  "After filtering data, it can be downloaded as a Comma Separated Values (CSV) file, or get a representation as a graph which you can download in different file formats as well" : "Después de filtrar datos, puedes descargarlos como un archivo de valores separados por comas (CSV) o obtener una representación gráfica que también puede descargar en diferentes formatos",
+  "No restriction" : "Sin restricción",
+  "Unlike other institutions with monitoring plans on water bodies of the internal creeks and lakes system of Cartagena that restrict access to the data taken, Aquapp provides information available for the entire community" : "A diferencia de otras instituciones con planes de monitoreo sobre cuerpos de agua del sistema lagunar de Cartagena y que restringen el acceso a los datos tomados, Aquapp brinda información disponible para toda la comunidad",
+  "Cool" : "Amable",
+  "To guarantee a great experience, we developed a well-built website up-to-date, with worthwhile content and an improved user interface with good navigation for quick and easy travel throughout the entire website" : "Para garantizar una gran experiencia, desarrollamos plataforma con información actualizada, contenido que vale la pena y una interfaz de usuario mejorada, que cuenta con elementos que permiten la navegación por las diferentes secciones",
+  "Cross Browser" : "Compatible",
+  "We built this compatible with all modern browsers. You are allow to use it in Chrome, Firefox, Safari and Opera, feel free to prove it yourself" : "Lo construimos para ser compatible con todos los navegadores modernos. Puedes usarlo en Chrome, Firefox, Safari y Opera, siéntete libre para probarlo",
+  "Developed with the best Web Design Technologies" : "Desarrollado con las mejores tecnologías web"
 }
