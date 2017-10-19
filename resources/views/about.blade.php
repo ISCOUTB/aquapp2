@@ -323,25 +323,17 @@
                     </p>
 
                     <p>
-                        <a class="pull-right" href="http://www.gnu.org/licenses/agpl-3.0.en.html" target="_blank">... <strong>@lang('Read more here')</strong></a>
+                        <strong><a class="pull-right" href="http://www.gnu.org/licenses/agpl-3.0.en.html" target="_blank">... @lang('Read more here')</a></strong>
                     </p>
                     <br>
 
                     <hr class="section-divisor">
 
                     <h1 id="contact">@lang('Contact')</h1>
-                    <p>
-                        Rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
-                        dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia cor magni dolores
-                        eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit,
-                        sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
-                        Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut!
-                    </p>
-                    <div class="row">
-                        <div class="col-md-4"><img src="//placehold.it/300x300" class="img-responsive"></div>
-                        <div class="col-md-4"><img src="//placehold.it/300x300" class="img-responsive"></div>
-                        <div class="col-md-4"><img src="//placehold.it/300x300" class="img-responsive"></div>
-                    </div>
+                    <p>@lang('You are free to drop us some lines by adding a comment on our project Wiki. Besides, esta wiki (on GitHub) will help you get in-depth information the project.')</p>
+                    <strong><a href="https://github.com/IngenieriaDeSistemasUTB/aquapp2/wiki/_new" target="_blank">@lang('Join the conversation')</a></strong>
+
+                    <hr class="section-divisor">
                 </div>
             </div>
         </div>
