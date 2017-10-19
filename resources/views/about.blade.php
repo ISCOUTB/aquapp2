@@ -80,11 +80,7 @@
         }
 
         h3{
-            margin-bottom: 0;
-        }
-
-        h2{
-            /*margin-bottom: 10px;*/
+            margin-bottom: 6px;
         }
 
         .fa{
@@ -93,6 +89,9 @@
 
         p{
             text-align: justify;
+        }
+        .margin-0{
+            margin-bottom: 0;
         }
 
     </style>
@@ -104,7 +103,7 @@
             <div class="col-md-3" id="leftCol">
                 <ul class="nav nav-stacked" id="sidebar">
                     <li>
-                        <a href="#aquapp">Aquapp 2.0</a>
+                        <a href="#aquapp">AquApp 2.0</a>
                         <ul class="nav">
                             <li class="subsection"><a href="#">@lang('Project')</a></li>
                             <li class="subsection"><a href="#">@lang('Features')</a></li>
@@ -122,7 +121,7 @@
 
             <div class="container">
                 <div class="col-md-9">
-                    <h1 id="aquapp">Aquapp 2.0</h1>
+                    <h1 id="aquapp">AquApp 2.0</h1>
                     <h2>@lang('Project')</h2>
                     <p>
                         At Bootply we like to build simple Bootstrap templates that utilize the code Bootstap CSS without a lot of customization. Sure you can
@@ -287,14 +286,46 @@
                     <hr class="section-divisor">
 
                     <h1 id="terms">@lang('Terms & Conditions')</h1>
+                    <h3>@lang('Information')</h3>
+
                     <p>
-                        Images are responsive sed @mdo but sum are more fun peratis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-                        totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
-                        dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia cor magni dolores
-                        eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit,
-                        sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
-                        Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut
+                        @lang('AquApp 2.0 is a platform supporting a program for monitoring water quality of Cartagena de Indias internal creeks and lakes system.')
+                        Copyright © 2017 - @lang('All rights reserved'). <a target="_blank" href="http://www.unitecnologica.edu.co/">Universidad Tecnológica de Bolívar</a>
                     </p>
+
+                    <p>
+                        @lang('This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.')
+                    </p>
+
+                    <p>
+                        @lang('This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more details.')
+                    </p>
+
+                    <p>
+                        @lang('You should have received a copy of the GNU Affero General Public License along with this program.  If not, see') <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses</a>
+                    </p>
+
+                    <h3>@lang('License') </h3>
+                    <h4 class="margin-0">GNU AFFERO GENERAL PUBLIC LICENSE</h4>
+                    <p class="margin-0">@lang('Version 3, 19 November 2007')</p>
+                    <p>
+                        Copyright © 2007 Free Software Foundation, Inc. <a href="http://fsf.org/">http://fsf.org/</a>
+                        @lang('Everyone is permitted to copy and distribute verbatim copies of this license document, but changing it is not allowed.')
+                    </p>
+
+                    <h4>@lang('Preamble')</h4>
+                    <p>
+                        @lang('The GNU Affero General Public License is a free, copyleft license for software and other kinds of works, specifically designed to ensure cooperation with community in the case of network server software.')
+                    </p>
+
+                    <p>
+                        @lang('The licenses for most software and other practical works are designed to take away your freedom to share and change the works. By contrast, our General Public Licenses are intended to guarantee your freedom to share and change all versions of a program--to make sure it remains free software for all its users.')
+                    </p>
+
+                    <p>
+                        <a class="pull-right" href="http://www.gnu.org/licenses/agpl-3.0.en.html" target="_blank">... <strong>@lang('Read more here')</strong></a>
+                    </p>
+                    <br>
 
                     <hr class="section-divisor">
 
