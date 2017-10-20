@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('title')
-    About AquApp
+    About
 @endsection
 
 @section('styles')
@@ -21,10 +21,6 @@
             display: block;
         }
 
-        /*.navbar-bright a, #masthead a, #masthead .lead {*/
-            /*color:#aaaacc;*/
-        /*}*/
-
         .navbar-bright li > a:hover {
             background-color:#000033;
         }
@@ -33,10 +29,10 @@
             position: static;
         }
 
-        @media (min-width: 979px) {
+        @media (min-width: 1000px) {
             #sidebar.affix-top {
                 position: static;
-                margin-top:30px;
+                margin-top:40px;
                 width:228px;
             }
 
@@ -44,6 +40,12 @@
                 position: fixed;
                 top:70px;
                 width:228px;
+            }
+        }
+
+        @media (max-width: 999px){
+            .affix-top,.affix{
+                margin-bottom: 30px;
             }
         }
 
@@ -94,6 +96,27 @@
             margin-bottom: 0;
         }
 
+        /* Contact */
+        .thumbnail {
+            padding: 0;
+        }
+
+        .thumbnail a img {
+            height: 200px;
+        }
+
+        .caption {
+            margin-bottom: 0;
+        }
+
+        .caption div {
+            border-left: 5px solid #ddd;
+            padding: 5px 9px 2px;
+        }
+
+        .caption div p {
+            margin-bottom: 0;
+        }
     </style>
 @endsection
 
@@ -270,17 +293,71 @@
                     <hr class="section-divisor">
 
                     <h1 id="team">@lang('Team')</h1>
-                    <p>
-                        Rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
-                        dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia cor magni dolores
-                        eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit,
-                        sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
-                        Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut!
-                    </p>
                     <div class="row">
-                        <div class="col-md-4"><img src="//placehold.it/300x300" class="img-responsive"></div>
-                        <div class="col-md-4"><img src="//placehold.it/300x300" class="img-responsive"></div>
-                        <div class="col-md-4"><img src="//placehold.it/300x300" class="img-responsive"></div>
+                        <div class="col-xs-12 col-sm-6 col-sm-4 col-md-4">
+                            <div class="thumbnail">
+                                <a href="http://www.unitecnologica.edu.co/noticias/utb-gradua-su-promocion-n-65" target="_blank">
+                                    <img src="/images/team/laura-schiatti.png" alt="team-picture">
+                                    <div class="caption">
+                                        <div>
+                                            <p class="text-left">
+                                                <span class="text-primary"><strong>Laura Schiatti</strong></span>
+                                                <br>
+                                                <small>@lang('Developer')</small>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-sm-4 col-md-4">
+                            <div class="thumbnail">
+                                <a href="http://programas.unitecnologica.edu.co/personal/%C3%A1lvaro-gonz%C3%A1lez-%C3%A1lvarez" target="_blank">
+                                    <img src="/images/team/alvaro-gonzalez.png" alt="team-picture">
+                                    <div class="caption">
+                                        <div>
+                                            <p class="text-left">
+                                                <span class="text-primary"><strong>Álvaro González</strong></span>
+                                                <br>
+                                                <small>@lang('Researcher')</small>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-sm-4 col-md-4">
+                            <div class="thumbnail">
+                                <a href="http://programas.unitecnologica.edu.co/personal/juan-martinez" target="_blank">
+                                    <img src="/images/team/juan-carlos-martinez.png" alt="team-picture">
+                                    <div class="caption">
+                                        <div>
+                                            <p class="text-left">
+                                                <span class="text-primary"><strong>Juan Carlos Martínez</strong></span>
+                                                <br>
+                                                <small>@lang('Researcher')</small>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-sm-4 col-md-4">
+                            <div class="thumbnail">
+                                <a href="http://programas.unitecnologica.edu.co/personal/jairo-serrano" target="_blank">
+                                    <img src="/images/team/jairo-serrano.png" alt="team-picture">
+                                    <div class="caption">
+                                        <div>
+                                            <p class="text-left">
+                                                <span class="text-primary"><strong>Jairo Serrano</strong></span>
+                                                <br>
+                                                <small>@lang('Researcher')</small>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
                     </div>
 
                     <hr class="section-divisor">
