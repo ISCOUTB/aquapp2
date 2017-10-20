@@ -294,7 +294,7 @@
 
                     <h1 id="team">@lang('Team')</h1>
                     <div class="row">
-                        <div class="col-xs-12 col-sm-6 col-sm-4 col-md-4">
+                        <div class="col-xs-12 col-sm-6 col-md-4">
                             <div class="thumbnail">
                                 <a href="http://www.unitecnologica.edu.co/noticias/utb-gradua-su-promocion-n-65" target="_blank">
                                     <img src="/images/team/laura-schiatti.png" alt="team-picture">
@@ -310,7 +310,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-6 col-sm-4 col-md-4">
+                        <div class="col-xs-12 col-sm-6 col-md-4">
                             <div class="thumbnail">
                                 <a href="http://programas.unitecnologica.edu.co/personal/%C3%A1lvaro-gonz%C3%A1lez-%C3%A1lvarez" target="_blank">
                                     <img src="/images/team/alvaro-gonzalez.png" alt="team-picture">
@@ -326,7 +326,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-6 col-sm-4 col-md-4">
+                        <div class="col-xs-12 col-sm-6 col-md-4">
                             <div class="thumbnail">
                                 <a href="http://programas.unitecnologica.edu.co/personal/juan-martinez" target="_blank">
                                     <img src="/images/team/juan-carlos-martinez.png" alt="team-picture">
@@ -342,7 +342,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-6 col-sm-4 col-md-4">
+                        <div class="col-xs-12 col-sm-6 col-md-4">
                             <div class="thumbnail">
                                 <a href="http://programas.unitecnologica.edu.co/personal/jairo-serrano" target="_blank">
                                     <img src="/images/team/jairo-serrano.png" alt="team-picture">
