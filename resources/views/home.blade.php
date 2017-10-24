@@ -50,7 +50,7 @@
         }
 
         #plot {
-            /*margin-top: 20;*/
+            margin-top: 50px;
         }
     </style>
 @endsection
@@ -228,12 +228,11 @@
                                 <select class="form-control" id="second-variable" name="second-variable"></select>
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-3">
-                                <div class="form-group">
-                                    <button type="button" class="btn btn-primary" id="plot">@lang('Plot Graph')</button>
-                                </div>
+                                <button type="button" class="btn btn-primary" id="plot">@lang('Plot Graph')</button>
                             </div>
                         </div>
                     </div>
+                    <div id="second-error"></div>
                 </div>
                 <div class="modal-footer">
                     <a class="btn pull-right" data-dismiss="modal">Close</a>
@@ -583,40 +582,13 @@
             $("#filter-form").submit(function(event) {
                 event.preventDefault();
 
-                // inputs
-                var start_date = $('#start-date').val(); // mm/dd/YY -> 10/01/2016 Oct 1 2016
-                var end_date = $('#end-date').val();
-
-                var node_id = $('#node').val();
-                var node_name = $("#node option[value='"+ node_id +"']").text();
-
-                var variable = $('#variable').val();
-                variable = variable.split("-");
-                var name = variable[0];
-                var unit = variable[1];
-
                 var output_format = $('input[name=output-format]:checked').val();
 
-                var url = "data?start_date=" + start_date + "&end_date=" + end_date + "&node_id=" + node_id + "&variable=" + name;
+                getDataRequest("node", "variable", output_format);
+            });
 
-                $.get(url, function (response) {
-                    var data = response['data'];
-
-                    if(data != "" && data != null) {
-                        if(output_format == 'csv') {
-                            var filename = node_name + "_" + variable + "_" + start_date + "_" + end_date;
-                            JSONToCSVConvertor(data, filename, true);
-                        } else if(output_format == 'graph') {
-                            drawGraph(node_name, name, unit, start_date, end_date, data);
-                        }
-                    } else {
-                        $('#error').html('<p class="text-danger"><strong>@lang('No data available')</strong></p>');
-                    }
-
-                }).fail(function(jqXHR, exception){
-                    var msg = getErrorMessage(jqXHR, exception);
-                    console.log(msg);
-                });
+            $("#plot").click(function() {
+                getDataRequest("second-node", "second-variable");
             });
 
             function getAcronym(string){
@@ -630,6 +602,44 @@
                 acronym = acronym.toUpperCase();
 
                 return acronym;
+            }
+
+            function getDataRequest(node, variable, output_format){
+                var start_date = $('#start-date').val(); // mm/dd/YY -> 10/01/2016 Oct 1 2016
+                var end_date = $('#end-date').val();
+
+                var node_id = $('#' + node).val();
+                var node_name = $("#" + node + " option[value='"+ node_id +"']").text();
+
+                var variable = $('#' + variable).val();
+                variable = variable.split("-");
+                var name = variable[0];
+                var unit = variable[1];
+
+//                var output_format = $('input[name=output-format]:checked').val();
+
+                var url = "data?start_date=" + start_date + "&end_date=" + end_date + "&node_id=" + node_id + "&variable=" + name;
+
+                $.get(url, function (response) {
+                    var data = response['data'];
+
+                    if(data != "" && data != null) {
+                        if(output_format == 'csv') {
+                            var filename = node_name + "_" + variable + "_" + start_date + "_" + end_date;
+                            JSONToCSVConvertor(data, filename, true);
+                        } else if(output_format == 'graph') {
+                            drawGraph(node_name, name, unit, start_date, end_date, data);
+                        } else {
+                            console.log(data);
+                        }
+                    } else {
+                        $('#error').html('<p class="text-danger"><strong>@lang('No data available')</strong></p>');
+                    }
+
+                }).fail(function(jqXHR, exception){
+                    var msg = getErrorMessage(jqXHR, exception);
+                    console.log(msg);
+                });
             }
 
             function getErrorMessage(jqXHR, exception){
@@ -869,6 +879,7 @@
             function clear(id){
                 $('#' + id).find('option').remove().end();
             }
+
         });
     </script>
 @endsection
