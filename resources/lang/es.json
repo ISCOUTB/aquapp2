@@ -19,6 +19,7 @@
   "Parameter": "Parámetro",
   "No stations available": "Ninguna estación disponible",
   "No parameters available": "Ningún parámetro disponible",
+  "No data available": "No hay datos disponibles",
   "Output Format": "Formato de descarga",
   "Graph": "Gráfica",
   "CSV File": "Archivo CSV",
@@ -31,6 +32,10 @@
   "Acceptable": "Aceptable",
   "Inadequate": "Inadecuada",
   "Appalling": "Pésima",
+  "Second Data Type?": "¿Segundo tipo de dato?",
+  "Second Station?": "¿Segunda estación?",
+  "Which Parameter?": "¿Qué parámetro?",
+  "Plot Graph": "Graficar",
   "Check source code": "Revisar código fuente",
 
   "Home": "Inicio",

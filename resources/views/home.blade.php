@@ -48,6 +48,10 @@
                 /*margin-top: 2%;*/
             /*}*/
         }
+
+        #plot {
+            /*margin-top: 20;*/
+        }
     </style>
 @endsection
 
@@ -212,30 +216,20 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-xs-12 col-sm-6 col-md-3">
-                                <p><strong>Second Data Type?</strong></p>
+                                <p><strong>@lang('Second Data Type?')</strong></p>
                                 <select class="form-control" id="second-node-type" name="second-node-type"></select>
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-3">
-                                <p><strong>Second Station?</strong></p>
-                                <select class="form-control" id="second-node" name="second-node">
-                                    <option value="volvo">Volvo</option>
-                                    <option value="saab">Saab</option>
-                                    <option value="mercedes">Mercedes</option>
-                                    <option value="audi">Audi</option>
-                                </select>
+                                <p><strong>@lang('Second Station?')</strong></p>
+                                <select class="form-control" id="second-node" name="second-node"></select>
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-3">
-                                <p><strong>Which Parameter?</strong></p>
-                                <select class="form-control" id="" name="">
-                                    <option value="volvo">Volvo</option>
-                                    <option value="saab">Saab</option>
-                                    <option value="mercedes">Mercedes</option>
-                                    <option value="audi">Audi</option>
-                                </select>
+                                <p><strong>@lang('Which Parameter?')</strong></p>
+                                <select class="form-control" id="second-variable" name="second-variable"></select>
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-3">
                                 <div class="form-group">
-                                    <button type="button" class="btn btn-primary"> Plot Graph</button>
+                                    <button type="button" class="btn btn-primary" id="plot">@lang('Plot Graph')</button>
                                 </div>
                             </div>
                         </div>
@@ -501,7 +495,6 @@
 
             legend.addTo(map);
 
-
             <!-- Initial map load -->
             getNodesRequest("node-type", true, "node", "variable");
             var nodes = [];
@@ -581,22 +574,9 @@
                 }
             }
 
-            function getAcronym(string){
-                var max_length = 3;
-
-                var acronym = string.split(' ').map(function (s) {
-                    return s.charAt(0);
-                }).join('');
-
-                acronym = acronym.substring(0, max_length);
-                acronym = acronym.toUpperCase();
-
-                return acronym;
-            }
-
             <!-- Display parameters according to selected node -->
             $('#node').on('change', function(e) {
-                updateSensors();
+                updateSensors("node", "variable");
             });
 
             <!-- Filter data request -->
@@ -630,7 +610,7 @@
                             drawGraph(node_name, name, unit, start_date, end_date, data);
                         }
                     } else {
-                        $('#error').html('<p class="text-danger"><strong>No data available</strong></p>');
+                        $('#error').html('<p class="text-danger"><strong>@lang('No data available')</strong></p>');
                     }
 
                 }).fail(function(jqXHR, exception){
@@ -638,6 +618,19 @@
                     console.log(msg);
                 });
             });
+
+            function getAcronym(string){
+                var max_length = 3;
+
+                var acronym = string.split(' ').map(function (s) {
+                    return s.charAt(0);
+                }).join('');
+
+                acronym = acronym.substring(0, max_length);
+                acronym = acronym.toUpperCase();
+
+                return acronym;
+            }
 
             function getErrorMessage(jqXHR, exception){
                 var msg = '';
@@ -792,12 +785,32 @@
                     }]
                 });
 
+                <!-- Second y-axis -->
+                // Node type
+                @foreach($nodeTypes as $nodeType)
+                    $('#second-node-type').append(
+                        $('<option></option>').val("{{ $nodeType->id }}").html("{{ $nodeType->name }}")
+                );
+                @endforeach
+
+                // Initial selects load
+                getNodesRequest("second-node-type", true, "second-node", "second-variable");
+
+                $('#second-node-type').on('change', function(e) {
+                    getNodesRequest("second-node-type", true, "second-node", "second-variable");
+                });
+
                 // Open modal
                 $('#graph-modal').modal('show');
             }
 
             function getNodesRequest(input_node_type, fill_map, input_node, input_variable){
-                var node_type_id = $('input[name=' + input_node_type + ']:checked').val();
+                if(input_node_type == "node-type"){
+                    var node_type_id = $('input[name=' + input_node_type + ']:checked').val();
+                }else{
+                    var node_type_id =  $('#'+ input_node_type + ' option:selected').val();
+                }
+
                 var url = "data?node_type_id=" + node_type_id;
 
                 $.get(url, function (data) {
@@ -844,7 +857,7 @@
                 var sensors = node[0]['node_type']['sensors'];
 
                 // clear options
-                clear("variable");
+                clear(input_variable);
 
                 $.each(sensors, function(index, value) {
                     $('#' + input_variable).append(
