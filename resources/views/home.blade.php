@@ -12,19 +12,41 @@
         #graph {
             width:100%;
             height:100%;
-            margin-bottom: 40px;
         }
 
         #graph-modal .modal-dialog {
-            width: 90%;
-            height: 90%;
-            padding: 0;
+            width: 92%;
+            margin-top: 4%;
         }
 
         #graph-modal .modal-content {
             width: 100%;
-            height: 100%;
             border-radius: 0;
+        }
+
+        .modal-content select {
+            width: 100%;
+        }
+
+        .modal-footer {
+            border-top: 0;
+            padding: 0;
+        }
+
+        .modal-body .container {
+            vertical-align:middle;
+        }
+
+        @media (max-width: 991px){
+            #graph {
+                margin-bottom: 20px;
+            }
+
+            /*#graph-modal .modal-dialog {*/
+                /*width: 96%;*/
+                /*height: 9%;*/
+                /*margin-top: 2%;*/
+            /*}*/
         }
     </style>
 @endsection
@@ -96,8 +118,8 @@
 
                             <div class="row row-margin">
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-4" for="from"> @lang('Start Date') </label>
-                                    <div class="col-md-8 col-sm-6 col-xs-8">
+                                    <label class="control-label col-md-3 col-xs-4" for="from"> @lang('Start Date') </label>
+                                    <div class="col-md-8 col-xs-8">
                                         <input id="start-date" type="text" class="form-control datepicker" name="start-date" required>
                                     </div>
                                 </div>
@@ -105,28 +127,28 @@
 
                             <div class="row row-margin">
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-4" for="to"> @lang('End Date') </label>
-                                    <div class="col-md-8 col-sm-6 col-xs-8">
+                                    <label class="control-label col-md-3 col-xs-4" for="to"> @lang('End Date') </label>
+                                    <div class="col-md-8 col-xs-8">
                                         <input id="end-date" type="text" class="form-control datepicker" name="end-date" required>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="row row-margin">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-4"> @lang('Preselect End Date') </label>
-                                <div class="col-md-8 col-sm-6 col-xs-8">
-                                    <ul class="inline-links">
-                                        <li><a href="javascript:void(0)"> @lang('1 Day') </a></li>
-                                        <li><a href="javascript:void(0)"> @lang('1 Week') </a></li>
-                                        <li><a href="javascript:void(0)"> @lang('1 Month') </a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                            {{--<div class="row row-margin">--}}
+                                {{--<label class="control-label col-md-3 col-sm-3 col-xs-4"> @lang('Preselect End Date') </label>--}}
+                                {{--<div class="col-md-8 col-sm-6 col-xs-8">--}}
+                                    {{--<ul class="inline-links">--}}
+                                        {{--<li><a href="javascript:void(0)"> @lang('1 Day') </a></li>--}}
+                                        {{--<li><a href="javascript:void(0)"> @lang('1 Week') </a></li>--}}
+                                        {{--<li><a href="javascript:void(0)"> @lang('1 Month') </a></li>--}}
+                                    {{--</ul>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
 
                             <div class="row row-margin">
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-4" for="node"> @lang('Station') </label>
-                                    <div class="col-md-8 col-sm-6 col-xs-8">
+                                    <label class="control-label col-md-3 col-xs-4" for="node"> @lang('Station') </label>
+                                    <div class="col-md-8 col-xs-8">
                                         <select class="form-control" id="node" name="node"></select>
                                     </div>
                                 </div>
@@ -134,8 +156,8 @@
 
                             <div class="row row-margin">
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-4" for="variable"> @lang('Parameter') </label>
-                                    <div class="col-md-8 col-sm-6 col-xs-8">
+                                    <label class="control-label col-md-3 col-xs-4" for="variable"> @lang('Parameter') </label>
+                                    <div class="col-md-8 col-xs-8">
                                         <select class="form-control" id="variable" name="variable"></select>
                                     </div>
                                 </div>
@@ -143,8 +165,8 @@
 
                             <div class="row">
                                 <div class="form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-4"> @lang('Output Format') </label>
-                                    <div class="col-md-8 col-sm-6 col-xs-8">
+                                    <label class="control-label col-md-3 col-xs-4"> @lang('Output Format') </label>
+                                    <div class="col-md-8 col-xs-8">
                                         <label class="radio-inline">
                                             <input type="radio" name="output-format" value="graph" checked> @lang('Graph')
                                         </label>
@@ -187,23 +209,37 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <div id="graph"></div>
-
-                    {{--<div class="container">--}}
-                        {{--<div class="row">--}}
-                            {{--<div class="col-md-3">--}}
-                                {{--<strong>Second Data Type?</strong>--}}
-                            {{--</div>--}}
-                            {{--<div class="col-md-3">--}}
-                                {{--<strong>Second Station?</strong>--}}
-                            {{--</div>--}}
-                            {{--<div class="col-md-3">--}}
-                                {{--<strong>Which Parameter?</strong>--}}
-                            {{--</div>--}}
-                            {{--<div class="col-md-3">--}}
-                                {{--<button type="button" class="btn"> Plot Graph</button>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-3">
+                                <p><strong>Second Data Type?</strong></p>
+                                <select class="form-control" id="second-node-type" name="second-node-type"></select>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-3">
+                                <p><strong>Second Station?</strong></p>
+                                <select class="form-control" id="second-node" name="second-node">
+                                    <option value="volvo">Volvo</option>
+                                    <option value="saab">Saab</option>
+                                    <option value="mercedes">Mercedes</option>
+                                    <option value="audi">Audi</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-3">
+                                <p><strong>Which Parameter?</strong></p>
+                                <select class="form-control" id="" name="">
+                                    <option value="volvo">Volvo</option>
+                                    <option value="saab">Saab</option>
+                                    <option value="mercedes">Mercedes</option>
+                                    <option value="audi">Audi</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-3">
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-primary"> Plot Graph</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <a class="btn pull-right" data-dismiss="modal">Close</a>
@@ -465,38 +501,15 @@
 
             legend.addTo(map);
 
-            // Initial map load
-            getNodesRequest();
+
+            <!-- Initial map load -->
+            getNodesRequest("node-type", true, "node", "variable");
             var nodes = [];
 
             <!-- Display markers according to radio selection -->
             $('input[name=node-type]').on('change', function(e) {
-                getNodesRequest();
+                getNodesRequest("node-type", true, "node", "variable");
             });
-
-            function getNodesRequest(){
-                var node_type_id = $('input[name=node-type]:checked').val();
-                var url = "data?node_type_id=" + node_type_id;
-
-                $.get(url, function (data) {
-                    fillMap(data);
-
-                    // clear options
-                    $('#node').find('option').remove().end();
-
-                    $.each(data, function(index, value) {
-                        nodes.push(value);
-                        $('#node').append(
-                                $('<option></option>').val(value['id']).html(value['name'])
-                        );
-                    });
-
-                    updateSensors();
-                }).fail(function(jqXHR, exception){
-                    var msg = getErrorMessage(jqXHR, exception);
-                    console.log(msg);
-                });
-            }
 
             function fillMap(nodes){
                 var marker, info_window;
@@ -586,25 +599,6 @@
                 updateSensors();
             });
 
-            function updateSensors(){
-                var node_id = $('#node option:selected').val(); // id of selected node
-
-                var node =  $.grep(nodes, function(item){
-                    return item.id == node_id;
-                });
-
-                var sensors = node[0]['node_type']['sensors'];
-
-                // clear options
-                $('#variable').find('option').remove().end();
-
-                $.each(sensors, function(index, value) {
-                    $('#variable').append(
-                        $('<option></option>').val(value['variable'] + '-' + value['unit']).html(value['variable'] + ' (' + value['unit'] + ')')
-                    );
-                });
-            }
-
             <!-- Filter data request -->
             $("#filter-form").submit(function(event) {
                 event.preventDefault();
@@ -666,8 +660,7 @@
                 return msg;
             }
 
-            function JSONToCSVConvertor(JSONData,fileName,ShowLabel)
-            {
+            function JSONToCSVConvertor(JSONData,fileName,ShowLabel) {
                 //If JSONData is not an object then JSON.parse will parse the JSON string in an Object
                 var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
 
@@ -803,6 +796,66 @@
                 $('#graph-modal').modal('show');
             }
 
+            function getNodesRequest(input_node_type, fill_map, input_node, input_variable){
+                var node_type_id = $('input[name=' + input_node_type + ']:checked').val();
+                var url = "data?node_type_id=" + node_type_id;
+
+                $.get(url, function (data) {
+                    if(fill_map == true){
+                        fillMap(data);
+                    }
+
+                    // clear options
+                    clear(input_node);
+                    clear(input_variable);
+
+                    if(data.length != 0){
+                        $.each(data, function(index, value) {
+                            nodes.push(value);
+                            $('#' + input_node).append(
+                                    $('<option></option>').val(value['id']).html(value['name'])
+                            );
+                        });
+
+                        updateSensors(input_node, input_variable);
+                    }else{
+                        $('#' + input_node).append(
+                            $('<option></option>').html('@lang('No stations available')')
+                        );
+
+                        $('#' + input_variable).append(
+                            $('<option></option>').html('@lang('No parameters available')')
+                        );
+                    }
+
+                }).fail(function(jqXHR, exception){
+                    var msg = getErrorMessage(jqXHR, exception);
+                    console.log(msg);
+                });
+            }
+
+            function updateSensors(input_node, input_variable){
+                var node_id = $('#'+ input_node + ' option:selected').val(); // id of selected node
+
+                var node =  $.grep(nodes, function(item){
+                    return item.id == node_id;
+                });
+
+                var sensors = node[0]['node_type']['sensors'];
+
+                // clear options
+                clear("variable");
+
+                $.each(sensors, function(index, value) {
+                    $('#' + input_variable).append(
+                        $('<option></option>').val(value['variable'] + '-' + value['unit']).html(value['variable'] + ' (' + value['unit'] + ')')
+                    );
+                });
+            }
+
+            function clear(id){
+                $('#' + id).find('option').remove().end();
+            }
         });
     </script>
 @endsection
