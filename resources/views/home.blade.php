@@ -9,17 +9,17 @@
     <link href="https://code.jquery.com/ui/1.12.0-rc.2/themes/smoothness/jquery-ui.css" rel="stylesheet">
 
     <style>
-        #graph {
+        #chart {
             width:100%;
             height:100%;
         }
 
-        #graph-modal .modal-dialog {
+        #chart-modal .modal-dialog {
             width: 92%;
             margin-top: 4%;
         }
 
-        #graph-modal .modal-content {
+        #chart-modal .modal-content {
             width: 100%;
             border-radius: 0;
         }
@@ -38,20 +38,17 @@
         }
 
         @media (max-width: 991px){
-            #graph {
+            #chart {
                 margin-bottom: 20px;
             }
-
-            /*#graph-modal .modal-dialog {*/
-                /*width: 96%;*/
-                /*height: 9%;*/
-                /*margin-top: 2%;*/
-            /*}*/
         }
 
+        /*Plot button*/
         #plot {
-            margin-top: 50px;
+            margin-top: 40px;
         }
+
+
     </style>
 @endsection
 
@@ -172,7 +169,7 @@
                                     <label class="control-label col-md-3 col-xs-4"> @lang('Output Format') </label>
                                     <div class="col-md-8 col-xs-8">
                                         <label class="radio-inline">
-                                            <input type="radio" name="output-format" value="graph" checked> @lang('Graph')
+                                            <input type="radio" name="output-format" value="chart" checked> @lang('Chart')
                                         </label>
                                         <label class="radio-inline">
                                             <input type="radio" name="output-format" value="csv"> @lang('CSV File')
@@ -207,12 +204,12 @@
     </div>
 
     <!-- Modal -->
-    <div id="graph-modal" class="modal fade" role="dialog">
+    <div id="chart-modal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-body">
-                    <div id="graph"></div>
+                    <div id="chart"></div>
                     <div class="container">
                         <div class="row">
                             <div class="col-xs-12 col-sm-6 col-md-3">
@@ -228,14 +225,14 @@
                                 <select class="form-control" id="second-variable" name="second-variable"></select>
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-3">
-                                <button type="button" class="btn btn-primary" id="plot">@lang('Plot Graph')</button>
+                                <button type="button" class="btn btn-primary" id="plot">@lang('Plot')</button>
                             </div>
                         </div>
                     </div>
                     <div id="second-error"></div>
                 </div>
                 <div class="modal-footer">
-                    <a class="btn pull-right" data-dismiss="modal">Close</a>
+                    <a class="btn pull-right" data-dismiss="modal">@lang('Close')</a>
                 </div>
             </div>
 
@@ -588,7 +585,7 @@
             });
 
             $("#plot").click(function() {
-                getDataRequest("second-node", "second-variable");
+                getDataRequest("second-node", "second-variable", null);
             });
 
             function getAcronym(string){
@@ -627,10 +624,12 @@
                         if(output_format == 'csv') {
                             var filename = node_name + "_" + variable + "_" + start_date + "_" + end_date;
                             JSONToCSVConvertor(data, filename, true);
-                        } else if(output_format == 'graph') {
-                            drawGraph(node_name, name, unit, start_date, end_date, data);
+                        } else if(output_format == 'chart') {
+                            var values = getValues(data);
+                            drawChart(node_name, name, unit, start_date, end_date, values);
                         } else {
-                            console.log(data);
+                            var values = getValues(data);
+                            addAxis(node_name, name, unit, values);
                         }
                     } else {
                         $('#error').html('<p class="text-danger"><strong>@lang('No data available')</strong></p>');
@@ -661,6 +660,270 @@
                 }
 
                 return msg;
+            }
+
+            function getNodesRequest(input_node_type, fill_map, input_node, input_variable){
+                if(input_node_type == "node-type"){
+                    var node_type_id = $('input[name=' + input_node_type + ']:checked').val();
+                }else{
+                    var node_type_id =  $('#'+ input_node_type + ' option:selected').val();
+                }
+
+                var url = "data?node_type_id=" + node_type_id;
+
+                $.get(url, function (data) {
+                    if(fill_map == true){
+                        fillMap(data);
+                    }
+
+                    // clear options
+                    clear(input_node);
+                    clear(input_variable);
+
+                    if(data.length != 0){
+                        $.each(data, function(index, value) {
+                            nodes.push(value);
+                            $('#' + input_node).append(
+                                    $('<option></option>').val(value['id']).html(value['name'])
+                            );
+                        });
+
+                        updateSensors(input_node, input_variable);
+                    }else{
+                        $('#' + input_node).append(
+                            $('<option></option>').html('@lang('No stations available')')
+                        );
+
+                        $('#' + input_variable).append(
+                            $('<option></option>').html('@lang('No parameters available')')
+                        );
+                    }
+
+                }).fail(function(jqXHR, exception){
+                    var msg = getErrorMessage(jqXHR, exception);
+                    console.log(msg);
+                });
+            }
+
+            function updateSensors(input_node, input_variable){
+                var node_id = $('#'+ input_node + ' option:selected').val(); // id of selected node
+
+                var node =  $.grep(nodes, function(item){
+                    return item.id == node_id;
+                });
+
+                var sensors = node[0]['node_type']['sensors'];
+
+                // clear options
+                clear(input_variable);
+
+                $.each(sensors, function(index, value) {
+                    $('#' + input_variable).append(
+                            $('<option></option>').val(value['variable'] + '-' + value['unit']).html(value['variable'] + ' (' + value['unit'] + ')')
+                    );
+                });
+            }
+
+            function clear(id){
+                $('#' + id).find('option').remove().end();
+            }
+
+            // chart title
+            var title;
+            function drawChart(node_name, name, unit, start_date, end_date, values) {
+                // chart config
+                Highcharts.setOptions({
+                    global: {
+                        useUTC: false
+                    },
+                    lang: {
+                        printChart: "@lang('Print Chart')" ,
+                        downloadPNG: "@lang('Download PNG image')",
+                        downloadJPEG: "@lang('Download JPEG image')",
+                        downloadPDF: "@lang('Download PDF document')",
+                    }
+                });
+
+                var chart;
+                $(window).resize(function() {
+                    newh = $("#chart-modal").height();
+                    chart.redraw();
+                    chart.reflow();
+                });
+
+                chart = Highcharts.chart('chart', {
+                    chart: {
+                        type: 'scatter',
+                        zoomType: 'xy'
+                    },
+                    title: {
+                        text: node_name
+                    },
+                    subtitle: {
+                        text: start_date + ' - ' + end_date
+                    },
+                    xAxis: {
+                        type: 'datetime',
+                        labels: {
+                            formatter: function() {
+                                return Highcharts.dateFormat('%e. %b, %Y', this.value);
+                            }
+                        }
+                    },
+                    yAxis : {
+                        title: {
+                            text: name + ' (' + unit + ')',
+                            style: {
+                                color: '#E00822'
+                            }
+                        },
+                        lineWidth: 2,
+                        labels: {
+                            format: '{value} ' + unit,
+                            style: {
+                                color: '#E00822'
+                            }
+                        }
+                    },
+                    series: [{
+                        name: name + ' @lang('in') ' + node_name,
+                        data: values,
+                        color: '#E00822',
+                        tooltip: {
+                            valueSuffix: ' ' + unit
+                        }
+                    }],
+                    responsive: {
+                        rules: [{
+                            condition: {
+                                maxWidth: 500
+                            },
+                            chartOptions: {
+                                legend: {
+                                    enabled: false
+                                }
+                            }
+                        }]
+                    },
+                    exporting: {
+                        buttons: {
+                            contextButton: {
+                                menuItems: ['printChart', 'downloadPNG', 'downloadJPEG', 'downloadPDF']
+                            }
+                        }
+                    }
+                });
+
+                title = [chart.options.title.text, ""];
+
+                <!-- Display Second Y-axis Form -->
+                // Node type
+                clear("second-node-type");
+                @foreach($nodeTypes as $nodeType)
+                    $('#second-node-type').append(
+                        $('<option></option>').val("{{ $nodeType->id }}").html("{{ $nodeType->name }}")
+                    );
+                @endforeach
+
+                // Initial selects load
+                getNodesRequest("second-node-type", true, "second-node", "second-variable");
+
+                $('#second-node-type').on('change', function(e) {
+                    getNodesRequest("second-node-type", true, "second-node", "second-variable");
+                });
+
+                // Open modal
+                $('#chart-modal').modal('show');
+            }
+
+            function getValues(data){
+                var values = [];
+
+                for(var i = 0; i < data.length; i++){
+                    var year = data[i]["timestamp"][0]+data[i]["timestamp"][1]+data[i]["timestamp"][2]+data[i]["timestamp"][3];
+                    var month = data[i]["timestamp"][4]+data[i]["timestamp"][5];
+                    var day = data[i]["timestamp"][6]+data[i]["timestamp"][7];
+                    var hours = data[i]["timestamp"][8]+data[i]["timestamp"][9];
+                    var minutes = data[i]["timestamp"][10]+data[i]["timestamp"][11];
+                    var seconds = data[i]["timestamp"][12]+data[i]["timestamp"][13];
+
+                    var date_obj = Date.UTC(year, month, day, hours, minutes, seconds);
+                    values.push([date_obj, parseFloat(data[i]["value"])]);
+                }
+
+                return values;
+            }
+
+            function addAxis(node_name, name, unit, values){
+                var chart = $('#chart').highcharts();
+
+                if(chart.series[1]){
+                    // update
+                    title[1] = node_name;
+                    chart.update({
+                        title: {
+                            text: title[0] + '<br>' + title[1]
+                        }
+                    });
+
+                    chart.yAxis[1].update({
+                        title: {
+                            text: name + ' (' + unit + ')',
+                            style: {
+                                color: '#0000FF'
+                            }
+                        },
+                        labels: {
+                            format: '{value} ' + unit,
+                            style: {
+                                color: '#0000FF'
+                            }
+                        }
+                    });
+
+                    chart.series[1].update({
+                        name: name + ' @lang('in') ' + node_name,
+                        data: values,
+                        tooltip: {
+                            valueSuffix: ' ' + unit
+                        }
+                    }, true);
+                } else {
+                    // add new y-axis
+                    title[1] = node_name;
+                    chart.setTitle({
+                        text: title[0] + '<br>' + title[1]
+                    });
+
+                    chart.addAxis({
+                        id: 'second-axis',
+                        gridLineWidth: 0,
+                        title: {
+                            text: name + ' (' + unit + ')',
+                            style: {
+                                color: '#0000FF'
+                            }
+                        },
+                        lineWidth: 2,
+                        labels: {
+                            format: '{value} ' + unit,
+                            style: {
+                                color: '#0000FF'
+                            }
+                        },
+                        opposite: true
+                    });
+
+                    chart.addSeries({
+                        name: name + ' @lang('in') ' + node_name,
+                        color: '#0000FF',
+                        yAxis: 'second-axis',
+                        data: values,
+                        tooltip: {
+                            valueSuffix: ' ' + unit
+                        }
+                    });
+                }
             }
 
             function JSONToCSVConvertor(JSONData,fileName,ShowLabel) {
@@ -721,163 +984,6 @@
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-            }
-
-            function drawGraph(node_name, name, unit, start_date, end_date, data) {
-                // Data processing
-                var values = [];
-
-                for(var i = 0; i < data.length; i++){
-                    var year = data[i]["timestamp"][0]+data[i]["timestamp"][1]+data[i]["timestamp"][2]+data[i]["timestamp"][3];
-                    var month = data[i]["timestamp"][4]+data[i]["timestamp"][5];
-                    var day = data[i]["timestamp"][6]+data[i]["timestamp"][7];
-                    var hours = data[i]["timestamp"][8]+data[i]["timestamp"][9];
-                    var minutes = data[i]["timestamp"][10]+data[i]["timestamp"][11];
-                    var seconds = data[i]["timestamp"][12]+data[i]["timestamp"][13];
-
-                    var date_obj = Date.UTC(year, month, day, hours, minutes, seconds);
-                    values.push([date_obj, parseFloat(data[i]["value"])]);
-                }
-
-                // Graph config
-                Highcharts.setOptions({
-                    global: {
-                        useUTC: false
-                    }
-                });
-
-                var chart;
-                $(window).resize(function() {
-                    newh = $("#graph-modal").height();
-                    chart.redraw();
-                    chart.reflow();
-                });
-
-                chart = Highcharts.chart('graph', {
-                    chart: {
-                      type: 'spline'
-                    },
-                    title: {
-                        text: name + ' for ' + node_name
-                    },
-                    subtitle: {
-                        text: start_date + ' - ' + end_date
-                    },
-                    xAxis: {
-                        type: 'datetime',
-                        labels: {
-                            formatter: function() {
-                                return Highcharts.dateFormat('%e. %b, %Y', this.value);
-                            }
-                        }
-                    },
-                    yAxis : {
-                        title: {
-                            text: name + ' (' + unit + ')',
-                            style: {
-                                color: '#e00822'
-                            }
-                        },
-                        labels: {
-                            format: '{value} ' + unit,
-                            style: {
-                                color: '#e00822'
-                            }
-                        }
-                    },
-                    series: [{
-                        name: name,
-                        data: values,
-                        color: '#e00822',
-                        tooltip: {
-                            valueSuffix: ' ' + unit
-                        }
-                    }]
-                });
-
-                <!-- Second y-axis -->
-                // Node type
-                @foreach($nodeTypes as $nodeType)
-                    $('#second-node-type').append(
-                        $('<option></option>').val("{{ $nodeType->id }}").html("{{ $nodeType->name }}")
-                );
-                @endforeach
-
-                // Initial selects load
-                getNodesRequest("second-node-type", true, "second-node", "second-variable");
-
-                $('#second-node-type').on('change', function(e) {
-                    getNodesRequest("second-node-type", true, "second-node", "second-variable");
-                });
-
-                // Open modal
-                $('#graph-modal').modal('show');
-            }
-
-            function getNodesRequest(input_node_type, fill_map, input_node, input_variable){
-                if(input_node_type == "node-type"){
-                    var node_type_id = $('input[name=' + input_node_type + ']:checked').val();
-                }else{
-                    var node_type_id =  $('#'+ input_node_type + ' option:selected').val();
-                }
-
-                var url = "data?node_type_id=" + node_type_id;
-
-                $.get(url, function (data) {
-                    if(fill_map == true){
-                        fillMap(data);
-                    }
-
-                    // clear options
-                    clear(input_node);
-                    clear(input_variable);
-
-                    if(data.length != 0){
-                        $.each(data, function(index, value) {
-                            nodes.push(value);
-                            $('#' + input_node).append(
-                                    $('<option></option>').val(value['id']).html(value['name'])
-                            );
-                        });
-
-                        updateSensors(input_node, input_variable);
-                    }else{
-                        $('#' + input_node).append(
-                            $('<option></option>').html('@lang('No stations available')')
-                        );
-
-                        $('#' + input_variable).append(
-                            $('<option></option>').html('@lang('No parameters available')')
-                        );
-                    }
-
-                }).fail(function(jqXHR, exception){
-                    var msg = getErrorMessage(jqXHR, exception);
-                    console.log(msg);
-                });
-            }
-
-            function updateSensors(input_node, input_variable){
-                var node_id = $('#'+ input_node + ' option:selected').val(); // id of selected node
-
-                var node =  $.grep(nodes, function(item){
-                    return item.id == node_id;
-                });
-
-                var sensors = node[0]['node_type']['sensors'];
-
-                // clear options
-                clear(input_variable);
-
-                $.each(sensors, function(index, value) {
-                    $('#' + input_variable).append(
-                        $('<option></option>').val(value['variable'] + '-' + value['unit']).html(value['variable'] + ' (' + value['unit'] + ')')
-                    );
-                });
-            }
-
-            function clear(id){
-                $('#' + id).find('option').remove().end();
             }
 
         });
