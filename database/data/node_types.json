@@ -44,12 +44,12 @@
     "separator": ",",
     "sensors": [
       {
-        "variable": "Water Depth",
-        "unit": "m"
-      },
-      {
         "variable": "Water Temperature",
         "unit": "°C"
+      },
+      {
+        "variable": "Water Depth",
+        "unit": "m"
       }
     ]
   }
