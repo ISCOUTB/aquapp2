@@ -171,7 +171,7 @@
 @endsection
 
 @section('modal')
-    <div id="schemaModal" class="modal fade" role="dialog" >
+    <div id="schemaModal" class="modal modal-center fade" role="dialog" >
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">

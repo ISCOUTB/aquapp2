@@ -195,12 +195,12 @@ dd{
 
 /* Modal vertically centered https://codepen.io/dimbslmh/full/mKfCcE
 -------------------------------------------------- */
-.modal {
+.modal-center {
     text-align: center;
     padding: 0!important;
 }
 
-.modal:before {
+.modal-center:before {
     content: '';
     display: inline-block;
     height: 100%;
@@ -208,7 +208,7 @@ dd{
     margin-right: -4px;
 }
 
-.modal-dialog {
+.modal-center .modal-dialog {
     display: inline-block;
     text-align: left;
     vertical-align: middle;
