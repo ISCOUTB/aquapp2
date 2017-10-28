@@ -7,49 +7,7 @@
 @section('styles')
     <!-- Jquery ui -->
     <link href="https://code.jquery.com/ui/1.12.0-rc.2/themes/smoothness/jquery-ui.css" rel="stylesheet">
-
-    <style>
-        #chart {
-            width:100%;
-            height:100%;
-        }
-
-        #chart-modal .modal-dialog {
-            width: 92%;
-            margin-top: 4%;
-        }
-
-        #chart-modal .modal-content {
-            width: 100%;
-            border-radius: 0;
-        }
-
-        .modal-content select {
-            width: 100%;
-        }
-
-        .modal-footer {
-            border-top: 0;
-            padding: 0;
-        }
-
-        .modal-body .container {
-            vertical-align:middle;
-        }
-
-        @media (max-width: 991px){
-            #chart {
-                margin-bottom: 20px;
-            }
-        }
-
-        /*Plot button*/
-        #plot {
-            margin-top: 40px;
-        }
-
-
-    </style>
+    <link href="/css/home.css" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -203,39 +161,58 @@
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Chart Modal -->
     <div id="chart-modal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-body">
                     <div id="chart"></div>
+
                     <div class="container">
                         <div class="row">
-                            <div class="col-xs-12 col-sm-6 col-md-3">
-                                <p><strong>@lang('Second Data Type?')</strong></p>
-                                <select class="form-control" id="second-node-type" name="second-node-type"></select>
-                            </div>
-                            <div class="col-xs-12 col-sm-6 col-md-3">
-                                <p><strong>@lang('Second Station?')</strong></p>
-                                <select class="form-control" id="second-node" name="second-node"></select>
-                            </div>
-                            <div class="col-xs-12 col-sm-6 col-md-3">
-                                <p><strong>@lang('Which Parameter?')</strong></p>
-                                <select class="form-control" id="second-variable" name="second-variable"></select>
-                            </div>
-                            <div class="col-xs-12 col-sm-6 col-md-3">
-                                <button type="button" class="btn btn-primary" id="plot">@lang('Plot')</button>
-                            </div>
+                            <form class="form-inline" role="form">
+                                <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                                    <p><strong>@lang('Second Data Type?')</strong></p>
+                                    <select class="form-control" id="second-node-type" name="second-node-type"></select>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                                    <p><strong>@lang('Second Station?')</strong></p>
+                                    <select class="form-control" id="second-node" name="second-node"></select>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                                    <p><strong>@lang('Which Parameter?')</strong></p>
+                                    <select class="form-control" id="second-variable" name="second-variable"></select>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-6 col-md-3">
+                                    <button type="button" class="btn btn-primary" id="plot">@lang('Plot')</button>
+                                </div>
+
+                                <div id="second-error"></div>
+                            </form>
                         </div>
                     </div>
-                    <div id="second-error"></div>
                 </div>
                 <div class="modal-footer">
                     <a class="btn pull-right" data-dismiss="modal">@lang('Close')</a>
                 </div>
             </div>
+        </div>
+    </div>
 
+    <!-- Loading -->
+    <div id="loading" class="loading" style="display: none">Loading&#8230;</div>
+
+    <div id="loading-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content text-center">
+                <div class="modal-body">
+                    <p>@lang('You have requested a significant amount of data. Please be patient as this may take a few minutes.')</p>
+                </div>
+                <div class="modal-footer">
+                    <a id="abort" class="btn btn-primary pull-right">@lang('Cancel')</a>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
@@ -581,11 +558,11 @@
 
                 var output_format = $('input[name=output-format]:checked').val();
 
-                getDataRequest("node", "variable", output_format);
+                getDataRequest("node", "variable", output_format, "error");
             });
 
             $("#plot").click(function() {
-                getDataRequest("second-node", "second-variable", null);
+                getDataRequest("second-node", "second-variable", null, "second-error");
             });
 
             function getAcronym(string){
@@ -601,7 +578,9 @@
                 return acronym;
             }
 
-            function getDataRequest(node, variable, output_format){
+            //Contains the last jqXHR object.
+            var currentRequest;
+            function getDataRequest(node, variable, output_format, error){
                 var start_date = $('#start-date').val(); // mm/dd/YY -> 10/01/2016 Oct 1 2016
                 var end_date = $('#end-date').val();
 
@@ -613,33 +592,52 @@
                 var name = variable[0];
                 var unit = variable[1];
 
-//                var output_format = $('input[name=output-format]:checked').val();
-
                 var url = "data?start_date=" + start_date + "&end_date=" + end_date + "&node_id=" + node_id + "&variable=" + name;
 
-                $.get(url, function (response) {
-                    var data = response['data'];
+                currentRequest = $.ajax({
+                    type: "GET",
+                    url: url,
+                    beforeSend: function() {
+                        $("#loading").show();
+                        $('#loading-modal').modal('show');
+                    },
+                    complete: function(){
+                        $("#loading").hide();
+                        $('#loading-modal').modal('hide');
+                    },
+                    success: function(response)   {
+                        var data = response['data'];
 
-                    if(data != "" && data != null) {
-                        if(output_format == 'csv') {
-                            var filename = node_name + "_" + variable + "_" + start_date + "_" + end_date;
-                            JSONToCSVConvertor(data, filename, true);
-                        } else if(output_format == 'chart') {
-                            var values = getValues(data);
-                            drawChart(node_name, name, unit, start_date, end_date, values);
+                        if(data != "" && data != null) {
+
+                            if(output_format == 'csv') {
+                                var filename = node_name + "_" + variable + "_" + start_date + "_" + end_date;
+                                JSONToCSVConvertor(data, filename, true);
+                            } else if(output_format == 'chart') {
+                                var values = getValues(data);
+                                drawChart(node_name, name, unit, start_date, end_date, values);
+                            } else {
+                                var values = getValues(data);
+                                addAxis(node_name, name, unit, values);
+                            }
                         } else {
-                            var values = getValues(data);
-                            addAxis(node_name, name, unit, values);
+                            $('#' + error).html('<p class="text-danger"><strong>@lang('No data available')</strong></p>');
                         }
-                    } else {
-                        $('#error').html('<p class="text-danger"><strong>@lang('No data available')</strong></p>');
+                    },
+                    error: function(jqXHR, exception) {
+                        var msg = getErrorMessage(jqXHR, exception);
+                        console.log(msg);
                     }
-
-                }).fail(function(jqXHR, exception){
-                    var msg = getErrorMessage(jqXHR, exception);
-                    console.log(msg);
                 });
             }
+
+            $("#abort").click(function(){
+                if(currentRequest){
+                    currentRequest.abort();
+                    $("#loading").hide();
+                    $('#loading-modal').modal('hide');
+                }
+            });
 
             function getErrorMessage(jqXHR, exception){
                 var msg = '';
@@ -753,8 +751,7 @@
 
                 chart = Highcharts.chart('chart', {
                     chart: {
-                        type: 'scatter',
-                        zoomType: 'xy'
+                        type: 'spline'
                     },
                     title: {
                         text: node_name
@@ -774,21 +771,25 @@
                         title: {
                             text: name + ' (' + unit + ')',
                             style: {
-                                color: '#E00822'
+                                color: '#FB0006'
                             }
                         },
-                        lineWidth: 2,
                         labels: {
                             format: '{value} ' + unit,
                             style: {
-                                color: '#E00822'
+                                color: '#FB0006'
                             }
+                        }
+                    },
+                    plotOptions: {
+                        series: {
+                            lineWidth: 2
                         }
                     },
                     series: [{
                         name: name + ' @lang('in') ' + node_name,
                         data: values,
-                        color: '#E00822',
+                        color: '#FB0006',
                         tooltip: {
                             valueSuffix: ' ' + unit
                         }

@@ -37,6 +37,10 @@
     }
 }
 
+#loading-modal .modal-content {
+    padding: 6px 15px;
+}
+
 #loading-modal p{
     margin-bottom: 0;
 }
@@ -47,7 +51,6 @@
 }
 
 /* Spinner from: https://codepen.io/MattIn4D/pen/LiKFC*/
-
 /* Absolute Center Spinner */
 .loading {
     position: fixed;
