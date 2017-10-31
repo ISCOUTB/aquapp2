@@ -43,7 +43,6 @@ function getFilteredData($request)
             {
                 $data[] = $datum;
             }
-
         }
     }
 
@@ -53,7 +52,7 @@ function getFilteredData($request)
     function cmp($item1, $item2) {
         $ts1 = strtotime($item1['timestamp']);
         $ts2 = strtotime($item2['timestamp']);
-        return $ts2 - $ts1;
+        return $ts1 - $ts2;
     }
 
     usort($data, "cmp");
