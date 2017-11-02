@@ -609,16 +609,15 @@
                         var data = response['data'];
 
                         if(data != "" && data != null) {
-
                             if(output_format == 'csv') {
                                 var filename = node_name + "_" + variable + "_" + start_date + "_" + end_date;
                                 JSONToCSVConvertor(data, filename, true);
                             } else if(output_format == 'chart') {
-                                var values = getValues(data);
-                                drawChart(node_name, name, unit, start_date, end_date, values);
+                                var data = getValues(data);
+                                drawChart(node_name, name, unit, start_date, end_date, data);
                             } else {
-                                var values = getValues(data);
-                                addAxis(node_name, name, unit, values);
+                                var data = getValues(data);
+                                addAxis(node_name, name, unit, data);
                             }
                         } else {
                             $('#' + error).html('<p class="text-danger"><strong>@lang('No data available')</strong></p>');
@@ -638,6 +637,31 @@
                     $('#loading-modal').modal('hide');
                 }
             });
+
+            function getValues(data){
+                var values = [];
+
+                for(var i = 0; i < data.length; i++){
+                    values.push([formatDate(data[i]["timestamp"]), parseFloat(data[i]["value"])]);
+                }
+
+                return values;
+            }
+
+            function formatDate(timestamp){
+                var date = new Date(timestamp);
+
+                var year = date.getFullYear();
+                var month = date.getMonth()+1; // January is 0
+                var day = date.getDate();
+                var hour = date.getHours();
+                var minutes = date.getMinutes();
+                var seconds = date.getSeconds();
+
+                var date_obj = Date.UTC(year, month, day, hour, minutes, seconds);
+
+                return date_obj;
+            }
 
             function getErrorMessage(jqXHR, exception){
                 var msg = '';
@@ -726,11 +750,9 @@
                 $('#' + id).find('option').remove().end();
             }
 
-            // chart title
-            var title;
+            var title; // chart title
             function drawChart(node_name, name, unit, start_date, end_date, values) {
-                // chart config
-                Highcharts.setOptions({
+                Highcharts.setOptions({ // chart config
                     global: {
                         useUTC: false
                     },
@@ -738,21 +760,11 @@
                         printChart: "@lang('Print Chart')" ,
                         downloadPNG: "@lang('Download PNG image')",
                         downloadJPEG: "@lang('Download JPEG image')",
-                        downloadPDF: "@lang('Download PDF document')",
+                        downloadPDF: "@lang('Download PDF document')"
                     }
                 });
 
-                var chart;
-                $(window).resize(function() {
-                    newh = $("#chart-modal").height();
-                    chart.redraw();
-                    chart.reflow();
-                });
-
-                chart = Highcharts.chart('chart', {
-                    chart: {
-                        type: 'spline'
-                    },
+                var chart = Highcharts.chart('chart', {
                     title: {
                         text: node_name
                     },
@@ -763,7 +775,7 @@
                         type: 'datetime',
                         labels: {
                             formatter: function() {
-                                return Highcharts.dateFormat('%e. %b, %Y', this.value);
+                                return Highcharts.dateFormat('%b. %e, %y', this.value);
                             }
                         }
                     },
@@ -771,25 +783,31 @@
                         title: {
                             text: name + ' (' + unit + ')',
                             style: {
-                                color: '#FB0006'
+                                color: '#FF0000'
                             }
                         },
+                        lineWidth: 2,
                         labels: {
                             format: '{value} ' + unit,
                             style: {
-                                color: '#FB0006'
+                                color: '#FF0000'
                             }
                         }
                     },
+                    tooltip: {
+                        headerFormat: '<b>{point.x:%b. %e, %Y}</b><br>'
+                    },
                     plotOptions: {
                         series: {
-                            lineWidth: 2
+                            animation: {
+                                duration: 2000
+                            }
                         }
                     },
                     series: [{
                         name: name + ' @lang('in') ' + node_name,
                         data: values,
-                        color: '#FB0006',
+                        color: '#FF0000',
                         tooltip: {
                             valueSuffix: ' ' + unit
                         }
@@ -815,6 +833,12 @@
                     }
                 });
 
+                $(window).resize(function() {
+                    newh = $("#chart-modal").height();
+                    chart.redraw();
+                    chart.reflow();
+                });
+
                 title = [chart.options.title.text, ""];
 
                 <!-- Display Second Y-axis Form -->
@@ -835,24 +859,6 @@
 
                 // Open modal
                 $('#chart-modal').modal('show');
-            }
-
-            function getValues(data){
-                var values = [];
-
-                for(var i = 0; i < data.length; i++){
-                    var year = data[i]["timestamp"][0]+data[i]["timestamp"][1]+data[i]["timestamp"][2]+data[i]["timestamp"][3];
-                    var month = data[i]["timestamp"][4]+data[i]["timestamp"][5];
-                    var day = data[i]["timestamp"][6]+data[i]["timestamp"][7];
-                    var hours = data[i]["timestamp"][8]+data[i]["timestamp"][9];
-                    var minutes = data[i]["timestamp"][10]+data[i]["timestamp"][11];
-                    var seconds = data[i]["timestamp"][12]+data[i]["timestamp"][13];
-
-                    var date_obj = Date.UTC(year, month, day, hours, minutes, seconds);
-                    values.push([date_obj, parseFloat(data[i]["value"])]);
-                }
-
-                return values;
             }
 
             function addAxis(node_name, name, unit, values){
