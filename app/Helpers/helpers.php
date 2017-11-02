@@ -19,15 +19,9 @@ function getFilteredData($request)
 {
     $nodeId = $request->input('node_id');
     $variable = $request->input('variable');
-    $startDate = $request->input('start_date');
-    $endDate = $request->input('end_date');
-
-    $startDate = date("YmdHis", strtotime($startDate));
-    $endDate = date("YmdHis", strtotime($endDate));
 
     $sensorData = SensorData::where('node_id', $nodeId)
         ->where('variable', $variable)
-        ->whereBetween('data.timestamp', array($startDate, $endDate))
         ->first();
 
     /*
@@ -37,10 +31,18 @@ function getFilteredData($request)
 
     if($sensorData)
     {
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        $format = 'm/d/Y';
+
+        $from = DateTime::createFromFormat($format, $startDate);
+        $to = DateTime::createFromFormat($format, $endDate);
+
         foreach($sensorData['data'] as $key => $datum)
         {
-            if($datum['timestamp'] >= $startDate && $datum['timestamp'] <= $endDate)
-            {
+            $formattedDateTime = DateTime::createFromFormat('m/d/y h:i:s A', $datum['timestamp']);
+
+            if (($from <= $formattedDateTime && $formattedDateTime <= $to) || ($from <= $formattedDateTime->modify('+1 day') && $formattedDateTime <= $to)) {
                 $data[] = $datum;
             }
         }
@@ -49,13 +51,14 @@ function getFilteredData($request)
     /*
      * Sort data
      */
-    function cmp($item1, $item2) {
+    function cmp($item1, $item2)
+    {
         $ts1 = strtotime($item1['timestamp']);
         $ts2 = strtotime($item2['timestamp']);
         return $ts1 - $ts2;
     }
 
-    usort($data, "cmp");
+//    usort($data, "cmp");
 
     $sensorData['data'] = $data;
 
