@@ -468,14 +468,83 @@
 
             legend.addTo(map);
 
-            <!-- Initial map load -->
+            <!-- Map load -->
             getNodesRequest("node-type", true, "node", "variable");
             var nodes = [];
 
-            <!-- Display markers according to radio selection -->
+            // Display markers according to radio selection
             $('input[name=node-type]').on('change', function(e) {
                 getNodesRequest("node-type", true, "node", "variable");
             });
+
+            <!-- Display parameters according to selected node -->
+            $('#node').on('change', function(e) {
+                updateSensors("node", "variable");
+            });
+
+            <!-- Filter data request -->
+            $("#filter-form").submit(function(event) {
+                event.preventDefault();
+
+                var output_format = $('input[name=output-format]:checked').val();
+
+                getDataRequest("node", "variable", output_format, "error");
+            });
+
+            $("#plot").click(function() {
+                getDataRequest("second-node", "second-variable", null, "second-error");
+            });
+
+            $("#abort").click(function(){
+                if(currentRequest){
+                    currentRequest.abort();
+                    $("#loading").hide();
+                    $('#loading-modal').modal('hide');
+                }
+            });
+
+            function getNodesRequest(input_node_type, fill_map, input_node, input_variable){
+                if(input_node_type == "node-type"){
+                    var node_type_id = $('input[name=' + input_node_type + ']:checked').val();
+                }else{
+                    var node_type_id =  $('#'+ input_node_type + ' option:selected').val();
+                }
+
+                var url = "data?node_type_id=" + node_type_id;
+
+                $.get(url, function (data) {
+                    if(fill_map == true){
+                        fillMap(data);
+                    }
+
+                    // clear options
+                    clear(input_node);
+                    clear(input_variable);
+
+                    if(data.length != 0){
+                        $.each(data, function(index, value) {
+                            nodes.push(value);
+                            $('#' + input_node).append(
+                                    $('<option></option>').val(value['id']).html(value['name'])
+                            );
+                        });
+
+                        updateSensors(input_node, input_variable);
+                    }else{
+                        $('#' + input_node).append(
+                                $('<option></option>').html('@lang('No stations available')')
+                        );
+
+                        $('#' + input_variable).append(
+                                $('<option></option>').html('@lang('No parameters available')')
+                        );
+                    }
+
+                }).fail(function(jqXHR, exception){
+                    var msg = getErrorMessage(jqXHR, exception);
+                    console.log(msg);
+                });
+            }
 
             function fillMap(nodes){
                 var marker, info_window;
@@ -547,24 +616,6 @@
                 }
             }
 
-            <!-- Display parameters according to selected node -->
-            $('#node').on('change', function(e) {
-                updateSensors("node", "variable");
-            });
-
-            <!-- Filter data request -->
-            $("#filter-form").submit(function(event) {
-                event.preventDefault();
-
-                var output_format = $('input[name=output-format]:checked').val();
-
-                getDataRequest("node", "variable", output_format, "error");
-            });
-
-            $("#plot").click(function() {
-                getDataRequest("second-node", "second-variable", null, "second-error");
-            });
-
             function getAcronym(string){
                 var max_length = 3;
 
@@ -578,8 +629,7 @@
                 return acronym;
             }
 
-            //Contains the last jqXHR object.
-            var currentRequest;
+            var currentRequest; //Contains the last jqXHR object.
             function getDataRequest(node, variable, output_format, error){
                 var start_date = $('#start-date').val(); // mm/dd/YY -> 10/01/2016 Oct 1 2016
                 var end_date = $('#end-date').val();
@@ -630,126 +680,6 @@
                 });
             }
 
-            $("#abort").click(function(){
-                if(currentRequest){
-                    currentRequest.abort();
-                    $("#loading").hide();
-                    $('#loading-modal').modal('hide');
-                }
-            });
-
-            function getValues(data){
-                var values = [];
-
-                for(var i = 0; i < data.length; i++){
-                    values.push([formatDate(data[i]["timestamp"]), parseFloat(data[i]["value"])]);
-                }
-
-                return values;
-            }
-
-            function formatDate(timestamp){
-                var date = new Date(timestamp);
-
-                var year = date.getFullYear();
-                var month = date.getMonth()+1; // January is 0
-                var day = date.getDate();
-                var hour = date.getHours();
-                var minutes = date.getMinutes();
-                var seconds = date.getSeconds();
-
-                var date_obj = Date.UTC(year, month, day, hour, minutes, seconds);
-
-                return date_obj;
-            }
-
-            function getErrorMessage(jqXHR, exception){
-                var msg = '';
-                if (jqXHR.status === 0) {
-                    msg = 'Not connect.\n Verify Network.';
-                } else if (jqXHR.status == 404) {
-                    msg = 'Requested page not found. [404]';
-                } else if (jqXHR.status == 500) {
-                    msg = 'Internal Server Error [500].';
-                } else if (exception === 'parsererror') {
-                    msg = 'Requested JSON parse failed.';
-                } else if (exception === 'timeout') {
-                    msg = 'Time out error.';
-                } else if (exception === 'abort') {
-                    msg = 'Ajax request aborted.';
-                } else {
-                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
-                }
-
-                return msg;
-            }
-
-            function getNodesRequest(input_node_type, fill_map, input_node, input_variable){
-                if(input_node_type == "node-type"){
-                    var node_type_id = $('input[name=' + input_node_type + ']:checked').val();
-                }else{
-                    var node_type_id =  $('#'+ input_node_type + ' option:selected').val();
-                }
-
-                var url = "data?node_type_id=" + node_type_id;
-
-                $.get(url, function (data) {
-                    if(fill_map == true){
-                        fillMap(data);
-                    }
-
-                    // clear options
-                    clear(input_node);
-                    clear(input_variable);
-
-                    if(data.length != 0){
-                        $.each(data, function(index, value) {
-                            nodes.push(value);
-                            $('#' + input_node).append(
-                                    $('<option></option>').val(value['id']).html(value['name'])
-                            );
-                        });
-
-                        updateSensors(input_node, input_variable);
-                    }else{
-                        $('#' + input_node).append(
-                            $('<option></option>').html('@lang('No stations available')')
-                        );
-
-                        $('#' + input_variable).append(
-                            $('<option></option>').html('@lang('No parameters available')')
-                        );
-                    }
-
-                }).fail(function(jqXHR, exception){
-                    var msg = getErrorMessage(jqXHR, exception);
-                    console.log(msg);
-                });
-            }
-
-            function updateSensors(input_node, input_variable){
-                var node_id = $('#'+ input_node + ' option:selected').val(); // id of selected node
-
-                var node =  $.grep(nodes, function(item){
-                    return item.id == node_id;
-                });
-
-                var sensors = node[0]['node_type']['sensors'];
-
-                // clear options
-                clear(input_variable);
-
-                $.each(sensors, function(index, value) {
-                    $('#' + input_variable).append(
-                            $('<option></option>').val(value['variable'] + '-' + value['unit']).html(value['variable'] + ' (' + value['unit'] + ')')
-                    );
-                });
-            }
-
-            function clear(id){
-                $('#' + id).find('option').remove().end();
-            }
-
             var title; // chart title
             function drawChart(node_name, name, unit, start_date, end_date, values) {
                 Highcharts.setOptions({ // chart config
@@ -765,6 +695,9 @@
                 });
 
                 var chart = Highcharts.chart('chart', {
+                    chart: {
+                        type: 'spline'
+                    },
                     title: {
                         text: node_name
                     },
@@ -786,7 +719,6 @@
                                 color: '#FF0000'
                             }
                         },
-                        lineWidth: 2,
                         labels: {
                             format: '{value} ' + unit,
                             style: {
@@ -802,6 +734,9 @@
                             animation: {
                                 duration: 2000
                             }
+                        },
+                        spline: {
+                            lineWidth: 3
                         }
                     },
                     series: [{
@@ -847,7 +782,7 @@
                 @foreach($nodeTypes as $nodeType)
                     $('#second-node-type').append(
                         $('<option></option>').val("{{ $nodeType->id }}").html("{{ $nodeType->name }}")
-                    );
+                );
                 @endforeach
 
                 // Initial selects load
@@ -911,7 +846,6 @@
                                 color: '#0000FF'
                             }
                         },
-                        lineWidth: 2,
                         labels: {
                             format: '{value} ' + unit,
                             style: {
@@ -992,6 +926,76 @@
                 link.click();
                 document.body.removeChild(link);
             }
+
+            function getValues(data){
+                var values = [];
+
+                for(var i = 0; i < data.length; i++){
+                    values.push([formatDate(data[i]["timestamp"]), parseFloat(data[i]["value"])]);
+                }
+
+                return values;
+            }
+
+            function formatDate(timestamp){
+                var date = new Date(timestamp);
+
+                var year = date.getFullYear();
+                var month = date.getMonth()+1; // January is 0
+                var day = date.getDate();
+                var hour = date.getHours();
+                var minutes = date.getMinutes();
+                var seconds = date.getSeconds();
+
+                var date_obj = Date.UTC(year, month, day, hour, minutes, seconds);
+
+                return date_obj;
+            }
+
+            function getErrorMessage(jqXHR, exception){
+                var msg = '';
+                if (jqXHR.status === 0) {
+                    msg = 'Not connect.\n Verify Network.';
+                } else if (jqXHR.status == 404) {
+                    msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status == 500) {
+                    msg = 'Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
+                    msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                    msg = 'Time out error.';
+                } else if (exception === 'abort') {
+                    msg = 'Ajax request aborted.';
+                } else {
+                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                }
+
+                return msg;
+            }
+
+            function updateSensors(input_node, input_variable){
+                var node_id = $('#'+ input_node + ' option:selected').val(); // id of selected node
+
+                var node =  $.grep(nodes, function(item){
+                    return item.id == node_id;
+                });
+
+                var sensors = node[0]['node_type']['sensors'];
+
+                // clear options
+                clear(input_variable);
+
+                $.each(sensors, function(index, value) {
+                    $('#' + input_variable).append(
+                            $('<option></option>').val(value['variable'] + '-' + value['unit']).html(value['variable'] + ' (' + value['unit'] + ')')
+                    );
+                });
+            }
+
+            function clear(id){
+                $('#' + id).find('option').remove().end();
+            }
+
 
         });
     </script>
