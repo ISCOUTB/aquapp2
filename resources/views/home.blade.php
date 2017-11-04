@@ -732,11 +732,13 @@
                     plotOptions: {
                         series: {
                             animation: {
-                                duration: 2000
+                                duration: 3000
+                            },
+                            states: {
+                                hover: {
+                                    enabled: false
+                                }
                             }
-                        },
-                        spline: {
-                            lineWidth: 3
                         }
                     },
                     series: [{
