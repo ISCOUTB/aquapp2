@@ -661,7 +661,7 @@
                         if(data != "" && data != null) {
                             if(output_format == 'csv') {
                                 var filename = node_name + "_" + variable + "_" + start_date + "_" + end_date;
-                                JSONToCSVConvertor(data, filename, true);
+                                JSONToCSVConverter(data, filename, true);
                             } else if(output_format == 'chart') {
                                 var data = getValues(data);
                                 drawChart(node_name, name, unit, start_date, end_date, data);
@@ -706,20 +706,11 @@
                                             fontWeight: 'bold',
                                             marginTop: '0',
                                             fontSize: '13px'
-                                        })
-//                                        .attr({
-//                                            'stroke': 'silver',
-//                                            'stroke-width': 1,
-//                                            'r': 2,
-//                                            'padding': 5
-//                                        })
-                                        .add();
+                                        }).add();
 
                                 label.align(Highcharts.extend(label.getBBox(), {
                                     align: 'center',
-//                                    x: 20, // offset
-                                    verticalAlign: 'bottom',
-//                                    y: 0 // offset
+                                    verticalAlign: 'bottom'
                                 }), null, 'spacingBox');
 
                             }
@@ -734,10 +725,10 @@
                     },
                     xAxis: {
                         type: 'datetime',
-                        labels: {
-                            formatter: function() {
-                                return Highcharts.dateFormat('%b. %e, %y', this.value);
-                            }
+                        tickInterval: 30 * 24 * 3600 * 1000, // make sure the intervals are in months (30 days, 24 hours, 3600 seconds, 1000 milliseconds)
+                        dateTimeLabelFormats: {
+                            month: '%b. %y',
+                            year: '%Y'
                         }
                     },
                     yAxis : {
@@ -764,6 +755,28 @@
                         valueSuffix: ' ' + unit
                     },
                     plotOptions: {
+                        scatter: {
+                            marker: {
+                                radius: 2,
+                                states: {
+                                    hover: {
+                                        enabled: true,
+                                        lineColor: 'rgb(100,100,100)'
+                                    }
+                                }
+                            },
+                            states: {
+                                hover: {
+                                    marker: {
+                                        enabled: false
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                headerFormat: '<b>{point.x:%b. %e, %Y}</b><br>',
+                                valueSuffix: ' ' + unit
+                            }
+                        },
                         series: {
                             animation: {
                                 duration: 3000
@@ -900,7 +913,7 @@
                 }
             }
 
-            function JSONToCSVConvertor(JSONData,fileName,ShowLabel) {
+            function JSONToCSVConverter(JSONData,fileName,ShowLabel) {
                 //If JSONData is not an object then JSON.parse will parse the JSON string in an Object
                 var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
 
@@ -913,7 +926,7 @@
                     //This loop will extract the label from 1st index of on array
                     for (var index in arrData[0]) {
 
-                        //Now convert each value to string and comma-seprated
+                        //Now convert each value to string and comma-separated
                         row += index + ',';
                     }
 
@@ -927,7 +940,7 @@
                 for (var i = 0; i < arrData.length; i++) {
                     var row = "";
 
-                    //2nd loop will extract each column and convert it in string comma-seprated
+                    //2nd loop will extract each column and convert it in string comma-separated
                     for (var index in arrData[i]) {
                         row += arrData[i][index] + ',';
                     }
