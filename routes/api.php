@@ -25,7 +25,7 @@ Route::get('/', function(){
     /*
     * Node Types
     */
-    Route::resource('node-types', 'ApiControllers\NodeType\NodeTypeController', ['only' => ['index', 'show']]);
+    Route::resource('node-types', 'ApiControllers\NodeType\NodeTypeController', ['only' => ['index', 'show', 'store']]);
     Route::resource('node-types.nodes', 'ApiControllers\NodeType\NodeTypeNodeController', ['only' => ['index']]);
 
     /*
