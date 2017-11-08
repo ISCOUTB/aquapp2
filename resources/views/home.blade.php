@@ -93,16 +93,16 @@
                                 </div>
                             </div>
 
-                            {{--<div class="row row-margin">--}}
-                                {{--<label class="control-label col-md-3 col-sm-3 col-xs-4"> @lang('Preselect End Date') </label>--}}
-                                {{--<div class="col-md-8 col-sm-6 col-xs-8">--}}
-                                    {{--<ul class="inline-links">--}}
-                                        {{--<li><a href="javascript:void(0)"> @lang('1 Day') </a></li>--}}
-                                        {{--<li><a href="javascript:void(0)"> @lang('1 Week') </a></li>--}}
-                                        {{--<li><a href="javascript:void(0)"> @lang('1 Month') </a></li>--}}
-                                    {{--</ul>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
+                            <div class="row row-margin">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-4"> @lang('Preselect End Date') </label>
+                                <div class="col-md-8 col-sm-6 col-xs-8">
+                                    <ul class="inline-links">
+                                        <li><a id="preselect-one-day" href="javascript:void(0)"> @lang('1 Day') </a></li>
+                                        <li><a id="preselect-one-week" href="javascript:void(0)"> @lang('1 Week') </a></li>
+                                        <li><a id="preselect-one-month"  href="javascript:void(0)"> @lang('1 Month') </a></li>
+                                    </ul>
+                                </div>
+                            </div>
 
                             <div class="row row-margin">
                                 <div class="form-group">
@@ -233,7 +233,7 @@
                 $(this).text(acronym);
             });
 
-            <!-- Datepicker jquery ui -->
+            <!-- Datepicker -->
             $("#start-date").datepicker({
                 dateFormat: 'mm/dd/yy',
                 changeMonth: true,
@@ -253,6 +253,25 @@
                     $("#start-date").datepicker( "option", "maxDate", selectedDate );
                 }
             });
+
+            // Preselect end date buttons
+            $("#preselect-one-day").click(function() {
+                updateEndDate(1);
+            });
+
+            $("#preselect-one-week").click(function() {
+                updateEndDate(7);
+            });
+
+            $("#preselect-one-month").click(function() {
+                updateEndDate(30);
+            });
+
+            function updateEndDate(days){
+                var start_date = $('#start-date').datepicker('getDate');
+                start_date.setDate(start_date.getDate() + days);
+                $('#end-date').datepicker('setDate', start_date);
+            }
 
             <!-- Leaflet Map -->
             var map = L.map('map').setView([10.4261961, -75.5364990], 14);
