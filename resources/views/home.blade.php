@@ -696,7 +696,35 @@
 
                 var chart = Highcharts.chart('chart', {
                     chart: {
-                        type: 'spline'
+                        type: 'spline',
+                        zoomType: 'x',
+                        events: {
+                            load: function () {
+                                var label = this.renderer.label("@lang('To zoom into a specific date/range, left click and drag in the plot area')")
+                                        .css({
+                                            width: 'auto',
+                                            fontWeight: 'bold',
+                                            marginTop: '0',
+                                            fontSize: '13px'
+                                        })
+//                                        .attr({
+//                                            'stroke': 'silver',
+//                                            'stroke-width': 1,
+//                                            'r': 2,
+//                                            'padding': 5
+//                                        })
+                                        .add();
+
+                                label.align(Highcharts.extend(label.getBBox(), {
+                                    align: 'center',
+//                                    x: 20, // offset
+                                    verticalAlign: 'bottom',
+//                                    y: 0 // offset
+                                }), null, 'spacingBox');
+
+                            }
+                        },
+                        marginBottom: 120
                     },
                     title: {
                         text: node_name
@@ -726,8 +754,14 @@
                             }
                         }
                     },
+                    legend: {
+                        align: 'center',
+                        verticalAlign: 'bottom',
+                        y: -45
+                    },
                     tooltip: {
-                        headerFormat: '<b>{point.x:%b. %e, %Y}</b><br>'
+                        headerFormat: '<b>{point.x:%b. %e, %Y}</b><br>',
+                        valueSuffix: ' ' + unit
                     },
                     plotOptions: {
                         series: {
@@ -744,10 +778,7 @@
                     series: [{
                         name: name + ' @lang('in') ' + node_name,
                         data: values,
-                        color: '#FF0000',
-                        tooltip: {
-                            valueSuffix: ' ' + unit
-                        }
+                        color: '#FF0000'
                     }],
                     responsive: {
                         rules: [{
