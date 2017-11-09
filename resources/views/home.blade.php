@@ -99,7 +99,7 @@
                                     <ul class="inline-links">
                                         <li><a id="preselect-one-day" href="javascript:void(0)"> @lang('1 Day') </a></li>
                                         <li><a id="preselect-one-week" href="javascript:void(0)"> @lang('1 Week') </a></li>
-                                        <li><a id="preselect-one-month"  href="javascript:void(0)"> @lang('1 Month') </a></li>
+                                        <li><a id="preselect-one-month" href="javascript:void(0)"> @lang('1 Month') </a></li>
                                     </ul>
                                 </div>
                             </div>

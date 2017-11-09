@@ -1,0 +1,111 @@
+/*https://www.bootply.com/533U4Zo7Uq*/
+#scrollspy{
+    margin-top: 50px;
+}
+/* hide sidebar sub menus by default */
+#sidebar.nav .nav {
+    display: none;
+    font-size:12px;
+}
+
+/* show sub menu when parent is active */
+#sidebar.nav>.active>ul {
+    display: block;
+}
+
+.navbar-bright li > a:hover {
+    background-color:#000033;
+}
+
+.affix-top,.affix{
+    position: static;
+}
+
+@media (min-width: 1000px) {
+    #sidebar.affix-top {
+        position: static;
+        margin-top:40px;
+        width:228px;
+    }
+
+    #sidebar.affix {
+        position: fixed;
+        top:70px;
+        width:228px;
+    }
+}
+
+@media (max-width: 999px){
+    .affix-top,.affix{
+        margin-bottom: 30px;
+    }
+}
+
+#sidebar li.active {
+    border:0 #007EE5 solid;
+    border-right-width:3px;
+}
+
+@media (max-width: 767px) {
+    #leftCol{
+        margin-bottom: 50px;
+    }
+}
+
+.nav-stacked{
+    /*text-align: center;*/
+}
+
+.nav-stacked>li>a{
+    font-weight:bold;
+}
+
+.subsection a{
+    font-size: 128%;
+    color: #2e3436;
+    font-weight: lighter;
+}
+
+.section-divisor{
+    height: 6px;
+    background: url(http://ibrahimjabbari.com/english/images/hr-11.png) repeat-x 0 0;
+    border: 0;
+    margin: 30px 0;
+}
+
+h3{
+    margin-bottom: 6px;
+}
+
+h3 .fa{
+    color: #007EE5;
+}
+
+p{
+    text-align: justify;
+}
+.margin-0{
+    margin-bottom: 0;
+}
+
+/* Contact */
+.thumbnail {
+    padding: 0;
+}
+
+.thumbnail a img {
+    height: 200px;
+}
+
+.caption {
+    margin-bottom: 0;
+}
+
+.caption div {
+    border-left: 5px solid #ddd;
+    padding: 5px 9px 2px;
+}
+
+.caption div p {
+    margin-bottom: 0;
+}
