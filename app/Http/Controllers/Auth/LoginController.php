@@ -25,7 +25,11 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected function redirectTo()
+    {
+        $nodeTypes = NodeType::all();
+        return view('home', ["nodeTypes" => $nodeTypes]);
+    }
 
     /**
      * Create a new controller instance.

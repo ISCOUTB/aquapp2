@@ -25,7 +25,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('nodes/parameters','NodeController@showAvailableParameters')->name('parameters');
 });
 
-
 Route::get('nodetypes', function(){
     return \App\NodeType::all();
 });
+
+// Authentication Routes
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
