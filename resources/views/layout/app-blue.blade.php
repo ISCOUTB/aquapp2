@@ -33,7 +33,11 @@
     </ul>
 </nav>
 
-@yield('content')
+<div class="container error">
+    <img src="/images/brand-no-back.png" alt="brand" width="180">
+    <br>
+    @yield('content')
+</div>
 
 <footer class="footer">
     <small class="text">Copyright © 2017. Universidad Tecnologica de Bolivar.</small>
