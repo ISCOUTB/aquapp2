@@ -64,7 +64,6 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="{{ url('/') }}"><i class="fa fa-home" aria-hidden="true"></i> &nbsp; @lang('Home') </a></li>
-                    <li><a href="{{ url('/admin/nodes') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> &nbsp; @lang('Login') </a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-language fa-fw" aria-hidden="true"></i> &nbsp; {{ Config::get('locale')[App::getLocale()] }} <span class="caret"></span></a>
@@ -77,6 +76,22 @@
                         </ul>
                     </li>
                     <li><a href="{{ url('about') }}"><i class="fa fa-question-circle" aria-hidden="true"></i> &nbsp; @lang('About') </a></li>
+                    @guest
+                        <li><a href="{{ route('login') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> &nbsp; @lang('Login') </a></li>
+                    @else
+                        <li><a href="{{ route('login') }}"><i class="fa fa-gears" aria-hidden="true"></i> &nbsp; @lang('Dashboard') </a></li>
+                        <li>
+                            <a href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
+                                <i class="fa fa-sign-out" aria-hidden="true"></i> &nbsp; @lang('Logout')
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
+                        </li>
+                    @endguest
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->

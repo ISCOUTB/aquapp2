@@ -1,5 +1,6 @@
 {
   "Login": "Ingresar",
+  "Logout": "Salir",
   "About": "Acerca de",
   "Available Data": "Datos disponibles",
   "Real Time": "Tiempo real",
@@ -47,7 +48,7 @@
   "Check source code": "Revisar código fuente",
 
   "Home": "Inicio",
-  "Dashboard": "Panel administrativo",
+  "Dashboard": "Panel",
   "Nodes": "Nodos",
   "Browse list of nodes": "Examinar lista de nodos",
   "Add new node": "Añadir nuevo nodo",

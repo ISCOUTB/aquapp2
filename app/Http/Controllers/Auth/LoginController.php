@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\NodeType;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -25,11 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected function redirectTo()
-    {
-        $nodeTypes = NodeType::all();
-        return view('home', ["nodeTypes" => $nodeTypes]);
-    }
+    protected $redirectTo = '/admin/nodes';
 
     /**
      * Create a new controller instance.
