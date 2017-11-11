@@ -40,7 +40,17 @@
 </div>
 
 <footer class="footer">
-    <small class="text">Copyright © 2017. Universidad Tecnologica de Bolivar.</small>
+    <div class="pull-left">
+        <ul class="list-inline">
+            <li><strong><i class="fa fa-language fa-fw" aria-hidden="true"></i> &nbsp; {{ Config::get('locale')[App::getLocale()] }}</strong></li>
+            @foreach (Config::get('locale') as $key => $locale)
+                @if ($key != App::getLocale())
+                    <li><a href="{{ route('locale', $key) }}">{{ $locale }}</a></li>
+                @endif
+            @endforeach
+        </ul>
+    </div>
+    <small class="pull-right hidden-xs">Copyright © 2017. Universidad Tecnologica de Bolivar.</small>
 </footer>
 
 <!-- Jquery -->
