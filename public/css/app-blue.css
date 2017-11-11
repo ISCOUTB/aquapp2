@@ -75,6 +75,17 @@ img{
     color: #282e3c;
 }
 
+/* Form
+-------------------------------------------------- */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.has-error .help-block, .has-error .radio, .has-error .radio-inline, .has-error.checkbox label, .has-error.checkbox-inline label, .has-error.radio label, .has-error.radio-inline label {
+    color: #ffffff;
+    font-size: 0.9em;
+}
+
 /* Footer
 -------------------------------------------------- */
 .footer{

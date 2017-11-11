@@ -34,7 +34,7 @@
 </nav>
 
 <div class="container error">
-    <img src="/images/brand-no-back.png" alt="brand" width="180">
+    <img src="/images/brand-no-back.png" alt="brand" width="170">
     <br>
     @yield('content')
 </div>

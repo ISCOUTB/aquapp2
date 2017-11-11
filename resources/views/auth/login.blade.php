@@ -4,12 +4,6 @@
     @lang('Login')
 @endsection
 
-@section('styles')
-    <style>
-
-    </style>
-@endsection
-
 @section('content')
 <div class="container">
     <div class="row">
@@ -18,7 +12,7 @@
                 {{ csrf_field() }}
 
                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="@lang('Email')" required autofocus>
+                    <input id="email" type="email" class="form-control input-lg" name="email" value="{{ old('email') }}" placeholder="@lang('Email')" required autofocus>
 
                     @if ($errors->has('email'))
                         <span class="help-block">
@@ -28,7 +22,7 @@
                 </div>
 
                 <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                    <input id="password" type="password" class="form-control" name="password" placeholder="@lang('Password')" required>
+                    <input id="password" type="password" class="form-control input-lg" name="password" placeholder="@lang('Password')" required>
 
                     @if ($errors->has('password'))
                         <span class="help-block">
@@ -46,7 +40,7 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-default btn-block">
+                    <button type="submit" class="btn btn-default btn-block btn-lg">
                         @lang('Login')
                     </button>
 
