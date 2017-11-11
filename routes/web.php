@@ -20,7 +20,7 @@ Route::get('data', 'DataController@filterData');
 // Locale Configure
 Route::get('locale/{locale}', 'LocaleController@switchLanguage')->name('locale');
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('nodes', 'NodeController', ['except' => ['show', 'destroy']]);
     Route::get('nodes/parameters','NodeController@showAvailableParameters')->name('parameters');
 });
