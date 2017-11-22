@@ -13,6 +13,8 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('users')->delete();
+
         User::create([
             'name'     => 'Admin',
             'email' => env('ADMIN_EMAIL'),
