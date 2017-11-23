@@ -74,6 +74,23 @@
                                 </div>
                             </div>
 
+                            <div class="row row-margin">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-xs-4" for="node"> @lang('Station') </label>
+                                    <div class="col-md-8 col-xs-8">
+                                        <select class="form-control" id="node" name="node"></select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row row-margin">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-xs-4" for="variable"> @lang('Parameter') </label>
+                                    <div class="col-md-8 col-xs-8">
+                                        <select class="form-control" id="variable" name="variable"></select>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="row row-margin">
                                 <div class="form-group">
@@ -101,24 +118,6 @@
                                         <li><a id="preselect-one-week" href="javascript:void(0)"> @lang('1 Week') </a></li>
                                         <li><a id="preselect-one-month" href="javascript:void(0)"> @lang('1 Month') </a></li>
                                     </ul>
-                                </div>
-                            </div>
-
-                            <div class="row row-margin">
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-xs-4" for="node"> @lang('Station') </label>
-                                    <div class="col-md-8 col-xs-8">
-                                        <select class="form-control" id="node" name="node"></select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row row-margin">
-                                <div class="form-group">
-                                    <label class="control-label col-md-3 col-xs-4" for="variable"> @lang('Parameter') </label>
-                                    <div class="col-md-8 col-xs-8">
-                                        <select class="form-control" id="variable" name="variable"></select>
-                                    </div>
                                 </div>
                             </div>
 
