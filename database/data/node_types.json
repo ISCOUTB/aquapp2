@@ -52,5 +52,156 @@
         "unit": "m"
       }
     ]
+  },
+  {
+    "_id" : "5a16342a9a8920290056a542",
+    "name": "Weather Station",
+    "separator": ",",
+    "sensors": [
+      {
+        "variable": "Temperature Out",
+        "unit": "°C"
+      },
+      {
+        "variable": "High Temperature",
+        "unit": "°C"
+      },
+      {
+        "variable": "Low Temperature",
+        "unit": "°C"
+      },
+      {
+        "variable": "Out Humidity",
+        "unit": "%"
+      },
+      {
+        "variable": "Dew Point",
+        "unit": "°C"
+      },
+      {
+        "variable": "Wind Speed",
+        "unit": "m/s"
+      },
+      {
+        "variable": "Wind Direction",
+        "unit": "Cardinal directions"
+      },
+      {
+        "variable": "Wind Run",
+        "unit": "m"
+      },
+      {
+        "variable": "High Speed",
+        "unit": "m/s"
+      },
+      {
+        "variable": "Highest Direction",
+        "unit": "Cardinal directions"
+      },
+      {
+        "variable": "Wind Chill",
+        "unit": "°C"
+      },
+      {
+        "variable": "Heat Index",
+        "unit": "°C"
+      },
+      {
+        "variable": "THW Index",
+        "unit": "°C"
+      },
+      {
+        "variable": "THSW Index",
+        "unit": "°C"
+      },
+      {
+        "variable": "Bar",
+        "unit": "mmHg"
+      },
+      {
+        "variable": "Rain",
+        "unit": "mm"
+      },
+      {
+        "variable": "Rain Rate",
+        "unit": "mm/h"
+      },
+      {
+        "variable": "Solar Radiation",
+        "unit": "W/m2"
+      },
+      {
+        "variable": "Solar Energy",
+        "unit": "Ly"
+      },
+      {
+        "variable": "Highest Solar Radiation",
+        "unit": "Ly"
+      },
+      {
+        "variable": "UV Index",
+        "unit": "UV Index"
+      },
+      {
+        "variable": "UV Dose",
+        "unit": "Minimum Erythemal Dose"
+      },
+      {
+        "variable": "Highest UV",
+        "unit": "UV Index"
+      },
+      {
+        "variable": "Heat D-D (heating degree day):",
+        "unit": "°C"
+      },
+      {
+        "variable": "Cool D-D (Cooling Degree day)",
+        "unit": "°C"
+      },
+      {
+        "variable": "Internal Temperature",
+        "unit": "°C"
+      },
+      {
+        "variable": "Internal Humidity",
+        "unit": "%"
+      },
+      {
+        "variable": "Internal Dew Point",
+        "unit": "°C"
+      },
+      {
+        "variable": "Internal Heat",
+        "unit": "°C"
+      },
+      {
+        "variable": "Internal EMC",
+        "unit": ""
+      },
+      {
+        "variable": "Internal Air Density",
+        "unit": ""
+      },
+      {
+        "variable": "ET",
+        "unit": ""
+      },
+      {
+        "variable": "Wind Samp",
+        "unit": ""
+      },
+      {
+        "variable": "Wind Tx",
+        "unit": ""
+      },
+      {
+        "variable": "ISS Recept",
+        "unit": ""
+      },
+      {
+        "variable": "Arc. Int",
+        "unit": ""
+      }
+    ]
   }
 ]

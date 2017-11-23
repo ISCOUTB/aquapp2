@@ -54,5 +54,13 @@
     "coordinates": [10.404833333333, -75.523972222222],
     "status": "Off",
     "node_type_id": "59c9d9019a892016ca4be413"
+  },
+  {
+    "_id": "5a1652279a89202b695560e2",
+    "name": "Cotecmar",
+    "location": "Zona Industrial Mamonal Km 9",
+    "coordinates": [10.3336549, -75.5059747],
+    "status": "Non Real Time",
+    "node_type_id": "5a16342a9a8920290056a542"
   }
 ]
