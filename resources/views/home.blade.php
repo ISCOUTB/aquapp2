@@ -714,8 +714,10 @@
 
                 var chart = Highcharts.chart('chart', {
                     chart: {
-                        type: 'spline',
-                        zoomType: 'x',
+//                        type: 'spline',
+//                        zoomType: 'x',
+                        type: 'scatter',
+                        zoomType: 'xy',
                         events: {
                             load: function () {
                                 var label = this.renderer.label("@lang('To zoom into a specific date/range, left click and drag in the plot area')")
